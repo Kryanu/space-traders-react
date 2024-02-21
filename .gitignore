@@ -7,6 +7,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+pocketbase
+pocketbase/pb_data
 node_modules
 dist
 dist-ssr
@@ -22,3 +24,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+pocketBase/pb_data/logs.db
+pocketBase/pb_data/data.db
