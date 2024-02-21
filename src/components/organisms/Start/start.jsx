@@ -1,6 +1,6 @@
 import { userDataStore, gameDataStore } from '../../../stores';
 import { Button, TextField } from '@mui/material';
-import { registerHandle } from './logic';
+import { registerHandle, retrieveContracts } from './logic';
 import '../../../App.css';
 
 export default function Start() {
@@ -37,6 +37,17 @@ export default function Start() {
           }}
         >
           Start Trading
+        </Button>
+        <Button
+          onClick={async () =>
+            await retrieveContracts(gameState?.token)
+          }
+          variant='contained'
+          sx={{
+            margin: 'auto',
+          }}
+        >
+          View Contracts
         </Button>
       </div>
     </>

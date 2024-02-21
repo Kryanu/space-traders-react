@@ -3,10 +3,10 @@ import PocketBase from 'pocketbase';
 
 const pb = new PocketBase('http://127.0.0.1:8090');
 
-export const addRecord = async (handle) => {
+export const addRecord = async (handle, token) => {
   if (handle) {
     try {
-      await pb.collection('players').create({ handle });
+      await pb.collection('players').create({ handle, token });
     } catch (ex) {
       console.error(ex);
     }
@@ -20,9 +20,13 @@ export const registerHandle = async (handle, faction) => {
 
   try {
     const startData = await API.registerAgent(handle, faction);
-    await addRecord(handle);
+    await addRecord(handle, startData?.token);
     return startData;
   } catch (ex) {
     console.error(ex);
   }
+};
+
+export const retrieveContracts = async (token) => {
+  return await API.viewContracts(token);
 };
