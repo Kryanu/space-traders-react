@@ -1,11 +1,11 @@
 import { userDataStore, gameDataStore } from '../../../stores';
 import { Button, TextField } from '@mui/material';
-import { registerHandle, retrieveContracts } from './logic';
+import { registerHandle } from './logic';
 import '../../../App.css';
 
 export default function Start() {
   const { handle, faction, changeHandle, changeFaction } = userDataStore();
-  const { gameState, updateGame } = gameDataStore();
+  const { updateGame } = gameDataStore();
   return (
     <>
       <h1 className='mb-8'>Space Traders</h1>
@@ -37,17 +37,6 @@ export default function Start() {
           }}
         >
           Start Trading
-        </Button>
-        <Button
-          onClick={async () =>
-            await retrieveContracts(gameState?.token)
-          }
-          variant='contained'
-          sx={{
-            margin: 'auto',
-          }}
-        >
-          View Contracts
         </Button>
       </div>
     </>

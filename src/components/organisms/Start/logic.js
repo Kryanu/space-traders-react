@@ -1,17 +1,5 @@
 import { API } from '../../../api/service';
-import PocketBase from 'pocketbase';
-
-const pb = new PocketBase('http://127.0.0.1:8090');
-
-export const addRecord = async (handle, token) => {
-  if (handle) {
-    try {
-      await pb.collection('players').create({ handle, token });
-    } catch (ex) {
-      console.error(ex);
-    }
-  }
-};
+import { addRecord } from '../../../api/pocketbase';
 
 export const registerHandle = async (handle, faction) => {
   if (!handle || !faction) {
@@ -27,6 +15,3 @@ export const registerHandle = async (handle, faction) => {
   }
 };
 
-export const retrieveContracts = async (token) => {
-  return await API.viewContracts(token);
-};
