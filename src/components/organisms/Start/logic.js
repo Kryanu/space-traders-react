@@ -1,5 +1,6 @@
 import { API } from '../../../api/service';
 import { addRecord } from '../../../api/pocketbase';
+import { filterRecordByHandle } from '../../../api/pocketbase';
 
 export const registerHandle = async (handle, faction) => {
   if (!handle || !faction) {
@@ -15,3 +16,7 @@ export const registerHandle = async (handle, faction) => {
   }
 };
 
+export const retrieveToken = async (handle) => {
+  const data = await filterRecordByHandle(handle);
+  return data?.items[0]?.token;
+};

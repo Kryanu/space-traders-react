@@ -1,44 +1,35 @@
 import { userDataStore, gameDataStore } from '../../../stores';
-import { Button, TextField } from '@mui/material';
-import { registerHandle } from './logic';
 import '../../../App.css';
+import { useEffect, useState } from 'react';
+import { SignUpComponents, InitialComponents } from './children';
+import { useNavigate } from 'react-router-dom';
 
 export default function Start() {
-  const { handle, faction, changeHandle, changeFaction } = userDataStore();
+  const navigate = useNavigate();
+  const { handle, faction, changeHandle, changeFaction, token, changeToken } =
+    userDataStore();
   const { updateGame } = gameDataStore();
+  const [isSignUp, setSignUp] = useState(false);
+  useEffect(() => {
+    if (token) {
+      navigate('/console');
+    }
+  });
+
   return (
     <>
       <h1 className='mb-8'>Space Traders</h1>
-      <div className='flex flex-col space-y-4'>
-        <div className='flex space-x-4'>
-          <TextField
-            variant='outlined'
-            label='Agent Handler'
-            onChange={(e) => {
-              changeHandle(e.target.value);
-            }}
-          />
-          <TextField
-            variant='outlined'
-            label='Faction'
-            onChange={(e) => {
-              changeFaction(e.target.value);
-            }}
-          />
-        </div>
-
-        <Button
-          onClick={async () =>
-            updateGame(await registerHandle(handle, faction))
-          }
-          variant='contained'
-          sx={{
-            margin: 'auto',
-          }}
-        >
-          Start Trading
-        </Button>
-      </div>
+      {SignUpComponents(
+        isSignUp,
+        { changeFaction, changeHandle, updateGame },
+        { handle, faction }
+      )}
+      {InitialComponents(
+        isSignUp,
+        { setSignUp, changeHandle, changeToken },
+        { handle }
+      )}
     </>
   );
 }
+//
