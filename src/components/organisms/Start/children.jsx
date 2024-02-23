@@ -1,6 +1,11 @@
-import { registerHandle, retrieveToken } from './logic';
+import { useState } from 'react';
+import { NavigateButton } from '../../atoms';
+import { registerHandle, handleLogin } from './logic';
 import { Button, TextField } from '@mui/material';
-export const InitialComponents = (isSignUp, hooks, state) => {
+
+export const InitialComponents = (isSignUp, hooks) => {
+  const { changeHandle, setSignUp, changeToken } = hooks;
+  const [handleInput, setHandleInput] = useState(undefined);
   if (isSignUp) {
     return <></>;
   }
@@ -11,12 +16,12 @@ export const InitialComponents = (isSignUp, hooks, state) => {
         variant='outlined'
         label='Agent Handler'
         onChange={(e) => {
-          hooks.changeHandle(e.target.value);
+          setHandleInput(e.target.value);
         }}
       />
       <div className='flex'>
         <Button
-          onClick={async () => hooks.setSignUp(true)}
+          onClick={async () => setSignUp(true)}
           variant='contained'
           sx={{
             margin: 'auto',
@@ -24,23 +29,21 @@ export const InitialComponents = (isSignUp, hooks, state) => {
         >
           Sign Up
         </Button>
-        <Button
-          onClick={async () =>
-            hooks.changeToken(await retrieveToken(state.handle))
-          }
-          variant='contained'
-          sx={{
-            margin: 'auto',
-          }}
-        >
-          Login
-        </Button>
+        <NavigateButton
+          isRendered={true}
+          text={'Login'}
+          callBack={handleLogin}
+          callBackProps={{ handleInput, changeToken, changeHandle }}
+          route={'/console'}
+        />
       </div>
     </div>
   );
 };
 
 export const SignUpComponents = (isSignUp, hooks, state) => {
+  const { changeHandle, changeFaction, updateGame } = hooks;
+  const {handle, faction} = state;
   if (!isSignUp) {
     return <></>;
   }
@@ -52,20 +55,20 @@ export const SignUpComponents = (isSignUp, hooks, state) => {
           variant='outlined'
           label='Agent Handler'
           onChange={(e) => {
-            hooks.changeHandle(e.target.value);
+            changeHandle(e.target.value);
           }}
         />
         <TextField
           variant='outlined'
           label='Faction'
           onChange={(e) => {
-            hooks.changeFaction(e.target.value);
+            changeFaction(e.target.value);
           }}
         />
       </div>
       <Button
         onClick={async () =>
-          hooks.updateGame(await registerHandle(state.handle, state.faction))
+          updateGame(await registerHandle(handle, faction))
         }
         variant='contained'
         sx={{
