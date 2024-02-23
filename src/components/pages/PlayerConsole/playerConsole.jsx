@@ -15,6 +15,7 @@ export default function PlayerConsole() {
     if (!token) {
       // retrieveToken('AMD0101', changeToken);
       //if we auth the user we can create a token with the spacetraders token embedded into it
+      //learn how to auth with pocketbase bro 
     }
   });
 
