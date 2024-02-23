@@ -12,7 +12,7 @@ export default function Start() {
   const [isSignUp, setSignUp] = useState(false);
   useEffect(() => {
     if (token) {
-      navigate('/console');
+      window.sessionStorage.setItem('token', token);
     }
   });
 
@@ -26,8 +26,7 @@ export default function Start() {
       )}
       {InitialComponents(
         isSignUp,
-        { setSignUp, changeHandle, changeToken },
-        { handle }
+        { setSignUp, changeHandle, changeToken }
       )}
     </>
   );

@@ -20,3 +20,13 @@ export const retrieveToken = async (handle) => {
   const data = await filterRecordByHandle(handle);
   return data?.items[0]?.token;
 };
+
+export const handleLogin = async ({ handleInput, changeToken, changeHandle }) => {
+  try {
+    changeToken(await retrieveToken(handleInput));
+    changeHandle(handleInput);
+    window.sessionStorage.setItem('handle', handleInput);
+  } catch (ex) {
+    throw new Error('Handle was incorrect');
+  }
+};

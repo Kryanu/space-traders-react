@@ -4,7 +4,7 @@ import './App.css';
 import { Start } from './components/organisms';
 import { PlayerConsole, ContractDetails } from './components/pages';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import { useToken } from './hooks';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -27,6 +27,8 @@ const darkTheme = createTheme({
 });
 
 function App() {
+  //Checks for token in sessionStorage
+  useToken();
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />

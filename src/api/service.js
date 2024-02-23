@@ -32,15 +32,12 @@ export const API = {
   },
   viewAgent: async (token) => {
     try {
-      const res = await axios.get(
-        'https://api.spacetraders.io/v2/my/agent',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.get('https://api.spacetraders.io/v2/my/agent', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res?.data?.data || res.data || res;
     } catch (ex) {
       throw new Error(ex);
@@ -61,6 +58,22 @@ export const API = {
     } catch (ex) {
       throw new Error(ex);
     }
-  }
-
+  },
+  acceptContract: async (token, contractId) => {
+    try {
+      const res = await axios.post(
+        `https://api.spacetraders.io/v2/my/contracts/${contractId}/accept`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json'
+          },
+        }
+      );
+    } catch (ex) {
+      throw new Error(ex);
+    }
+  },
 };

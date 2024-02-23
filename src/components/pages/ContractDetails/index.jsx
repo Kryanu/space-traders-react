@@ -1,27 +1,32 @@
 import { useEffect, useState } from 'react';
 import { userDataStore } from '../../../stores';
 import { useLocation } from 'react-router-dom';
-import { retrieveContractDetails, retrieveToken } from './logic';
+import { retrieveContractDetails, acceptContract } from './logic';
 import { ContractList } from './children';
+import { NavigateButton } from '../../atoms';
 export default function ContractDetails() {
-  const { token, changeToken } = userDataStore();
-  const [contractDetails, setDetails] = useState(undefined);
   const location = useLocation();
+  const { token } = userDataStore();
+  const { contractId } = location.state;
+  const [contractDetails, setDetails] = useState(undefined);
   const [openPaymentsList, setOpenPaymentsList] = useState(false);
   const [openDeliverablesList, setOpenDeliverablesList] = useState(false);
-  const { contractId } = location.state;
-  useEffect(() => {
-    if (!token) {
-      retrieveToken('AMD0101', changeToken);
-    }
-  });
-
+  const [isAccepted, setIsAccepted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     if (token && contractId) {
-      retrieveContractDetails(token, contractId, setDetails);
+      retrieveContractDetails(token, contractId, {
+        setDetails,
+        setIsLoading,
+        setIsAccepted,
+      });
     }
   }, [token]);
-  console.log(contractDetails);
+
+  if (isLoading) {
+    return <></>;
+  }
+
   return (
     <div>
       {ContractList(
@@ -29,6 +34,13 @@ export default function ContractDetails() {
         { setOpenDeliverablesList, setOpenPaymentsList },
         { openDeliverablesList, openPaymentsList }
       )}
+      <NavigateButton
+        isRendered={!isAccepted}
+        text={'Accept Contract'}
+        callBack={acceptContract}
+        callBackProps={{ token, contractId }}
+        route={'/console'}
+      />
     </div>
   );
 }

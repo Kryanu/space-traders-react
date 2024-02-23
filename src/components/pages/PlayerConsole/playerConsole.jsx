@@ -1,4 +1,4 @@
-import { retrieveContracts, retrieveToken, setAgentDetails } from './logic';
+import { retrieveContracts, setAgentDetails } from './logic';
 import { Typography } from '@mui/material';
 import { userDataStore } from '../../../stores';
 import { useEffect, useState } from 'react';
@@ -7,17 +7,9 @@ import { useNavigate } from 'react-router-dom';
 export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);
   const [agent, setAgent] = useState(undefined);
-  const { token, changeToken } = userDataStore();
+  const { token } = userDataStore();
   const [selectedContractId, setContractId] = useState(undefined);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!token) {
-      // retrieveToken('AMD0101', changeToken);
-      //if we auth the user we can create a token with the spacetraders token embedded into it
-      //learn how to auth with pocketbase bro 
-    }
-  });
 
   useEffect(() => {
     if (!agent && token) {

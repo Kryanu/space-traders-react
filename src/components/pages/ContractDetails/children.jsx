@@ -3,14 +3,14 @@ import {
   ListItem,
   ListItemText,
   ListItemButton,
-  Collapse,
+  Collapse
 } from '@mui/material';
 
 export const ContractList = (contract, hooks, state) => {
-    if(!contract){
-        return (<></>)
-    }
-    return (
+  if (!contract) {
+    return <></>;
+  }
+  return (
     <List sx={{ paddingTop: '0px' }}>
       <ListItem
         sx={{ alignItems: 'start' }}
