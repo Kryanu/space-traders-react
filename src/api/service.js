@@ -46,4 +46,21 @@ export const API = {
       throw new Error(ex);
     }
   },
+  getContract: async (token, contractId) => {
+    try {
+      const res = await axios.get(
+        `https://api.spacetraders.io/v2/my/contracts/${contractId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res?.data?.data || res.data || res;
+    } catch (ex) {
+      throw new Error(ex);
+    }
+  }
+
 };
