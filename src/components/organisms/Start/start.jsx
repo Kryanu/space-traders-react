@@ -13,7 +13,6 @@ export default function Start() {
   useEffect(() => {
     if (token) {
       window.sessionStorage.setItem('token', token);
-      navigate('/console');
     }
   });
 
