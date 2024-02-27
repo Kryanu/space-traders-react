@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavigateButton } from '../../atoms';
-import { registerHandle, handleLogin } from './logic';
+import { handleLogin, handleSignUp } from './logic';
 import { Button, TextField } from '@mui/material';
 
 export const InitialComponents = (isSignUp, hooks) => {
@@ -42,8 +42,8 @@ export const InitialComponents = (isSignUp, hooks) => {
 };
 
 export const SignUpComponents = (isSignUp, hooks, state) => {
-  const { changeHandle, changeFaction, updateGame } = hooks;
-  const {handle, faction} = state;
+  const { changeHandle, changeFaction, updateGame, changeToken } = hooks;
+  const { handle, faction } = state;
   if (!isSignUp) {
     return <></>;
   }
@@ -66,17 +66,13 @@ export const SignUpComponents = (isSignUp, hooks, state) => {
           }}
         />
       </div>
-      <Button
-        onClick={async () =>
-          updateGame(await registerHandle(handle, faction))
-        }
-        variant='contained'
-        sx={{
-          margin: 'auto',
-        }}
-      >
-        Start Trading
-      </Button>
+      <NavigateButton
+        isRendered={true}
+        text={'Start Trading'}
+        callBack={handleSignUp}
+        callBackProps={{ handle, faction, updateGame, changeToken, changeHandle }}
+        route={'/console'}
+      />
     </div>
   );
 };

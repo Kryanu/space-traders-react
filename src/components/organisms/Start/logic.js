@@ -2,7 +2,28 @@ import { API } from '../../../api/service';
 import { addRecord } from '../../../api/pocketbase';
 import { filterRecordByHandle } from '../../../api/pocketbase';
 
-export const registerHandle = async (handle, faction) => {
+
+export const retrieveToken = async (handle) => {
+  const data = await filterRecordByHandle(handle);
+  return data?.items[0]?.token;
+};
+
+export const handleLogin = async ({
+  handleInput,
+  changeToken,
+  changeHandle,
+}) => {
+  try {
+    changeToken(await retrieveToken(handleInput));
+    changeHandle(handleInput);
+    window.sessionStorage.setItem('handle', handleInput);
+  } catch (ex) {
+    throw new Error('Handle was incorrect');
+  }
+};
+
+
+const registerHandle = async (handle, faction) => {
   if (!handle || !faction) {
     return 'Handle or Faction cannot be undefined';
   }
@@ -16,17 +37,10 @@ export const registerHandle = async (handle, faction) => {
   }
 };
 
-export const retrieveToken = async (handle) => {
-  const data = await filterRecordByHandle(handle);
-  return data?.items[0]?.token;
-};
-
-export const handleLogin = async ({ handleInput, changeToken, changeHandle }) => {
-  try {
-    changeToken(await retrieveToken(handleInput));
-    changeHandle(handleInput);
-    window.sessionStorage.setItem('handle', handleInput);
-  } catch (ex) {
-    throw new Error('Handle was incorrect');
-  }
+export const handleSignUp = async ({ handle, faction, updateGame, changeHandle, changeToken }) => {
+  const data = await registerHandle(handle, faction);
+  changeToken(data.token);
+  changeHandle(handle);
+  window.sessionStorage.setItem('handle', handle);
+  updateGame(data);
 };

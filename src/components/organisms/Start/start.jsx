@@ -19,7 +19,7 @@ export default function Start() {
       <h1 className='mb-8'>Space Traders</h1>
       {SignUpComponents(
         isSignUp,
-        { changeFaction, changeHandle, updateGame },
+        { changeFaction, changeHandle, updateGame, changeToken },
         { handle, faction }
       )}
       {InitialComponents(isSignUp, { setSignUp, changeHandle, changeToken })}
