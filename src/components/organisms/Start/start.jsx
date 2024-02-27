@@ -2,10 +2,8 @@ import { userDataStore, gameDataStore } from '../../../stores';
 import '../../../App.css';
 import { useEffect, useState } from 'react';
 import { SignUpComponents, InitialComponents } from './children';
-import { useNavigate } from 'react-router-dom';
 
 export default function Start() {
-  const navigate = useNavigate();
   const { handle, faction, changeHandle, changeFaction, token, changeToken } =
     userDataStore();
   const { updateGame } = gameDataStore();
@@ -24,10 +22,7 @@ export default function Start() {
         { changeFaction, changeHandle, updateGame },
         { handle, faction }
       )}
-      {InitialComponents(
-        isSignUp,
-        { setSignUp, changeHandle, changeToken }
-      )}
+      {InitialComponents(isSignUp, { setSignUp, changeHandle, changeToken })}
     </>
   );
 }

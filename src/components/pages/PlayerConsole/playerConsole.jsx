@@ -4,6 +4,7 @@ import { userDataStore } from '../../../stores';
 import { useEffect, useState } from 'react';
 import { AgentDetails, ContractIdList } from './children';
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../../Layouts/navbar';
 export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);
   const [agent, setAgent] = useState(undefined);
@@ -27,6 +28,7 @@ export default function PlayerConsole() {
   }, [selectedContractId]);
   return (
     <div className='flex flex-col'>
+      <NavBar route={'/'} />
       <div className='flex space-x-2'>
         <div className='flex flex-col'>
           <Typography variant='h5'>Agent Details:</Typography>

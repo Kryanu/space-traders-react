@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { retrieveContractDetails, acceptContract } from './logic';
 import { ContractList } from './children';
 import { NavigateButton } from '../../atoms';
+import { NavBar } from '../../Layouts';
 export default function ContractDetails() {
   const location = useLocation();
   const { token } = userDataStore();
@@ -29,6 +30,7 @@ export default function ContractDetails() {
 
   return (
     <div>
+      <NavBar route={'/console'} />
       {ContractList(
         contractDetails,
         { setOpenDeliverablesList, setOpenPaymentsList },
