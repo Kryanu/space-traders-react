@@ -2,13 +2,24 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 export default function NavigateButton(props) {
-  const { isRendered = true, callBack, text, route, callBackProps } = props;
+  const {
+    isRendered = true,
+    callBack,
+    text,
+    route,
+    callBackProps,
+    style,
+  } = props;
+  let classes = { margin: 'auto' };
+  if (style) {
+    classes = style;
+  }
   const navigate = useNavigate();
   if (!isRendered) {
     return <></>;
   }
   const navigateCallBack = async () => {
-    if(callBack) {
+    if (callBack) {
       await callBack(callBackProps);
     }
     navigate(route);
@@ -20,7 +31,7 @@ export default function NavigateButton(props) {
         await navigateCallBack();
       }}
       variant='contained'
-      sx={{ margin: 'auto' }}
+      sx={classes}
     >
       {text}
     </Button>
