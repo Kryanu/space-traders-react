@@ -1,6 +1,5 @@
 import { API } from '../../../api/service';
 
-
 export const retrieveContracts = async (token, setContracts) => {
   setContracts(await API.viewContracts(token));
 };

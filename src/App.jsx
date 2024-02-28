@@ -2,7 +2,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import './App.css';
 import { Start } from './components/organisms';
-import { PlayerConsole, ContractDetails } from './components/pages';
+import { PlayerConsole, ContractDetails, ShipShop } from './components/pages';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useToken } from './hooks';
 const router = createBrowserRouter([
@@ -16,8 +16,12 @@ const router = createBrowserRouter([
   },
   {
     path: '/console/:contractId',
-    element: <ContractDetails />
-  }
+    element: <ContractDetails />,
+  },
+  {
+    path: '/console/ship-shop',
+    element: <ShipShop />,
+  },
 ]);
 
 const darkTheme = createTheme({
