@@ -7,6 +7,7 @@ import {
   ContractDetails,
   ShipShop,
   AstroidMining,
+  Markets,
 } from './components/pages';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useToken } from './hooks';
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/console/market',
-    element: <div>Market</div>,
+    element: <Markets />,
   },
 ]);
 

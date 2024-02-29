@@ -1,11 +1,11 @@
 import { retrieveWaypoints } from '../../../hooks';
 import { API } from '../../../api/service';
-import { delay } from '../../../hooks/helpers';
-export const retrieveAsteroids = async (token, system, setAsteroids) => {
-  const data = await retrieveWaypoints(token, system, {
-    type: 'ENGINEERED_ASTEROID',
-  });
-  setAsteroids(data);
+export const retrieveMarkets = async (token, system, setMarkets) => {
+  setMarkets(
+    await retrieveWaypoints(token, system, {
+      traits: 'MARKETPLACE',
+    })
+  );
 };
 
 export const orbitShip = async (token, shipSymbol) => {
@@ -23,14 +23,6 @@ export const navigateShip = async (token, shipSymbol, waypointSymbol) => {
 
 export const dockShip = async (token, shipSymbol) => {
   await API.dockShip(token, shipSymbol);
-};
-
-export const refuelShip = async (token, shipSymbol) => {
-  await API.refuelShip(token, shipSymbol);
-};
-
-export const mineAsteroid = async (token, shipSymbol) => {
-  await API.mineAsteroid(token, shipSymbol);
 };
 
 export const sellCargo = async (token, shipSymbol, cargo) => {
