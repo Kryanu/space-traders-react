@@ -1,25 +1,24 @@
 import { useState, useEffect } from 'react';
 import { gameDataStore, userDataStore } from '../../../stores';
-import { setLocationDetails, retrieveAllShips } from './logic';
+import { retrieveAllShips } from './logic';
 import { display } from '../../../hooks';
 import { ShipyardList } from './children';
+import { NavBar } from '../../Layouts';
 export default function ShipShop() {
   const [shipyards, setShipYards] = useState(undefined);
-  const [location, setLocation] = useState(undefined);
-  const { agent } = gameDataStore();
+  const { location, updateShips } = gameDataStore();
   const { token } = userDataStore();
-
-  useEffect(() => {
-    if (!location && agent) {
-      setLocation(setLocationDetails(agent));
-    }
-  }, []);
 
   useEffect(() => {
     if (location) {
       retrieveAllShips(token, location.system, setShipYards);
     }
   }, [location]);
-  display(shipyards);
-  return <div>{ShipyardList(shipyards, token)}</div>;
+
+  return (
+    <div>
+      <NavBar route={'/console'} />
+      {ShipyardList(shipyards, token, updateShips)}
+    </div>
+  );
 }

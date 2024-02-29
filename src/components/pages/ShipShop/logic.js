@@ -1,24 +1,10 @@
 import { API } from '../../../api/service';
-import { isValidArray } from '../../../hooks';
-
-export const setLocationDetails = (agent) => {
-  if (agent && agent?.headquarters.length > 0) {
-    const locations = agent.headquarters.split('-');
-
-    return {
-      sector: locations[0],
-      system: `${locations[0]}-${locations[1]}`,
-      waypoint: agent.headquarters,
-    };
-  }
-};
-
-const retrieveShipyards = async (token, system) => {
-  return await API.listWaypoints(token, system, 'SHIPYARD');
-};
+import { isValidArray, retrieveWaypoints } from '../../../hooks';
 
 export const retrieveAllShips = async (token, system, setShips) => {
-  const shipyards = await retrieveShipyards(token, system);
+  const shipyards = await retrieveWaypoints(token, system, {
+    traits: 'SHIPYARD',
+  });
   if (isValidArray(shipyards)) {
     const shipPromises = shipyards.map((shipyard) => {
       return API.getShipyard(token, system, shipyard.symbol);
@@ -31,6 +17,7 @@ export const retrieveAllShips = async (token, system, setShips) => {
   }
 };
 
-export const purchaseShip = async ({token, shipType, waypoint}) => {
-  await API.purchaseShip(token, shipType, waypoint);
+export const purchaseShip = async ({ token, shipType, waypoint, updateShips }) => {
+  const data = await API.purchaseShip(token, shipType, waypoint);
+  updateShips(data.ship);
 };
