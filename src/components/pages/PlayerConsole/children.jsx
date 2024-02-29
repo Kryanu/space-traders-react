@@ -5,8 +5,8 @@ import {
   ListItemText,
   ListItemButton,
 } from '@mui/material';
-
-export const AgentDetails = (agent) => {  
+import { NavigateButton } from '../../atoms';
+export const AgentDetails = (agent) => {
   if (!agent) {
     return <></>;
   }
@@ -47,4 +47,38 @@ export const ContractIdList = (contracts, setContractId) => {
   });
 
   return <List sx={{ paddingTop: '0px' }}>{data}</List>;
+};
+
+export const NavigationButtons = () => {
+  return (
+    <div className='flex'>
+      <NavigateButton
+        style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '0.75rem',
+        }}
+        text={'Go Ship Shopping'}
+        route={'/console/ship-shop'}
+      />
+      <NavigateButton
+        style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '0.75rem',
+        }}
+        text={'Go Asteroid Mining'}
+        route={'/console/astroid-mining'}
+      />
+      <NavigateButton
+        style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '0.75rem',
+        }}
+        text={'Go To Market'}
+        route={'/console/market'}
+      />
+    </div>
+  );
 };

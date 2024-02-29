@@ -7,10 +7,10 @@ import {
 import { Typography } from '@mui/material';
 import { userDataStore, gameDataStore } from '../../../stores';
 import { useEffect, useState } from 'react';
-import { AgentDetails, ContractIdList } from './children';
+import { AgentDetails, ContractIdList, NavigationButtons } from './children';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../Layouts/navbar';
-import { NavigateButton } from '../../atoms';
+
 export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);
   const { token } = userDataStore();
@@ -55,35 +55,7 @@ export default function PlayerConsole() {
           {ContractIdList(contracts, setContractId)}
         </div>
       </div>
-      <div className='flex'>
-        <NavigateButton
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: '0.75rem',
-          }}
-          text={'Go Ship Shopping'}
-          route={'/console/ship-shop'}
-        />
-        <NavigateButton
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: '0.75rem',
-          }}
-          text={'Go Asteroid Mining'}
-          route={'/console/astroid-mining'}
-        />
-        <NavigateButton
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: '0.75rem',
-          }}
-          text={'Go To Market'}
-          route={'/console/market'}
-        />
-      </div>
+      {NavigationButtons()}
     </div>
   );
 }
