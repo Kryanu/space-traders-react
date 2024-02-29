@@ -1,4 +1,9 @@
-import { retrieveContracts, setAgentDetails } from './logic';
+import {
+  retrieveContracts,
+  retrieveShips,
+  setAgentDetails,
+  setLocationDetails,
+} from './logic';
 import { Typography } from '@mui/material';
 import { userDataStore, gameDataStore } from '../../../stores';
 import { useEffect, useState } from 'react';
@@ -9,7 +14,7 @@ import { NavigateButton } from '../../atoms';
 export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);
   const { token } = userDataStore();
-  const { agent, updateAgent } = gameDataStore();
+  const { agent, updateAgent, location, updateLocation, ships, updateShips } = gameDataStore();
   const [selectedContractId, setContractId] = useState(undefined);
   const navigate = useNavigate();
 
@@ -17,10 +22,17 @@ export default function PlayerConsole() {
     if (!agent && token) {
       setAgentDetails(token, updateAgent);
       retrieveContracts(token, setContracts);
+      retrieveShips(token, updateShips)
     } else if (!contracts && token) {
       retrieveContracts(token, setContracts);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (!location && agent) {
+      updateLocation(setLocationDetails(agent));
+    }
+  }, [agent]);
 
   useEffect(() => {
     if (selectedContractId) {
@@ -43,15 +55,35 @@ export default function PlayerConsole() {
           {ContractIdList(contracts, setContractId)}
         </div>
       </div>
-      <NavigateButton
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: '0.75rem',
-        }}
-        text={'Go Ship Shopping'}
-        route={'/console/ship-shop'}
-      />
+      <div className='flex'>
+        <NavigateButton
+          style={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: '0.75rem',
+          }}
+          text={'Go Ship Shopping'}
+          route={'/console/ship-shop'}
+        />
+        <NavigateButton
+          style={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: '0.75rem',
+          }}
+          text={'Go Asteroid Mining'}
+          route={'/console/astroid-mining'}
+        />
+        <NavigateButton
+          style={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: '0.75rem',
+          }}
+          text={'Go To Market'}
+          route={'/console/market'}
+        />
+      </div>
     </div>
   );
 }

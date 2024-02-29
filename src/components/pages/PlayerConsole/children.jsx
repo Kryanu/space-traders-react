@@ -6,7 +6,7 @@ import {
   ListItemButton,
 } from '@mui/material';
 
-export const AgentDetails = (agent) => {
+export const AgentDetails = (agent) => {  
   if (!agent) {
     return <></>;
   }
