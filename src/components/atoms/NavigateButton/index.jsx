@@ -9,6 +9,7 @@ export default function NavigateButton(props) {
     route,
     callBackProps,
     style,
+    state,
   } = props;
   let classes = { margin: 'auto' };
   if (style) {
@@ -22,7 +23,11 @@ export default function NavigateButton(props) {
     if (callBack) {
       await callBack(callBackProps);
     }
-    navigate(route);
+    if (state) {
+      navigate(route, { state: state });
+    } else {
+      navigate(route);
+    }
   };
 
   return (
