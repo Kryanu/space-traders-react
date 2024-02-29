@@ -2,18 +2,19 @@ import { ListItem, ListItemText, List } from '@mui/material';
 import { isValidArray } from '../../../hooks';
 import { NavigateButton } from '../../atoms';
 import { purchaseShip } from './logic';
-export const ShipyardList = (shipyards, token) => {
+
+export const ShipyardList = (shipyards, token, updateShips) => {
   if (!isValidArray(shipyards)) {
     return <></>;
   }
   const data = shipyards.map((shipyard) => {
-    return ShipList(shipyard.ships, token, shipyard.symbol);
+    return ShipList(shipyard.ships, token, shipyard.symbol, updateShips);
   });
 
   return <List>{data}</List>;
 };
 
-export const ShipList = (ships, token, waypoint) => {
+const ShipList = (ships, token, waypoint, updateShips) => {
   if (!isValidArray(ships)) {
     return <></>;
   }
@@ -30,7 +31,7 @@ export const ShipList = (ships, token, waypoint) => {
         <ListItemText>{`Purchase Price: ${ship.purchasePrice}`}</ListItemText>
         <NavigateButton
           callBack={purchaseShip}
-          callBackProps={{ token, shipType: ship.type, waypoint }}
+          callBackProps={{ token, shipType: ship.type, waypoint, updateShips }}
           route={'/console'}
           style={{}}
           text={'Purchase'}
