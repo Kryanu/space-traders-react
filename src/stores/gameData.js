@@ -4,6 +4,8 @@ import { produce } from 'immer';
 export const gameDataStore = create((set) => ({
   gameState: undefined,
   agent: undefined,
+  location: undefined,
+  ships: undefined,
   updateGame: (newState) =>
     set(
       produce((state) => {
@@ -14,6 +16,18 @@ export const gameDataStore = create((set) => ({
     set(
       produce((state) => {
         state.agent = newState;
+      })
+    ),
+  updateLocation: (newState) =>
+    set(
+      produce((state) => {
+        state.location = newState;
+      })
+    ),
+  updateShips: (newState) =>
+    set(
+      produce((state) => {
+        state.ships = newState;
       })
     ),
 }));

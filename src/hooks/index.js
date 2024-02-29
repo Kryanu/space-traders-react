@@ -1,2 +1,2 @@
 export { default as useToken } from './useToken';
-export { isValidArray, display } from './helpers';
+export { isValidArray, display, retrieveWaypoints } from './helpers';
