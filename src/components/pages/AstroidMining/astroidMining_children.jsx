@@ -1,4 +1,4 @@
-import { ListItem, List, ListItemText, Button } from '@mui/material';
+import { ListItem, List, ListItemText } from '@mui/material';
 import { isValidArray } from '../../../hooks';
 import {
   navigateShip,
@@ -6,58 +6,8 @@ import {
   refuelShip,
   orbitShip,
   mineAsteroid,
-  sellCargo,
 } from './astroidMining_logic';
-
-function Actions(props) {
-  const { token, shipSymbol, asteroid, cargo, setTime } = props;
-  return (
-    <div className='flex space-x-2'>
-      <Button
-        onClick={async () => {
-          setTime(await navigateShip(token, shipSymbol, asteroid.symbol));
-        }}
-      >
-        Fly To
-      </Button>
-      <Button
-        onClick={() => {
-          dockShip(token, shipSymbol);
-        }}
-      >
-        Dock
-      </Button>
-      <Button
-        onClick={() => {
-          refuelShip(token, shipSymbol);
-        }}
-      >
-        Refuel
-      </Button>
-      <Button
-        onClick={() => {
-          orbitShip(token, shipSymbol);
-        }}
-      >
-        Orbit
-      </Button>
-      <Button
-        onClick={() => {
-          mineAsteroid(token, shipSymbol);
-        }}
-      >
-        Mine
-      </Button>
-      <Button
-        onClick={() => {
-          sellCargo(token, shipSymbol, cargo);
-        }}
-      >
-        Sell Cargo
-      </Button>
-    </div>
-  );
-}
+import { ActionRow } from '../../molecules/index';
 
 function DisplayTraits(props) {
   const { asteroid } = props;
@@ -70,12 +20,39 @@ function DisplayTraits(props) {
   });
 }
 
-export function DisplayAsteroids(asteroids, token, shipSymbol, cargo, setTime) {
-  if (!asteroids && !isValidArray(asteroids)) {
+export function DisplayAsteroids(asteroids, token, shipSymbol) {
+  if ((!asteroids && !isValidArray(asteroids)) || !token) {
     return <></>;
   }
 
   const AsteroidList = asteroids.map((asteroid, index) => {
+    const actionRowConfig = [
+      {
+        text: 'Fly To',
+        callBack: navigateShip,
+        callBackProps: { token, shipSymbol, waypointSymbol: asteroid.symbol },
+      },
+      {
+        text: 'Dock',
+        callBack: dockShip,
+        callBackProps: { token, shipSymbol },
+      },
+      {
+        text: 'refuelShip',
+        callBack: refuelShip,
+        callBackProps: { token, shipSymbol },
+      },
+      {
+        text: 'Orbit',
+        callBack: orbitShip,
+        callBackProps: { token, shipSymbol },
+      },
+      {
+        text: 'Mine Asteroid',
+        callBack: mineAsteroid,
+        callBackProps: { token, shipSymbol },
+      },
+    ];
     return (
       <ListItem
         sx={{ alignItems: 'start' }}
@@ -85,13 +62,7 @@ export function DisplayAsteroids(asteroids, token, shipSymbol, cargo, setTime) {
         <ListItemText>{`Symbol ${asteroid.symbol}`}</ListItemText>
         <ListItemText>{`Type ${asteroid.type}`}</ListItemText>
         <DisplayTraits asteroid={asteroid} />
-        <Actions
-          token={token}
-          shipSymbol={shipSymbol}
-          asteroid={asteroid}
-          cargo={cargo}
-          setTime={setTime}
-        />
+        <ActionRow actions={actionRowConfig} />
       </ListItem>
     );
   });

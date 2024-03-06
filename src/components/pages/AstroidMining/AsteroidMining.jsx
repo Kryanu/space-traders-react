@@ -17,7 +17,7 @@ export default function AstroidMining() {
 
   useEffect(() => {
     if (token && location?.system && ships) {
-      orbitShip(token, ships.symbol);
+      orbitShip({ token, shipSymbol: ships.symbol });
       retrieveAsteroids(token, location.system, setAsteroids);
     }
   }, []);

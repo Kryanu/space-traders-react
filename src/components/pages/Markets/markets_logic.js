@@ -8,11 +8,11 @@ export const retrieveMarkets = async (token, system, setMarkets) => {
   );
 };
 
-export const orbitShip = async (token, shipSymbol) => {
+export const orbitShip = async ({ token, shipSymbol }) => {
   await API.orbitShip(token, shipSymbol);
 };
 
-export const navigateShip = async (token, shipSymbol, waypointSymbol) => {
+export const navigateShip = async ({ token, shipSymbol, waypointSymbol }) => {
   if (!token) {
     throw new Error('Token not found');
   }
@@ -21,11 +21,11 @@ export const navigateShip = async (token, shipSymbol, waypointSymbol) => {
   } catch {}
 };
 
-export const dockShip = async (token, shipSymbol) => {
+export const dockShip = async ({ token, shipSymbol }) => {
   await API.dockShip(token, shipSymbol);
 };
 
-export const sellCargo = async (token, shipSymbol, cargo) => {
+export const sellCargo = async ({ token, shipSymbol, cargo }) => {
   for (let i = 0; i < cargo.inventory.length; i++) {
     try {
       await API.sellCargo(token, shipSymbol, {

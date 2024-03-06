@@ -1,36 +1,28 @@
 import { Button } from '@mui/material';
 import { navigateShip, orbitShip, dockShip, sellCargo } from './markets_logic';
+import ActionRow from '../../molecules/ActionRow/ActionRow';
 export const Actions = (token, shipSymbol, market, cargo) => {
-  return (
-    <div className='flex space-x-2'>
-      <Button
-        onClick={() => {
-          navigateShip(token, shipSymbol, market.symbol);
-        }}
-      >
-        Fly To
-      </Button>
-      <Button
-        onClick={() => {
-          dockShip(token, shipSymbol);
-        }}
-      >
-        Dock
-      </Button>
-      <Button
-        onClick={() => {
-          orbitShip(token, shipSymbol);
-        }}
-      >
-        Orbit
-      </Button>
-      <Button
-        onClick={() => {
-          sellCargo(token, shipSymbol, cargo);
-        }}
-      >
-        Sell Cargo
-      </Button>
-    </div>
-  );
+  const actionRowConfig = [
+    {
+      text: 'Fly to',
+      callBack: navigateShip,
+      callBackProps: { token, shipSymbol, waypointSymbol: market.symbol },
+    },
+    {
+      text: 'Dock',
+      callBack: dockShip,
+      callBackProps: { token, shipSymbol },
+    },
+    {
+      text: 'Orbit',
+      callBack: orbitShip,
+      callBackProps: { token, shipSymbol },
+    },
+    {
+      text: 'Sell Cargo',
+      callBack: sellCargo,
+      callBackProps: { token, shipSymbol, cargo },
+    },
+  ];
+  return <ActionRow actions={actionRowConfig} />;
 };

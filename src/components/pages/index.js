@@ -2,4 +2,4 @@ export { default as PlayerConsole } from './PlayerConsole/playerConsole';
 export { ContractDetails } from './ContractDetails';
 export { default as ShipShop } from './ShipShop';
 export { AsteroidMining } from './AstroidMining';
-export { default as Markets } from './Markets';
+export { Markets } from './Markets';
