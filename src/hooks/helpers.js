@@ -19,7 +19,7 @@ export const delay = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const retrieveToken = async (handle, changeToken) => {
+export const retrieveToken = async (handle, setToken) => {
   const data = await filterRecordByHandle(handle);
-  changeToken(data?.items[0]?.token);
+  setToken(data?.items[0]?.token);
 };

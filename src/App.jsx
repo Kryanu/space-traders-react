@@ -17,28 +17,36 @@ function App() {
   const tokenKey = 'token';
   const handleKey = 'handle';
   const [token, setToken] = useState(undefined);
-  const handle = window.sessionStorage.getItem(handleKey);
+  const [handle, setHandle] = useState(
+    window.sessionStorage.getItem(handleKey)
+  );
 
   useEffect(() => {
+    const localToken = window.sessionStorage.getItem(tokenKey);
     if (!token) {
       try {
-        const localToken = window.sessionStorage.getItem(tokenKey);
         if (localToken && localToken !== 'undefined') {
           setToken(localToken);
         } else {
           retrieveToken(handle, setToken);
-          window.sessionStorage.setItem(tokenKey, token);
+          if (token) {
+            window.sessionStorage.setItem(tokenKey, token);
+          }
         }
       } catch (ex) {
         console.error('No token was found');
       }
+    } else {
+      if (!localToken || localToken === 'undefined') {
+        window.sessionStorage.setItem(tokenKey, token);
+      }
     }
-  });
+  }, [handle]);
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <TokenContext.Provider value={{ token, setToken }}>
+      <TokenContext.Provider value={{ token, setToken, handle, setHandle }}>
         <RouterProvider router={router} />
       </TokenContext.Provider>
     </ThemeProvider>

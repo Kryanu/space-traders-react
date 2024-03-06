@@ -5,10 +5,9 @@ import { SignUpComponents, InitialComponents } from './children';
 import { TokenContext } from '../../../context/TokenContext';
 
 export default function Start() {
-  const { handle, faction, changeHandle, changeFaction, changeToken } =
-    userDataStore();
+  const { faction, changeHandle, changeFaction } = userDataStore();
 
-  const { token, setToken } = useContext(TokenContext);
+  const { token, setToken, handle, setHandle } = useContext(TokenContext);
   const { updateGame } = gameDataStore();
   const [isSignUp, setSignUp] = useState(false);
   useEffect(() => {
@@ -22,10 +21,10 @@ export default function Start() {
       <h1 className='mb-8'>Space Traders</h1>
       {SignUpComponents(
         isSignUp,
-        { changeFaction, changeHandle, updateGame, setToken },
+        { changeFaction, setHandle, updateGame, setToken },
         { handle, faction }
       )}
-      {InitialComponents(isSignUp, { setSignUp, changeHandle, setToken })}
+      {InitialComponents(isSignUp, { setSignUp, setHandle, setToken })}
     </>
   );
 }
