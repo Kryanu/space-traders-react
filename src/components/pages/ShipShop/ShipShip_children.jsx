@@ -3,16 +3,17 @@ import { isValidArray } from '../../../hooks';
 import { NavigateButton } from '../../atoms';
 import { purchaseShip } from './logic';
 
-export const ShipyardList = (shipyards, token, updateShips) => {
+export function ShipyardList(props) {
+  const { shipyards, token, updateShips } = props;
   if (!isValidArray(shipyards)) {
     return <></>;
   }
-  const data = shipyards.map((shipyard) => {
+  const shipList = shipyards.map((shipyard) => {
     return ShipList(shipyard.ships, token, shipyard.symbol, updateShips);
   });
 
-  return <List>{data}</List>;
-};
+  return <List>{shipList}</List>;
+}
 
 const ShipList = (ships, token, waypoint, updateShips) => {
   if (!isValidArray(ships)) {

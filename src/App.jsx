@@ -39,8 +39,13 @@ const router = createBrowserRouter([
   },
   {
     path: '/kitchen-sink',
-    element: <CountDown arrival={"2024-03-04T20:44:44.796Z"} departure={"2024-03-04T18:41:34.796Z"}/>
-  }
+    element: (
+      <CountDown
+        arrival={'2024-03-04T20:44:44.796Z'}
+        departure={'2024-03-04T18:41:34.796Z'}
+      />
+    ),
+  },
 ]);
 
 const darkTheme = createTheme({
