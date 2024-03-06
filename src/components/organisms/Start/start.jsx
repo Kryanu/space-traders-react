@@ -1,12 +1,11 @@
-import { userDataStore, gameDataStore } from '../../../stores';
+import { gameDataStore } from '../../../stores';
 import '../../../App.css';
 import { useContext, useEffect, useState } from 'react';
 import { SignUpComponents, InitialComponents } from './children';
 import { TokenContext } from '../../../context/TokenContext';
 
 export default function Start() {
-  const { faction, changeHandle, changeFaction } = userDataStore();
-
+  const [faction, changeFaction] = useState(undefined);
   const { token, setToken, handle, setHandle } = useContext(TokenContext);
   const { updateGame } = gameDataStore();
   const [isSignUp, setSignUp] = useState(false);

@@ -5,7 +5,7 @@ import { router } from './router/router.jsx';
 import { RouterProvider } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { retrieveToken } from './hooks/index.js';
-import { TokenContext } from './context/TokenContext.jsx';
+import { GameContext, TokenContext } from './context';
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -20,6 +20,9 @@ function App() {
   const [handle, setHandle] = useState(
     window.sessionStorage.getItem(handleKey)
   );
+  const [agent, setAgent] = useState(undefined);
+  const [location, setLocation] = useState(undefined);
+  const [ships, setShips] = useState(undefined);
 
   useEffect(() => {
     const localToken = window.sessionStorage.getItem(tokenKey);
@@ -47,7 +50,11 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <TokenContext.Provider value={{ token, setToken, handle, setHandle }}>
-        <RouterProvider router={router} />
+        <GameContext
+          value={{ agent, setAgent, location, setLocation, ships, setShips }}
+        >
+          <RouterProvider router={router} />
+        </GameContext>
       </TokenContext.Provider>
     </ThemeProvider>
   );
