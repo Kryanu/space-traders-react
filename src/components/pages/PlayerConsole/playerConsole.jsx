@@ -14,7 +14,8 @@ import NavBar from '../../Layouts/navbar';
 export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);
   const { token } = userDataStore();
-  const { agent, updateAgent, location, updateLocation, ships, updateShips } = gameDataStore();
+  const { agent, updateAgent, location, updateLocation, ships, updateShips } =
+    gameDataStore();
   const [selectedContractId, setContractId] = useState(undefined);
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ export default function PlayerConsole() {
     if (!agent && token) {
       setAgentDetails(token, updateAgent);
       retrieveContracts(token, setContracts);
-      retrieveShips(token, updateShips)
+      retrieveShips(token, updateShips);
     } else if (!contracts && token) {
       retrieveContracts(token, setContracts);
     }
@@ -48,14 +49,14 @@ export default function PlayerConsole() {
       <div className='flex space-x-2'>
         <div className='flex flex-col'>
           <Typography variant='h5'>Agent Details:</Typography>
-          {AgentDetails(agent)}
+          <AgentDetails agent={agent} />
         </div>
         <div className='flex flex-col'>
           <Typography variant='h5'>Contracts:</Typography>
-          {ContractIdList(contracts, setContractId)}
+          <ContractIdList contracts={contracts} setContractId={setContractId} />
         </div>
       </div>
-      {NavigationButtons()}
+      <NavigationButtons />
     </div>
   );
 }

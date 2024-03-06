@@ -6,7 +6,8 @@ import {
   ListItemButton,
 } from '@mui/material';
 import { NavigateButton } from '../../atoms';
-export const AgentDetails = (agent) => {
+export function AgentDetails(props) {
+  const { agent } = props;
   if (!agent) {
     return <></>;
   }
@@ -19,9 +20,10 @@ export const AgentDetails = (agent) => {
       <Typography variant='h6'>{`Ships: ${agent.shipCount}`}</Typography>
     </div>
   );
-};
+}
 
-export const ContractIdList = (contracts, setContractId) => {
+export function ContractIdList(props) {
+  const { contracts, setContractId } = props;
   if (!Array.isArray(contracts) || contracts.length === 0) {
     return <></>;
   }
@@ -47,9 +49,9 @@ export const ContractIdList = (contracts, setContractId) => {
   });
 
   return <List sx={{ paddingTop: '0px' }}>{data}</List>;
-};
+}
 
-export const NavigationButtons = () => {
+export function NavigationButtons() {
   return (
     <div className='flex'>
       <NavigateButton
@@ -81,4 +83,4 @@ export const NavigationButtons = () => {
       />
     </div>
   );
-};
+}
