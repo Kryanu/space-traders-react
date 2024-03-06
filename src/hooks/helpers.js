@@ -1,4 +1,5 @@
 import { API } from '../api/service';
+import { filterRecordByHandle } from '../api/pocketbase';
 
 export const isValidArray = (array) => {
   return Array.isArray(array) && array.length > 0;
@@ -16,4 +17,9 @@ export const retrieveWaypoints = async (token, system, params) => {
 
 export const delay = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const retrieveToken = async (handle, changeToken) => {
+  const data = await filterRecordByHandle(handle);
+  changeToken(data?.items[0]?.token);
 };

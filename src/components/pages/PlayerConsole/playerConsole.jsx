@@ -5,17 +5,19 @@ import {
   setLocationDetails,
 } from './logic';
 import { Typography } from '@mui/material';
-import { userDataStore, gameDataStore } from '../../../stores';
-import { useEffect, useState } from 'react';
+import { gameDataStore } from '../../../stores';
+import { useContext, useEffect, useState } from 'react';
 import { AgentDetails, ContractIdList, NavigationButtons } from './children';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../Layouts/navbar';
+import { TokenContext } from '../../../App';
 
 export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);
-  const { token } = userDataStore();
-  const { agent, updateAgent, location, updateLocation, ships, updateShips } =
+  const { token } = useContext(TokenContext);
+  const { agent, updateAgent, location, updateLocation, updateShips } =
     gameDataStore();
+
   const [selectedContractId, setContractId] = useState(undefined);
   const navigate = useNavigate();
 

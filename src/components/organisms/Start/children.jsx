@@ -4,7 +4,7 @@ import { handleLogin, handleSignUp } from './logic';
 import { Button, TextField } from '@mui/material';
 
 export const InitialComponents = (isSignUp, hooks) => {
-  const { changeHandle, setSignUp, changeToken } = hooks;
+  const { changeHandle, setSignUp, setToken } = hooks;
   const [handleInput, setHandleInput] = useState(undefined);
   if (isSignUp) {
     return <></>;
@@ -33,7 +33,7 @@ export const InitialComponents = (isSignUp, hooks) => {
           isRendered={true}
           text={'Login'}
           callBack={handleLogin}
-          callBackProps={{ handleInput, changeToken, changeHandle }}
+          callBackProps={{ handleInput, setToken, changeHandle }}
           route={'/console'}
         />
       </div>
@@ -42,7 +42,7 @@ export const InitialComponents = (isSignUp, hooks) => {
 };
 
 export const SignUpComponents = (isSignUp, hooks, state) => {
-  const { changeHandle, changeFaction, updateGame, changeToken } = hooks;
+  const { changeHandle, changeFaction, updateGame, setToken } = hooks;
   const { handle, faction } = state;
   if (!isSignUp) {
     return <></>;
@@ -70,7 +70,7 @@ export const SignUpComponents = (isSignUp, hooks, state) => {
         isRendered={true}
         text={'Start Trading'}
         callBack={handleSignUp}
-        callBackProps={{ handle, faction, updateGame, changeToken, changeHandle }}
+        callBackProps={{ handle, faction, updateGame, setToken, changeHandle }}
         route={'/console'}
       />
     </div>

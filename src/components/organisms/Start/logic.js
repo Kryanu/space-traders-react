@@ -9,11 +9,11 @@ export const retrieveToken = async (handle) => {
 
 export const handleLogin = async ({
   handleInput,
-  changeToken,
+  setToken,
   changeHandle,
 }) => {
   try {
-    changeToken(await retrieveToken(handleInput));
+    setToken(await retrieveToken(handleInput));
     changeHandle(handleInput);
     window.sessionStorage.setItem('handle', handleInput);
   } catch (ex) {
@@ -36,9 +36,9 @@ const registerHandle = async (handle, faction) => {
   }
 };
 
-export const handleSignUp = async ({ handle, faction, updateGame, changeHandle, changeToken }) => {
+export const handleSignUp = async ({ handle, faction, updateGame, changeHandle, setToken }) => {
   const data = await registerHandle(handle, faction);
-  changeToken(data.token);
+  setToken(data.token);
   changeHandle(handle);
   window.sessionStorage.setItem('handle', handle);
   updateGame(data);
