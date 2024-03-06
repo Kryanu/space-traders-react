@@ -1,12 +1,11 @@
-import { userDataStore, gameDataStore } from '../../../stores';
 import '../../../App.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SignUpComponents, InitialComponents } from './children';
+import { TokenContext } from '../../../context/TokenContext';
 
 export default function Start() {
-  const { handle, faction, changeHandle, changeFaction, token, changeToken } =
-    userDataStore();
-  const { updateGame } = gameDataStore();
+  const [faction, changeFaction] = useState(undefined);
+  const { token, setToken, handle, setHandle } = useContext(TokenContext);
   const [isSignUp, setSignUp] = useState(false);
   useEffect(() => {
     if (token) {
@@ -19,10 +18,10 @@ export default function Start() {
       <h1 className='mb-8'>Space Traders</h1>
       {SignUpComponents(
         isSignUp,
-        { changeFaction, changeHandle, updateGame, changeToken },
+        { changeFaction, setHandle, setToken },
         { handle, faction }
       )}
-      {InitialComponents(isSignUp, { setSignUp, changeHandle, changeToken })}
+      {InitialComponents(isSignUp, { setSignUp, setHandle, setToken })}
     </>
   );
 }

@@ -4,7 +4,7 @@ import { handleLogin, handleSignUp } from './logic';
 import { Button, TextField } from '@mui/material';
 
 export const InitialComponents = (isSignUp, hooks) => {
-  const { changeHandle, setSignUp, changeToken } = hooks;
+  const { setHandle, setSignUp, setToken } = hooks;
   const [handleInput, setHandleInput] = useState(undefined);
   if (isSignUp) {
     return <></>;
@@ -33,7 +33,7 @@ export const InitialComponents = (isSignUp, hooks) => {
           isRendered={true}
           text={'Login'}
           callBack={handleLogin}
-          callBackProps={{ handleInput, changeToken, changeHandle }}
+          callBackProps={{ handleInput, setToken, setHandle }}
           route={'/console'}
         />
       </div>
@@ -42,7 +42,7 @@ export const InitialComponents = (isSignUp, hooks) => {
 };
 
 export const SignUpComponents = (isSignUp, hooks, state) => {
-  const { changeHandle, changeFaction, updateGame, changeToken } = hooks;
+  const { setHandle, changeFaction, setToken } = hooks;
   const { handle, faction } = state;
   if (!isSignUp) {
     return <></>;
@@ -55,7 +55,7 @@ export const SignUpComponents = (isSignUp, hooks, state) => {
           variant='outlined'
           label='Agent Handler'
           onChange={(e) => {
-            changeHandle(e.target.value);
+            setHandle(e.target.value);
           }}
         />
         <TextField
@@ -70,7 +70,7 @@ export const SignUpComponents = (isSignUp, hooks, state) => {
         isRendered={true}
         text={'Start Trading'}
         callBack={handleSignUp}
-        callBackProps={{ handle, faction, updateGame, changeToken, changeHandle }}
+        callBackProps={{ handle, faction, setToken, setHandle }}
         route={'/console'}
       />
     </div>

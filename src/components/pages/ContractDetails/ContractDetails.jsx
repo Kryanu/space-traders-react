@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { userDataStore } from '../../../stores';
+import { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   retrieveContractDetails,
@@ -8,9 +7,11 @@ import {
 import { ContractList } from './ContractDetails_children.jsx';
 import { NavigateButton } from '../../atoms';
 import { NavBar } from '../../Layouts';
+import { TokenContext } from '../../../context/TokenContext.jsx';
 export default function ContractDetails() {
   const location = useLocation();
-  const { token } = userDataStore();
+  const { token } = useContext(TokenContext);
+
   const { contractId } = location.state;
   const [contractDetails, setDetails] = useState(undefined);
   const [openPaymentsList, setOpenPaymentsList] = useState(false);

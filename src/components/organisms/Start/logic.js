@@ -7,20 +7,15 @@ export const retrieveToken = async (handle) => {
   return data?.items[0]?.token;
 };
 
-export const handleLogin = async ({
-  handleInput,
-  changeToken,
-  changeHandle,
-}) => {
+export const handleLogin = async ({ handleInput, setToken, setHandle }) => {
   try {
-    changeToken(await retrieveToken(handleInput));
-    changeHandle(handleInput);
+    setToken(await retrieveToken(handleInput));
+    setHandle(handleInput);
     window.sessionStorage.setItem('handle', handleInput);
   } catch (ex) {
     throw new Error('Handle was incorrect');
   }
 };
-
 
 const registerHandle = async (handle, faction) => {
   if (!handle || !faction) {
@@ -36,10 +31,14 @@ const registerHandle = async (handle, faction) => {
   }
 };
 
-export const handleSignUp = async ({ handle, faction, updateGame, changeHandle, changeToken }) => {
+export const handleSignUp = async ({
+  handle,
+  faction,
+  setHandle,
+  setToken,
+}) => {
   const data = await registerHandle(handle, faction);
-  changeToken(data.token);
-  changeHandle(handle);
+  setToken(data.token);
+  setHandle(handle);
   window.sessionStorage.setItem('handle', handle);
-  updateGame(data);
 };
