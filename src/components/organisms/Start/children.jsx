@@ -42,7 +42,7 @@ export const InitialComponents = (isSignUp, hooks) => {
 };
 
 export const SignUpComponents = (isSignUp, hooks, state) => {
-  const { setHandle, changeFaction, updateGame, setToken } = hooks;
+  const { setHandle, changeFaction, setToken } = hooks;
   const { handle, faction } = state;
   if (!isSignUp) {
     return <></>;
@@ -70,7 +70,7 @@ export const SignUpComponents = (isSignUp, hooks, state) => {
         isRendered={true}
         text={'Start Trading'}
         callBack={handleSignUp}
-        callBackProps={{ handle, faction, updateGame, setToken, setHandle }}
+        callBackProps={{ handle, faction, setToken, setHandle }}
         route={'/console'}
       />
     </div>

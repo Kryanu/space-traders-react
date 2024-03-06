@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { gameDataStore } from '../../../stores';
 import { retrieveAsteroids, orbitShip } from './astroidMining_logic';
 import { DisplayAsteroids } from './astroidMining_children';
 import { NavBar } from '../../Layouts';
 import Countdown from '../../atoms/Countdown';
-import { TokenContext } from '../../../context/TokenContext';
+import { TokenContext, GameContext } from '../../../context';
 export default function AstroidMining() {
   const { token } = useContext(TokenContext);
-  const { location, ships } = gameDataStore();
+  const { location, ships } = useContext(GameContext);
   const [asteroids, setAsteroids] = useState(undefined);
   const [time, setTime] = useState(0);
   const renderCount = () => {

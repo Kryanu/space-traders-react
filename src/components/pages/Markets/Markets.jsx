@@ -1,13 +1,12 @@
 import { useEffect, useState, useContext } from 'react';
-import { gameDataStore } from '../../../stores';
 import { retrieveMarkets } from './markets_logic';
 import { Typography } from '@mui/material';
 import { Actions } from './markets_children';
 import NavBar from '../../Layouts/navbar';
-import { TokenContext } from '../../../context/TokenContext';
+import { TokenContext, GameContext } from '../../../context/';
 export default function Markets() {
   const { token } = useContext(TokenContext);
-  const { location, ships } = gameDataStore();
+  const { location, ships } = useContext(GameContext);
   const [markets, setMarkets] = useState(undefined);
   useEffect(() => {
     if (token) {

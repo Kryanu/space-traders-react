@@ -13,7 +13,6 @@ const darkTheme = createTheme({
 });
 
 function App() {
-  //Checks for token in sessionStorage
   const tokenKey = 'token';
   const handleKey = 'handle';
   const [token, setToken] = useState(undefined);
@@ -23,7 +22,7 @@ function App() {
   const [agent, setAgent] = useState(undefined);
   const [location, setLocation] = useState(undefined);
   const [ships, setShips] = useState(undefined);
-
+  //Sets token when handle changes and on page load
   useEffect(() => {
     const localToken = window.sessionStorage.getItem(tokenKey);
     if (!token) {
@@ -50,11 +49,11 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <TokenContext.Provider value={{ token, setToken, handle, setHandle }}>
-        <GameContext
+        <GameContext.Provider
           value={{ agent, setAgent, location, setLocation, ships, setShips }}
         >
           <RouterProvider router={router} />
-        </GameContext>
+        </GameContext.Provider>
       </TokenContext.Provider>
     </ThemeProvider>
   );

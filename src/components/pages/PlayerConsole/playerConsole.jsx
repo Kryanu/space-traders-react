@@ -5,27 +5,25 @@ import {
   setLocationDetails,
 } from './logic';
 import { Typography } from '@mui/material';
-import { gameDataStore } from '../../../stores';
 import { useContext, useEffect, useState } from 'react';
 import { AgentDetails, ContractIdList, NavigationButtons } from './children';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../Layouts/navbar';
-import { TokenContext } from '../../../context/TokenContext';
+import { TokenContext, GameContext } from '../../../context/';
 
 export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);
   const { token } = useContext(TokenContext);
-  const { agent, updateAgent, location, updateLocation, updateShips } =
-    gameDataStore();
-
+  const { agent, setAgent, location, setLocation, setShips } =
+    useContext(GameContext);
   const [selectedContractId, setContractId] = useState(undefined);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!agent && token) {
-      setAgentDetails(token, updateAgent);
+      setAgentDetails(token, setAgent);
       retrieveContracts(token, setContracts);
-      retrieveShips(token, updateShips);
+      retrieveShips(token, setShips);
     } else if (!contracts && token) {
       retrieveContracts(token, setContracts);
     }
@@ -33,7 +31,7 @@ export default function PlayerConsole() {
 
   useEffect(() => {
     if (!location && agent) {
-      updateLocation(setLocationDetails(agent));
+      setLocation(setLocationDetails(agent));
     }
   }, [agent]);
 

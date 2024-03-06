@@ -1,1 +1,0 @@
-export { gameDataStore } from './gameData';
