@@ -20,7 +20,7 @@ function DisplayTraits(props) {
   });
 }
 
-export function DisplayAsteroids(asteroids, token, shipSymbol) {
+export function DisplayAsteroids(asteroids, token, shipSymbol, setTime) {
   if ((!asteroids && !isValidArray(asteroids)) || !token) {
     return <></>;
   }
@@ -30,7 +30,12 @@ export function DisplayAsteroids(asteroids, token, shipSymbol) {
       {
         text: 'Fly To',
         callBack: navigateShip,
-        callBackProps: { token, shipSymbol, waypointSymbol: asteroid.symbol },
+        callBackProps: {
+          token,
+          shipSymbol,
+          waypointSymbol: asteroid.symbol,
+          setTime,
+        },
       },
       {
         text: 'Dock',

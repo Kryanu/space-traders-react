@@ -2,12 +2,11 @@
 // Departure 2024-03-04T18:41:34.796Z
 
 import React, { useState, useEffect } from 'react';
-
+import { formatDistance } from 'date-fns';
 export default function Countdown(props) {
   const { arrival } = props;
-
+  debugger;
   const arrivalMS = new Date(arrival).getTime();
-  //  const arrivalMS = new Date(arrival).getTime();
   const nowMS = new Date().getTime();
   const diffMS = arrivalMS - nowMS;
   const [countdown, setCountdown] = useState(diffMS / 1000); // Initial countdown value in seconds
@@ -21,15 +20,21 @@ export default function Countdown(props) {
     // Clean up interval on component unmount
     return () => clearInterval(countdownInterval);
   }, []); // Empty dependency array ensures effect runs only once on component mount
-  const minutes = Math.floor(countdown / 60);
-  const seconds = countdown % 60;
-  console.log(diffMS);
+
+  if (diffMS <= 0) {
+    return <p>Arrived</p>;
+  }
   return (
     <div>
       {/* Display countdown */}
       <p>
-        Time Left: {minutes.toString().padStart(2, '0')}:
-        {seconds.toString().substring(0, 2).padStart(2, '0')}
+        {`Time Left till arrival: ${formatDistance(
+          new Date(),
+          new Date(arrival),
+          {
+            includeSeconds: true,
+          }
+        )}`}
       </p>
     </div>
   );

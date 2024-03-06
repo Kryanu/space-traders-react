@@ -9,6 +9,7 @@ export default function AstroidMining() {
   const { location, ships } = useContext(GameContext);
   const [asteroids, setAsteroids] = useState(undefined);
   const [time, setTime] = useState(0);
+  debugger
   const renderCount = () => {
     if (time !== 0) {
       return <Countdown arrival={time} />;
@@ -24,7 +25,7 @@ export default function AstroidMining() {
   return (
     <div className='flex flex-col'>
       <NavBar route={'/console'} />
-      {DisplayAsteroids(asteroids, token, ships.symbol, ships.cargo, setTime)}
+      {DisplayAsteroids(asteroids, token, ships.symbol, setTime)}
       {renderCount(time)}
     </div>
   );
