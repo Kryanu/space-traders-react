@@ -6,7 +6,7 @@ import {
   PlayerConsole,
   ContractDetails,
   ShipShop,
-  AstroidMining,
+  AsteroidMining,
   Markets,
 } from './components/pages';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/console/astroid-mining',
-    element: <AstroidMining />,
+    element: <AsteroidMining />,
   },
   {
     path: '/console/market',

@@ -3,10 +3,43 @@ import {
   ListItem,
   ListItemText,
   ListItemButton,
-  Collapse
+  Collapse,
 } from '@mui/material';
 
-export const ContractList = (contract, hooks, state) => {
+function DeliverablesList(props) {
+  const { deliver } = props;
+  const data = deliver.map((x) => {
+    return (
+      <ListItem
+        key={x.destinationSymbol}
+        sx={{ alignItems: 'start' }}
+        className='flex flex-col'
+      >
+        <ListItemText>{`TradeSymbol: ${x.tradeSymbol}`}</ListItemText>
+        <ListItemText>{`Destination ${x.destinationSymbol}`}</ListItemText>
+        <ListItemText>{`Units: ${x.unitsRequired}`}</ListItemText>
+        <ListItemText>{`Fulfilled: ${x.unitsFulfilled}`}</ListItemText>
+      </ListItem>
+    );
+  });
+  return <List>{data}</List>;
+}
+
+function PaymentDetails(props) {
+  const { payment } = props;
+  return (
+    <List>
+      <ListItem className='flex flex-col'>
+        <ListItemText>{`When Accepted: ${payment.onAccepted}`}</ListItemText>
+        <ListItemText>{`When Fulfilled: ${payment.onFulfilled}`}</ListItemText>
+      </ListItem>
+    </List>
+  );
+}
+
+export function ContractList(props) {
+  const { contract, hooks, state } = props;
+
   if (!contract) {
     return <></>;
   }
@@ -24,7 +57,7 @@ export const ContractList = (contract, hooks, state) => {
           <ListItemText primary='Payment Details' />
         </ListItemButton>
         <Collapse in={state.openPaymentsList}>
-          {PaymentDetails(contract.terms)}
+          <PaymentDetails payment={contract.terms.payment} />
         </Collapse>
         <ListItemButton
           onClick={() =>
@@ -34,7 +67,7 @@ export const ContractList = (contract, hooks, state) => {
           <ListItemText primary='Deliverables Details' />
         </ListItemButton>
         <Collapse in={state.openDeliverablesList}>
-          {DeliverablesList(contract.terms)}
+          <DeliverablesList deliver={contract.terms.deliver} />
         </Collapse>
 
         <ListItemText>{`Accepted?: ${contract.accepted}`}</ListItemText>
@@ -43,35 +76,4 @@ export const ContractList = (contract, hooks, state) => {
       </ListItem>
     </List>
   );
-};
-
-export const DeliverablesList = (terms) => {
-  const { deliver } = terms;
-  const data = deliver.map((x) => {
-    return (
-      <ListItem
-        key={x.destinationSymbol}
-        sx={{ alignItems: 'start' }}
-        className='flex flex-col'
-      >
-        <ListItemText>{`TradeSymbol: ${x.tradeSymbol}`}</ListItemText>
-        <ListItemText>{`Destination ${x.destinationSymbol}`}</ListItemText>
-        <ListItemText>{`Units: ${x.unitsRequired}`}</ListItemText>
-        <ListItemText>{`Fulfilled: ${x.unitsFulfilled}`}</ListItemText>
-      </ListItem>
-    );
-  });
-  return <List>{data}</List>;
-};
-
-export const PaymentDetails = (terms) => {
-  const { payment } = terms;
-  return (
-    <List>
-      <ListItem className='flex flex-col'>
-        <ListItemText>{`When Accepted: ${payment.onAccepted}`}</ListItemText>
-        <ListItemText>{`When Fulfilled: ${payment.onFulfilled}`}</ListItemText>
-      </ListItem>
-    </List>
-  );
-};
+}
