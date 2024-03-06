@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
-import { gameDataStore, userDataStore } from '../../../stores';
+import { useEffect, useState, useContext } from 'react';
+import { gameDataStore } from '../../../stores';
 import { retrieveMarkets } from './markets_logic';
 import { Typography } from '@mui/material';
 import { Actions } from './markets_children';
 import NavBar from '../../Layouts/navbar';
+import { TokenContext } from '../../../context/TokenContext';
 export default function Markets() {
-  const { token } = userDataStore();
+  const { token } = useContext(TokenContext);
   const { location, ships } = gameDataStore();
   const [markets, setMarkets] = useState(undefined);
   useEffect(() => {

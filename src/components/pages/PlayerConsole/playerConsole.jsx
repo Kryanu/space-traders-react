@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AgentDetails, ContractIdList, NavigationButtons } from './children';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../Layouts/navbar';
-import { TokenContext } from '../../../App';
+import { TokenContext } from '../../../context/TokenContext';
 
 export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);

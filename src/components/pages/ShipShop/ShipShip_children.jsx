@@ -2,9 +2,11 @@ import { ListItem, ListItemText, List } from '@mui/material';
 import { isValidArray } from '../../../hooks';
 import { NavigateButton } from '../../atoms';
 import { purchaseShip } from './ShipShop_logic';
-
+import { TokenContext } from '../../../context/TokenContext';
+import { useContext } from 'react';
 export function ShipyardList(props) {
-  const { shipyards, token, updateShips } = props;
+  const { shipyards, updateShips } = props;
+  const { token } = useContext(TokenContext);
   if (!isValidArray(shipyards)) {
     return <></>;
   }

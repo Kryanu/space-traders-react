@@ -3,10 +3,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import './App.css';
 import { router } from './router/router.jsx';
 import { RouterProvider } from 'react-router-dom';
-import { createContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { retrieveToken } from './hooks/index.js';
-export const TokenContext = createContext(undefined);
-
+import { TokenContext } from './context/TokenContext.jsx';
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',

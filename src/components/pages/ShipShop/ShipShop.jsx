@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
-import { gameDataStore, userDataStore } from '../../../stores';
+import { useState, useEffect, useContext } from 'react';
+import { gameDataStore } from '../../../stores';
 import { retrieveAllShips } from './ShipShop_logic';
 import { ShipyardList } from './ShipShip_children';
 import { NavBar } from '../../Layouts';
+import { TokenContext } from '../../../context/TokenContext';
 export default function ShipShop() {
   const [shipyards, setShipYards] = useState(undefined);
   const { location, updateShips } = gameDataStore();
-  const { token } = userDataStore();
+  const { token } = useContext(TokenContext);
 
   useEffect(() => {
     if (location) {
@@ -19,7 +20,6 @@ export default function ShipShop() {
       <NavBar route={'/console'} />
       <ShipyardList
         shipyards={shipyards}
-        token={token}
         updateShips={updateShips}
       />
     </div>

@@ -2,7 +2,7 @@ import { userDataStore, gameDataStore } from '../../../stores';
 import '../../../App.css';
 import { useContext, useEffect, useState } from 'react';
 import { SignUpComponents, InitialComponents } from './children';
-import { TokenContext } from '../../../App';
+import { TokenContext } from '../../../context/TokenContext';
 
 export default function Start() {
   const { handle, faction, changeHandle, changeFaction, changeToken } =
