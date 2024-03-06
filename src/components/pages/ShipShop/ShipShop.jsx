@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { gameDataStore, userDataStore } from '../../../stores';
-import { retrieveAllShips } from './logic';
+import { retrieveAllShips } from './ShipShop_logic';
 import { ShipyardList } from './ShipShip_children';
 import { NavBar } from '../../Layouts';
 export default function ShipShop() {

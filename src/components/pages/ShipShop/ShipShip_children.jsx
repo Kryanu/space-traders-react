@@ -1,7 +1,7 @@
 import { ListItem, ListItemText, List } from '@mui/material';
 import { isValidArray } from '../../../hooks';
 import { NavigateButton } from '../../atoms';
-import { purchaseShip } from './logic';
+import { purchaseShip } from './ShipShop_logic';
 
 export function ShipyardList(props) {
   const { shipyards, token, updateShips } = props;
