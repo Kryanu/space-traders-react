@@ -8,48 +8,9 @@ import {
   mineAsteroid,
   sellCargo,
 } from './astroidMining_logic';
-export function DisplayAsteroids(asteroids, token, shipSymbol, cargo, setTime) {
-  if (!asteroids) {
-    return <></>;
-  }
 
-  return (
-    <List>{AsteroidList(asteroids, token, shipSymbol, cargo, setTime)}</List>
-  );
-}
-
-const AsteroidList = (asteroids, token, shipSymbol, cargo, setTime) => {
-  if (!asteroids && !isValidArray(asteroids)) {
-    return <></>;
-  }
-
-  return asteroids.map((asteroid, index) => {
-    return (
-      <ListItem
-        sx={{ alignItems: 'start' }}
-        className='flex flex-col border-2 rounded-md border-slate-300 mb-2'
-        key={index}
-      >
-        <ListItemText>{`Symbol ${asteroid.symbol}`}</ListItemText>
-        <ListItemText>{`Type ${asteroid.type}`}</ListItemText>
-        {DisplayTraits(asteroid)}
-        {Actions(token, shipSymbol, asteroid, cargo, setTime)}
-      </ListItem>
-    );
-  });
-};
-
-const DisplayTraits = (asteroid) => {
-  if (!asteroid.traits) {
-    return <></>;
-  }
-
-  return asteroid.traits.map((trait, index) => {
-    return <ListItemText key={index}>{`Trait: ${trait.name}`}</ListItemText>;
-  });
-};
-
-const Actions = (token, shipSymbol, asteroid, cargo, setTime) => {
+function Actions(props) {
+  const { token, shipSymbol, asteroid, cargo, setTime } = props;
   return (
     <div className='flex space-x-2'>
       <Button
@@ -96,4 +57,43 @@ const Actions = (token, shipSymbol, asteroid, cargo, setTime) => {
       </Button>
     </div>
   );
-};
+}
+
+function DisplayTraits(props) {
+  const { asteroid } = props;
+  if (!asteroid.traits) {
+    return <></>;
+  }
+
+  return asteroid.traits.map((trait, index) => {
+    return <ListItemText key={index}>{`Trait: ${trait.name}`}</ListItemText>;
+  });
+}
+
+export function DisplayAsteroids(asteroids, token, shipSymbol, cargo, setTime) {
+  if (!asteroids && !isValidArray(asteroids)) {
+    return <></>;
+  }
+
+  const AsteroidList = asteroids.map((asteroid, index) => {
+    return (
+      <ListItem
+        sx={{ alignItems: 'start' }}
+        className='flex flex-col border-2 rounded-md border-slate-300 mb-2'
+        key={index}
+      >
+        <ListItemText>{`Symbol ${asteroid.symbol}`}</ListItemText>
+        <ListItemText>{`Type ${asteroid.type}`}</ListItemText>
+        <DisplayTraits asteroid={asteroid} />
+        <Actions
+          token={token}
+          shipSymbol={shipSymbol}
+          asteroid={asteroid}
+          cargo={cargo}
+          setTime={setTime}
+        />
+      </ListItem>
+    );
+  });
+  return <List>{AsteroidList}</List>;
+}
