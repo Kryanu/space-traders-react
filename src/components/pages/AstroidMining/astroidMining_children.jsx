@@ -8,15 +8,17 @@ import {
   mineAsteroid,
   sellCargo,
 } from './astroidMining_logic';
-export function DisplayAsteroids(asteroids, token, shipSymbol, cargo) {
+export function DisplayAsteroids(asteroids, token, shipSymbol, cargo, setTime) {
   if (!asteroids) {
     return <></>;
   }
 
-  return <List>{AsteroidList(asteroids, token, shipSymbol, cargo)}</List>;
+  return (
+    <List>{AsteroidList(asteroids, token, shipSymbol, cargo, setTime)}</List>
+  );
 }
 
-const AsteroidList = (asteroids, token, shipSymbol, cargo) => {
+const AsteroidList = (asteroids, token, shipSymbol, cargo, setTime) => {
   if (!asteroids && !isValidArray(asteroids)) {
     return <></>;
   }
@@ -31,7 +33,7 @@ const AsteroidList = (asteroids, token, shipSymbol, cargo) => {
         <ListItemText>{`Symbol ${asteroid.symbol}`}</ListItemText>
         <ListItemText>{`Type ${asteroid.type}`}</ListItemText>
         {DisplayTraits(asteroid)}
-        {Actions(token, shipSymbol, asteroid, cargo)}
+        {Actions(token, shipSymbol, asteroid, cargo, setTime)}
       </ListItem>
     );
   });
@@ -47,12 +49,12 @@ const DisplayTraits = (asteroid) => {
   });
 };
 
-const Actions = (token, shipSymbol, asteroid, cargo) => {
+const Actions = (token, shipSymbol, asteroid, cargo, setTime) => {
   return (
     <div className='flex space-x-2'>
       <Button
-        onClick={() => {
-          navigateShip(token, shipSymbol, asteroid.symbol);
+        onClick={async () => {
+          setTime(await navigateShip(token, shipSymbol, asteroid.symbol));
         }}
       >
         Fly To

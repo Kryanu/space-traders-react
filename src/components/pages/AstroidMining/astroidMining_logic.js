@@ -12,12 +12,14 @@ export const orbitShip = async (token, shipSymbol) => {
   await API.orbitShip(token, shipSymbol);
 };
 
-export const navigateShip = async (token, shipSymbol, waypointSymbol) => {
+export const navigateShip = async (token, shipSymbol, waypointSymbol, setTime) => {
   if (!token) {
     throw new Error('Token not found');
   }
   try {
-    await API.navigateShip(token, shipSymbol, waypointSymbol);
+    const data = await API.navigateShip(token, shipSymbol, waypointSymbol);
+    return data.nav.route.arrival;
+    
   } catch {}
 };
 

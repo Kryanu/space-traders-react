@@ -11,6 +11,7 @@ import {
 } from './components/pages';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useToken } from './hooks';
+import CountDown from './components/atoms/Countdown';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     path: '/console/market',
     element: <Markets />,
   },
+  {
+    path: '/kitchen-sink',
+    element: <CountDown arrival={"2024-03-04T20:44:44.796Z"} departure={"2024-03-04T18:41:34.796Z"}/>
+  }
 ]);
 
 const darkTheme = createTheme({

@@ -158,7 +158,7 @@ export const API = {
   },
   navigateShip: async (token, shipSymbol, waypointSymbol) => {
     try {
-      return await axios.post(
+      const res = await axios.post(
         `https://api.spacetraders.io/v2/my/ships/${shipSymbol}/navigate`,
         { waypointSymbol: waypointSymbol },
         {
@@ -169,8 +169,9 @@ export const API = {
           },
         }
       );
+      return res.data.data || res.data || res
     } catch (ex) {
-      throw new Error(ex);
+      return res.data
     }
   },
   dockShip: async (token, shipSymbol) => {
