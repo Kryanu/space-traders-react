@@ -2,7 +2,7 @@
 // Departure 2024-03-04T18:41:34.796Z
 
 import React, { useState, useEffect } from 'react';
-import { formatDistance } from 'date-fns';
+import { intervalToDuration, formatDuration } from 'date-fns';
 export default function Countdown(props) {
   const { arrival } = props;
   debugger;
@@ -27,15 +27,9 @@ export default function Countdown(props) {
   return (
     <div>
       {/* Display countdown */}
-      <p>
-        {`Time Left till arrival: ${formatDistance(
-          new Date(),
-          new Date(arrival),
-          {
-            includeSeconds: true,
-          }
-        )}`}
-      </p>
+      <p>{`Time Left till arrival: ${formatDuration(
+        intervalToDuration({ end: new Date(arrival), start: new Date() })
+      )}`}</p>
     </div>
   );
 }
