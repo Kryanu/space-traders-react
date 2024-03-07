@@ -1,6 +1,5 @@
 import { API } from '../../../api/service';
 import { isValidArray, retrieveWaypoints } from '../../../hooks';
-
 export const retrieveAllShips = async (token, system, setShips) => {
   const shipyards = await retrieveWaypoints(token, system, {
     traits: 'SHIPYARD',
@@ -17,7 +16,19 @@ export const retrieveAllShips = async (token, system, setShips) => {
   }
 };
 
-export const purchaseShip = async ({ token, shipType, waypoint, updateShips }) => {
-  const data = await API.purchaseShip(token, shipType, waypoint);
-  updateShips(data.ship);
+export const purchaseShip = async ({
+  token,
+  shipType,
+  waypoint,
+  updateShips,
+  setIsToastVisible,
+}) => {
+  try {
+    const data = await API.purchaseShip(token, shipType, waypoint);
+    updateShips(data.ship);
+    setIsToastVisible({
+      isVisible: true,
+      message: 'Ship Successfully Purchased',
+    });
+  } catch {}
 };

@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { retrieveToken } from './hooks/index.js';
 import { GameContext, TokenContext } from './context';
+import { Toast } from './components/molecules/Toast/Toast.jsx';
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -66,6 +67,10 @@ function App() {
           }}
         >
           <RouterProvider router={router} />
+          <Toast
+            isVisible={isToastVisible.isVisible}
+            message={isToastVisible.message}
+          />
         </GameContext.Provider>
       </TokenContext.Provider>
     </ThemeProvider>

@@ -5,7 +5,7 @@ import { NavBar } from '../../Layouts';
 import { TokenContext, GameContext } from '../../../context';
 export default function ShipShop() {
   const [shipyards, setShipYards] = useState(undefined);
-  const { location, updateShips } = useContext(GameContext);
+  const { location, setShips } = useContext(GameContext);
   const { token } = useContext(TokenContext);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function ShipShop() {
   return (
     <div>
       <NavBar route={'/console'} />
-      <ShipyardList shipyards={shipyards} updateShips={updateShips} />
+      <ShipyardList shipyards={shipyards} updateShips={setShips} />
     </div>
   );
 }

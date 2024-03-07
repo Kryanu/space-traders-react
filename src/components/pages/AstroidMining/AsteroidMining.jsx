@@ -4,7 +4,6 @@ import { DisplayAsteroids } from './astroidMining_children';
 import { NavBar } from '../../Layouts';
 import Countdown from '../../atoms/Countdown';
 import { TokenContext, GameContext } from '../../../context';
-import { Toast } from '../../molecules/Toast/Toast';
 export default function AstroidMining() {
   const { token } = useContext(TokenContext);
   const { location, ships, isToastVisible, setIsToastVisible } =
@@ -34,10 +33,6 @@ export default function AstroidMining() {
         setIsToastVisible
       )}
       {renderCount(time)}
-      <Toast
-        message={isToastVisible.message}
-        isVisible={isToastVisible.isVisible}
-      />
     </div>
   );
 }

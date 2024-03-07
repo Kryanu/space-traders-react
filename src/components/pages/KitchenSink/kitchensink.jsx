@@ -8,12 +8,12 @@ const KitchenSink = () => {
     <div>
       <button
         onClick={() => {
-          setIsToastVisible(true);
+          setIsToastVisible({isVisible: true, message:'Hello'});
         }}
       >
         Show Toast
       </button>
-      <Toast message='This is a toast message' isVisible={isToastVisible} />
+      {/* <Toast message='This is a toast message' isVisible={isToastVisible} /> */}
     </div>
   );
 };
