@@ -5,6 +5,7 @@ import {
   ShipShop,
   AsteroidMining,
   Markets,
+  KitchenSink
 } from '../components/pages';
 import CountDown from '../components/atoms/Countdown';
 import { createBrowserRouter } from 'react-router-dom';
@@ -37,10 +38,11 @@ export const router = createBrowserRouter([
   {
     path: '/kitchen-sink',
     element: (
-      <CountDown
-        arrival={'2024-03-08T23:44:44.796Z'}
-        departure={'2024-03-04T18:41:34.796Z'}
-      />
+      // <CountDown
+      //   arrival={'2024-03-08T23:44:44.796Z'}
+      //   departure={'2024-03-04T18:41:34.796Z'}
+      // />
+      <KitchenSink />
     ),
   },
 ]);

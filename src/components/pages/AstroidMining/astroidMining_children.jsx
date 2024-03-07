@@ -20,42 +20,47 @@ function DisplayTraits(props) {
   });
 }
 
-export function DisplayAsteroids(asteroids, token, shipSymbol, setTime) {
+export function DisplayAsteroids(
+  asteroids,
+  token,
+  shipSymbol,
+  setTime,
+  setIsToastVisible
+) {
   if ((!asteroids && !isValidArray(asteroids)) || !token) {
     return <></>;
   }
-
+  const actionProps = { token, shipSymbol, setIsToastVisible };
   const AsteroidList = asteroids.map((asteroid, index) => {
     const actionRowConfig = [
       {
         text: 'Fly To',
         callBack: navigateShip,
         callBackProps: {
-          token,
-          shipSymbol,
           waypointSymbol: asteroid.symbol,
           setTime,
+          ...actionProps,
         },
       },
       {
         text: 'Dock',
         callBack: dockShip,
-        callBackProps: { token, shipSymbol },
+        callBackProps: actionProps,
       },
       {
         text: 'refuelShip',
         callBack: refuelShip,
-        callBackProps: { token, shipSymbol },
+        callBackProps: actionProps,
       },
       {
         text: 'Orbit',
         callBack: orbitShip,
-        callBackProps: { token, shipSymbol },
+        callBackProps: actionProps,
       },
       {
         text: 'Mine Asteroid',
         callBack: mineAsteroid,
-        callBackProps: { token, shipSymbol },
+        callBackProps: actionProps,
       },
     ];
     return (

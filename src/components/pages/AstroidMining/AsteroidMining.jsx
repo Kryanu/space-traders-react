@@ -4,12 +4,13 @@ import { DisplayAsteroids } from './astroidMining_children';
 import { NavBar } from '../../Layouts';
 import Countdown from '../../atoms/Countdown';
 import { TokenContext, GameContext } from '../../../context';
+import { Toast } from '../../molecules/Toast/Toast';
 export default function AstroidMining() {
   const { token } = useContext(TokenContext);
-  const { location, ships } = useContext(GameContext);
+  const { location, ships, isToastVisible, setIsToastVisible } =
+    useContext(GameContext);
   const [asteroids, setAsteroids] = useState(undefined);
   const [time, setTime] = useState(0);
-  debugger
   const renderCount = () => {
     if (time !== 0) {
       return <Countdown arrival={time} />;
@@ -25,8 +26,18 @@ export default function AstroidMining() {
   return (
     <div className='flex flex-col'>
       <NavBar route={'/console'} />
-      {DisplayAsteroids(asteroids, token, ships.symbol, setTime)}
+      {DisplayAsteroids(
+        asteroids,
+        token,
+        ships.symbol,
+        setTime,
+        setIsToastVisible
+      )}
       {renderCount(time)}
+      <Toast
+        message={isToastVisible.message}
+        isVisible={isToastVisible.isVisible}
+      />
     </div>
   );
 }

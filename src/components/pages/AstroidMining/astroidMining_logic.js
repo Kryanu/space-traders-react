@@ -1,6 +1,5 @@
 import { retrieveWaypoints } from '../../../hooks';
 import { API } from '../../../api/service';
-import { delay } from '../../../hooks/helpers';
 export const retrieveAsteroids = async (token, system, setAsteroids) => {
   const data = await retrieveWaypoints(token, system, {
     type: 'ENGINEERED_ASTEROID',
@@ -8,8 +7,11 @@ export const retrieveAsteroids = async (token, system, setAsteroids) => {
   setAsteroids(data);
 };
 
-export const orbitShip = async ({ token, shipSymbol }) => {
-  await API.orbitShip(token, shipSymbol);
+export const orbitShip = async ({ token, shipSymbol, setIsToastVisible }) => {
+  try {
+    await API.orbitShip(token, shipSymbol);
+    setIsToastVisible({ isVisible: true, message: 'Orbiting...' });
+  } catch {}
 };
 
 export const navigateShip = async ({
@@ -17,25 +19,39 @@ export const navigateShip = async ({
   shipSymbol,
   waypointSymbol,
   setTime,
+  setIsToastVisible,
 }) => {
   if (!token) {
     throw new Error('Token not found');
   }
   try {
-    debugger
     const data = await API.navigateShip(token, shipSymbol, waypointSymbol);
     setTime(data.nav.route.arrival);
+    setIsToastVisible({ isVisible: true, message: 'Navigation ongoing' });
   } catch {}
 };
 
-export const dockShip = async ({ token, shipSymbol }) => {
-  await API.dockShip(token, shipSymbol);
+export const dockShip = async ({ token, shipSymbol, setIsToastVisible }) => {
+  try {
+    await API.dockShip(token, shipSymbol);
+    setIsToastVisible({ isVisible: true, message: 'Docking...' });
+  } catch {}
 };
 
-export const refuelShip = async ({ token, shipSymbol }) => {
-  await API.refuelShip(token, shipSymbol);
+export const refuelShip = async ({ token, shipSymbol, setIsToastVisible }) => {
+  try {
+    await API.refuelShip(token, shipSymbol);
+    setIsToastVisible({ isVisible: true, message: 'Refueling...' });
+  } catch {}
 };
 
-export const mineAsteroid = async ({ token, shipSymbol }) => {
-  await API.mineAsteroid(token, shipSymbol);
+export const mineAsteroid = async ({
+  token,
+  shipSymbol,
+  setIsToastVisible,
+}) => {
+  try {
+    await API.mineAsteroid(token, shipSymbol);
+    setIsToastVisible({ isVisible: true, message: 'Mining...' });
+  } catch {}
 };

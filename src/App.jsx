@@ -22,6 +22,10 @@ function App() {
   const [agent, setAgent] = useState(undefined);
   const [location, setLocation] = useState(undefined);
   const [ships, setShips] = useState(undefined);
+  const [isToastVisible, setIsToastVisible] = useState({
+    message: '',
+    isVisible: false,
+  });
   //Sets token when handle changes and on page load
   useEffect(() => {
     const localToken = window.sessionStorage.getItem(tokenKey);
@@ -50,7 +54,16 @@ function App() {
       <CssBaseline />
       <TokenContext.Provider value={{ token, setToken, handle, setHandle }}>
         <GameContext.Provider
-          value={{ agent, setAgent, location, setLocation, ships, setShips }}
+          value={{
+            agent,
+            setAgent,
+            location,
+            setLocation,
+            ships,
+            setShips,
+            isToastVisible,
+            setIsToastVisible,
+          }}
         >
           <RouterProvider router={router} />
         </GameContext.Provider>
