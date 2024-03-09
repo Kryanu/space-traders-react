@@ -1,4 +1,4 @@
-import { ListItem, ListItemText, List } from '@mui/material';
+import { ListItem, ListItemText, List, Typography } from '@mui/material';
 import { isValidArray } from '../../../hooks';
 import { NavigateButton } from '../../atoms';
 import { purchaseShip } from './ShipShop_logic';
@@ -10,7 +10,7 @@ export function ShipyardList(props) {
   const { token } = useContext(TokenContext);
   const { setIsToastVisible } = useContext(GameContext);
   if (!isValidArray(shipyards)) {
-    return <></>;
+    return <><Typography>No Ships are for sale</Typography></>;
   }
   const shipList = shipyards.map((shipyard) => {
     return ShipList(

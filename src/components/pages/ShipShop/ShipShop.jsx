@@ -7,7 +7,6 @@ export default function ShipShop() {
   const [shipyards, setShipYards] = useState(undefined);
   const { location, setShips } = useContext(GameContext);
   const { token } = useContext(TokenContext);
-
   useEffect(() => {
     if (location) {
       retrieveAllShips(token, location.system, setShipYards);
@@ -15,7 +14,7 @@ export default function ShipShop() {
   }, [location]);
 
   return (
-    <div>
+    <div className='flex flex-col items-center'>
       <NavBar route={'/console'} />
       <ShipyardList shipyards={shipyards} updateShips={setShips} />
     </div>
