@@ -1,5 +1,5 @@
-import { Button } from '@mui/material';
-import { navigateShip, orbitShip, dockShip, sellCargo } from './markets_logic';
+import { orbitShip, dockShip, sellCargo } from './markets_logic';
+import { navigateShip } from '../../../hooks/helpers';
 import ActionRow from '../../molecules/ActionRow/ActionRow';
 export const Actions = (token, shipSymbol, market, cargo) => {
   const actionRowConfig = [

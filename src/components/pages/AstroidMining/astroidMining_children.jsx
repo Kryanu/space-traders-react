@@ -1,7 +1,7 @@
 import { ListItem, List, ListItemText } from '@mui/material';
 import { isValidArray } from '../../../hooks';
 import {
-  navigateShip,
+  timedNavigateShip,
   dockShip,
   refuelShip,
   orbitShip,
@@ -35,7 +35,7 @@ export function DisplayAsteroids(
     const actionRowConfig = [
       {
         text: 'Fly To',
-        callBack: navigateShip,
+        callBack: timedNavigateShip,
         callBackProps: {
           waypointSymbol: asteroid.symbol,
           setTime,

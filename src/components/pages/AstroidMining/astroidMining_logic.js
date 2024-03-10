@@ -1,5 +1,6 @@
 import { retrieveWaypoints } from '../../../hooks';
 import { API } from '../../../api/service';
+import { navigateShip } from '../../../hooks/helpers';
 export const retrieveAsteroids = async (token, system, setAsteroids) => {
   const data = await retrieveWaypoints(token, system, {
     type: 'ENGINEERED_ASTEROID',
@@ -14,7 +15,7 @@ export const orbitShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   } catch {}
 };
 
-export const navigateShip = async ({
+export const timedNavigateShip = async ({
   token,
   shipSymbol,
   waypointSymbol,
@@ -25,7 +26,7 @@ export const navigateShip = async ({
     throw new Error('Token not found');
   }
   try {
-    const data = await API.navigateShip(token, shipSymbol, waypointSymbol);
+    const data = await navigateShip({ token, shipSymbol, waypointSymbol });
     setTime(data.nav.route.arrival);
     setIsToastVisible({ isVisible: true, message: 'Navigation ongoing' });
   } catch {}

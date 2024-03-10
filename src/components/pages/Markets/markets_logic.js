@@ -12,15 +12,6 @@ export const orbitShip = async ({ token, shipSymbol }) => {
   await API.orbitShip(token, shipSymbol);
 };
 
-export const navigateShip = async ({ token, shipSymbol, waypointSymbol }) => {
-  if (!token) {
-    throw new Error('Token not found');
-  }
-  try {
-    await API.navigateShip(token, shipSymbol, waypointSymbol);
-  } catch {}
-};
-
 export const dockShip = async ({ token, shipSymbol }) => {
   await API.dockShip(token, shipSymbol);
 };

@@ -10,7 +10,7 @@ import { isValidArray } from '../../../hooks';
 import { Modal } from '../';
 import { useContext, useState } from 'react';
 import { GameContext, TokenContext } from '../../../context';
-import { API } from '../../../api/service';
+import { navigateShip } from '../../../hooks/helpers';
 const customToolTip = (props) => {
   const { payload } = props;
   if (!isValidArray(payload)) {
@@ -31,21 +31,13 @@ const customToolTip = (props) => {
   );
 };
 
-const navigateShip = async ({ token, shipSymbol, waypointSymbol }) => {
-  if (!token) {
-    throw new Error('Token not found');
-  }
-  try {
-    await API.navigateShip(token, shipSymbol, waypointSymbol);
-  } catch {}
-};
-
 export default function Map(props) {
   const { data, title } = props;
   const { ships } = useContext(GameContext);
   const { token } = useContext(TokenContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedWaypoint, setSelectedWaypoint] = useState(undefined);
+
   const openModal = (waypoint) => {
     setSelectedWaypoint(waypoint);
     setIsModalOpen(true);

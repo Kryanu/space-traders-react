@@ -23,3 +23,12 @@ export const retrieveToken = async (handle, setToken) => {
   const data = await filterRecordByHandle(handle);
   setToken(data?.items[0]?.token);
 };
+
+export const navigateShip = async ({ token, shipSymbol, waypointSymbol }) => {
+  if (!token) {
+    throw new Error('Token not found');
+  }
+  try {
+    return await API.navigateShip(token, shipSymbol, waypointSymbol);
+  } catch {}
+};
