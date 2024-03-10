@@ -90,7 +90,7 @@ export function NavigationButtons() {
 }
 
 export function MapSelector(props) {
-  const [selectedMap, setSelectedMap] = useState(MAPS.systems);
+  const [selectedMap, setSelectedMap] = useState(MAPS.waypoints);
   const { systems, waypoints } = props;
 
   if (!selectedMap || !systems || !waypoints) return <></>;

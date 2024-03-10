@@ -4,6 +4,9 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  ListItemButton,
+  Collapse,
+  Divider,
 } from '@mui/material';
 import { ScatterChart, XAxis, YAxis, Tooltip, Scatter } from 'recharts';
 import { isValidArray } from '../../../hooks';
@@ -31,14 +34,29 @@ const customToolTip = (props) => {
   );
 };
 
+function TraitDetails(props) {
+  const { traits } = props;
+  if (!isValidArray(traits)) return <></>;
+
+  return traits.map((trait, index) => {
+    return (
+      <ListItem key={index}>
+        <ListItemText primary={`${trait.name}`} />
+      </ListItem>
+    );
+  });
+}
+
 export default function Map(props) {
   const { data, title } = props;
   const { ships } = useContext(GameContext);
   const { token } = useContext(TokenContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedWaypoint, setSelectedWaypoint] = useState(undefined);
+  const [selectedWaypoint, setSelectedWaypoint] = useState({ traits: [] });
+  const [isTraitsOpen, setIsTraitsOpen] = useState(false);
 
   const openModal = (waypoint) => {
+    setIsTraitsOpen(false);
     setSelectedWaypoint(waypoint);
     setIsModalOpen(true);
   };
@@ -85,9 +103,23 @@ export default function Map(props) {
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <div className='p-4 rounded-md bg-blackie'>
-          <Typography variant='h6'>
+          <Typography variant='h6' color={'#32C832'}>
             Do you want to fly to this waypoint?
           </Typography>
+          <List>
+            <ListItem
+              sx={{ alignItems: 'start' }}
+              className='flex flex-col border-2 rounded-md border-map-green mb-2'
+            >
+              <ListItemButton onClick={() => setIsTraitsOpen(!isTraitsOpen)}>
+                <ListItemText primary='Traits' style={{ color: '#32C832' }} />
+              </ListItemButton>
+              <Collapse in={isTraitsOpen}>
+                <Divider className='p-2' />
+                <TraitDetails traits={selectedWaypoint.traits} />
+              </Collapse>
+            </ListItem>
+          </List>
           <Button
             onClick={async () => {
               await navigateShip({
