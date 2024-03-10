@@ -91,6 +91,15 @@ export const API = {
       throw new Error(ex);
     }
   },
+  listSystems: async () => {
+    let url = `https://api.spacetraders.io/v2/systems`;
+    try {
+      const res = await axios.get(url);
+      return res?.data?.data || res.data || res;
+    } catch (ex) {
+      throw new Error(ex);
+    }
+  },
   getShipyard: async (token, system, waypoint) => {
     try {
       const res = await axios.get(
@@ -169,9 +178,9 @@ export const API = {
           },
         }
       );
-      return res.data.data || res.data || res
+      return res.data.data || res.data || res;
     } catch (ex) {
-      return res.data
+      return res.data;
     }
   },
   dockShip: async (token, shipSymbol) => {
@@ -323,5 +332,5 @@ export const API = {
     } catch (ex) {
       throw new Error(ex);
     }
-  }
+  },
 };

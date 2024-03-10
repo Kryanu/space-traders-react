@@ -7,11 +7,16 @@ import { useState, useEffect } from 'react';
 import { retrieveToken } from './hooks/index.js';
 import { GameContext, TokenContext } from './context';
 import { Toast } from './components/molecules/Toast/Toast.jsx';
+import { API } from './api/service.js';
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
   },
 });
+
+const retrieveSystems = async (setSystems) => {
+  setSystems(await API.listSystems());
+};
 
 function App() {
   const tokenKey = 'token';
@@ -27,6 +32,7 @@ function App() {
     message: '',
     isVisible: false,
   });
+  const [systems, setSystems] = useState(undefined);
   //Sets token when handle changes and on page load
   useEffect(() => {
     const localToken = window.sessionStorage.getItem(tokenKey);
@@ -50,6 +56,10 @@ function App() {
     }
   }, [handle]);
 
+  useEffect(() => {
+    retrieveSystems(setSystems);
+  }, []);
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -64,6 +74,8 @@ function App() {
             setShips,
             isToastVisible,
             setIsToastVisible,
+            systems,
+            setSystems,
           }}
         >
           <RouterProvider router={router} />

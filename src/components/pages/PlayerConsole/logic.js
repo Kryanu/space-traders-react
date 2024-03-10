@@ -25,3 +25,7 @@ export const retrieveShips = async (token, updateShips) => {
   const data = await API.getShips(token);
   updateShips(data[0]);
 };
+
+export const retrieveWaypoints = async (token, system, updateWaypoints) => {
+  updateWaypoints(await API.listWaypoints(token, system));
+};
