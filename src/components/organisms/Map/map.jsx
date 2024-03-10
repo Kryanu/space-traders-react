@@ -28,10 +28,7 @@ const customToolTip = (props) => {
 };
 
 export default function Map(props) {
-  if (!props) {
-    return <></>;
-  }
-  const { data } = props;
+  const { data, title } = props;
   if (!data) {
     return <></>;
   }
@@ -39,7 +36,7 @@ export default function Map(props) {
   return (
     <div className='flex flex-col items-start'>
       <Typography variant='h4' color={'#32C832'}>
-        Systems Map
+        {`${title}`}
       </Typography>
       <ScatterChart width={700} height={700}>
         <XAxis

@@ -116,3 +116,8 @@ const MODIFIERS = [
   'CRITICAL_LIMIT',
   'CIVIL_UNREST',
 ];
+
+export const MAPS = {
+  systems: 'systems',
+  waypoints: 'waypoints',
+};
