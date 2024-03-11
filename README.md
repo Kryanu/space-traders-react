@@ -14,9 +14,9 @@
 ## - Allow persistent storage of key data - SP006
  - Current Location of Ships
 
-## ~~ - Add View ships functionality - SP007 ~~
+## ~~- Add View ships functionality SP007~~
 
-## ~~ - Add Select Current Ship functionality - SP008 ~~
+## ~~- Add Select Current Ship functionality - SP008~~
 
 ## - Add Select Component for SP003 - SP009
 
