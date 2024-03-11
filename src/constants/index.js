@@ -1,6 +1,6 @@
 export { darkTheme } from './material';
 
-const TRAITS = [
+const TRAITS_ARR = [
   'UNCHARTED',
   'UNDER_CONSTRUCTION',
   'MARKETPLACE',
@@ -71,6 +71,11 @@ const TRAITS = [
   'HOLLOWED_INTERIOR',
   'STRIPPED',
 ];
+
+export const TRAITS = {
+  shipyard: 'SHIPYARD',
+  marketPlace: 'MARKETPLACE'
+};
 
 const WAYPOINT_TYPE = [
   'PLANET',

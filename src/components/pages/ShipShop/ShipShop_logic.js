@@ -1,8 +1,9 @@
 import { API } from '../../../api/service';
 import { isValidArray, retrieveWaypoints } from '../../../hooks';
+import { TRAITS } from '../../../constants';
 export const retrieveAllShips = async (token, system, setShips) => {
   const shipyards = await retrieveWaypoints(token, system, {
-    traits: 'SHIPYARD',
+    traits: TRAITS.shipyard,
   });
   if (isValidArray(shipyards)) {
     const shipPromises = shipyards.map((shipyard) => {

@@ -1,8 +1,9 @@
 import { retrieveWaypoints } from '../../../hooks';
 import { API } from '../../../api/service';
+import { TRAITS } from '../../../constants';
 export const retrieveMarkets = async (system, setMarkets) => {
   const { data } = await retrieveWaypoints(undefined, system, {
-    traits: 'MARKETPLACE',
+    traits: TRAITS.marketPlace,
   });
   setMarkets(data);
 };
