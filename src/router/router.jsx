@@ -6,6 +6,7 @@ import {
   Waypoint,
   Markets,
   KitchenSink,
+  ShipViewer,
 } from '../components/pages';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -38,4 +39,8 @@ export const router = createBrowserRouter([
     path: '/kitchen-sink',
     element: <KitchenSink />,
   },
+  {
+    path: '/console/ships',
+    element: <ShipViewer />
+  }
 ]);

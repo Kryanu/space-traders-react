@@ -51,13 +51,12 @@ function App() {
   const tokenKey = 'token';
   const handleKey = 'handle';
   const [token, setToken] = useState(undefined);
-  const [handle, setHandle] = useState(
-    window.localStorage.getItem(handleKey)
-  );
+  const [handle, setHandle] = useState(window.localStorage.getItem(handleKey));
   const [waypoints, setWaypoints] = useState(undefined);
   const [agent, setAgent] = useState(undefined);
   const [location, setLocation] = useState(undefined);
   const [ships, setShips] = useState(undefined);
+  const [currentShip, setCurrentShip] = useState(undefined);
   const [isToastVisible, setIsToastVisible] = useState({
     message: '',
     isVisible: false,
@@ -116,6 +115,8 @@ function App() {
             systems,
             setSystems,
             waypoints,
+            currentShip,
+            setCurrentShip,
           }}
         >
           <RouterProvider router={router} />

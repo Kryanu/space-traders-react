@@ -17,11 +17,26 @@ export function AgentDetails(props) {
   }
   return (
     <div className='flex flex-col rounded-md border-2 border-map-green p-4 mx-auto'>
-      <Typography color={'#32C832'} variant='h6'>{`Symbol: ${agent.symbol}`}</Typography>
-      <Typography color={'#32C832'} variant='h6'>{`HQ Coordinates: ${agent.headquarters}`}</Typography>
-      <Typography color={'#32C832'} variant='h6'>{`Credits: ${agent.credits}`}</Typography>
-      <Typography color={'#32C832'} variant='h6'>{`Faction: ${agent.startingFaction}`}</Typography>
-      <Typography color={'#32C832'} variant='h6'>{`Ships: ${agent.shipCount}`}</Typography>
+      <Typography
+        color={'#32C832'}
+        variant='h6'
+      >{`Symbol: ${agent.symbol}`}</Typography>
+      <Typography
+        color={'#32C832'}
+        variant='h6'
+      >{`HQ Coordinates: ${agent.headquarters}`}</Typography>
+      <Typography
+        color={'#32C832'}
+        variant='h6'
+      >{`Credits: ${agent.credits}`}</Typography>
+      <Typography
+        color={'#32C832'}
+        variant='h6'
+      >{`Faction: ${agent.startingFaction}`}</Typography>
+      <Typography
+        color={'#32C832'}
+        variant='h6'
+      >{`Ships: ${agent.shipCount}`}</Typography>
     </div>
   );
 }
@@ -35,7 +50,7 @@ export function ContractIdList(props) {
   const data = contracts.map((x) => {
     return (
       <ListItem
-        sx={{ alignItems: 'start', color:'#32C832' }}
+        sx={{ alignItems: 'start', color: '#32C832' }}
         className='flex flex-col border-2 rounded-md border-map-green mb-2'
         key={x.id}
       >
@@ -75,6 +90,15 @@ export function NavigationButtons() {
         }}
         text={'Go To Market'}
         route={'/console/market'}
+      />
+      <NavigateButton
+        style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '0.75rem',
+        }}
+        text={'View Ships'}
+        route={'/console/ships'}
       />
     </div>
   );

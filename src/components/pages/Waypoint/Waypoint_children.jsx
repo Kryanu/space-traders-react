@@ -16,13 +16,13 @@ import { TokenContext, GameContext } from '../../../context';
 export function Waypoint(props) {
   const { asteroids, setTime } = props;
   const { token } = useContext(TokenContext);
-  const { ships, setIsToastVisible } = useContext(GameContext);
+  const { currentShip, setIsToastVisible } = useContext(GameContext);
   const [isTraitsOpen, setIsTraitsOpen] = useState(false);
   const waypoint = asteroids;
   if (!asteroids || !token) {
     return <></>;
   }
-  let shipSymbol = ships?.symbol;
+  let shipSymbol = currentShip?.symbol;
   const actionProps = { token, shipSymbol, setIsToastVisible };
   const actionRowConfig = [
     {

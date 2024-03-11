@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { retrieveMarkets } from './markets_logic';
 import { MarketList } from './markets_children';
 import NavBar from '../../Layouts/navbar';
-import { TokenContext, GameContext } from '../../../context/';
+import { GameContext } from '../../../context/';
 export default function Markets() {
   const { location } = useContext(GameContext);
   const [markets, setMarkets] = useState(undefined);

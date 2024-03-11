@@ -10,14 +10,14 @@ export default function AstroidMining() {
   const routerProps = useLocation();
   const { waypointSymbol } = routerProps.state;
   const { token } = useContext(TokenContext);
-  const { location, ships } = useContext(GameContext);
+  const { location, currentShip } = useContext(GameContext);
   const [waypoint, setWaypoint] = useState(undefined);
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    if (token && location?.system && ships && waypointSymbol) {
+    if (token && location?.system && currentShip && waypointSymbol) {
       retrieveWaypoint(location.system, waypointSymbol, setWaypoint);
-      orbitShip({ token, shipSymbol: ships.symbol });
+      orbitShip({ token, shipSymbol: currentShip.symbol });
     }
   }, []);
 

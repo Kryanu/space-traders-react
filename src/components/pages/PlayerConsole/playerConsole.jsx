@@ -10,18 +10,25 @@ import {
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../Layouts/navbar';
 import { TokenContext, GameContext } from '../../../context/';
+import { Modal } from '../../organisms';
+import ShipViewer from '../ShipViewer/ShipViewer';
 
 export default function PlayerConsole() {
   const navigate = useNavigate();
   const { token } = useContext(TokenContext);
-  const { agent, setShips, systems, waypoints } = useContext(GameContext);
+  const { agent, setShips, ship, systems, waypoints } = useContext(GameContext);
   const [selectedContractId, setContractId] = useState(undefined);
   const [contracts, setContracts] = useState(undefined);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => setIsModalOpen(false);
+
+  useEffect(() => {
+    if (!ship) setIsModalOpen(true);
+  }, []);
 
   useEffect(() => {
     if (token) {
       retrieveContracts(token, setContracts);
-      retrieveShips(token, setShips);
     } else if (!contracts && token) {
       retrieveContracts(token, setContracts);
     }
@@ -59,6 +66,12 @@ export default function PlayerConsole() {
         <NavigationButtons />
       </div>
       <MapSelector systems={systems} waypoints={waypoints} />
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
+          <Typography variant='h3'>Select a Ship</Typography>
+          <ShipViewer closeModal={closeModal} />
+        </div>
+      </Modal>
     </div>
   );
 }

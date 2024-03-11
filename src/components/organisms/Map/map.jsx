@@ -1,12 +1,4 @@
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  ListItemButton,
-  Collapse,
-  Divider,
-} from '@mui/material';
+import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import {
   ScatterChart,
   XAxis,
