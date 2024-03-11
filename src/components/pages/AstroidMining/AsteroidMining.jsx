@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
-import { retrieveAsteroids, orbitShip } from './astroidMining_logic';
+import { orbitShip, retrieveWaypoint } from './astroidMining_logic';
 import { DisplayAsteroids } from './astroidMining_children';
 import { NavBar } from '../../Layouts';
 import Countdown from '../../atoms/Countdown';
 import { TokenContext, GameContext } from '../../../context';
+import { useLocation } from 'react-router-dom';
 export default function AstroidMining() {
+  const routerProps = useLocation();
+  const { waypointSymbol } = routerProps.state;
   const { token } = useContext(TokenContext);
   const { location, ships } = useContext(GameContext);
-  const [asteroids, setAsteroids] = useState(undefined);
+  const [waypoint, setWaypoint] = useState(undefined);
   const [time, setTime] = useState(0);
   const renderCount = () => {
     if (time !== 0) {
@@ -16,15 +19,18 @@ export default function AstroidMining() {
   };
 
   useEffect(() => {
-    if (token && location?.system && ships) {
+    if (token && location?.system && ships && waypointSymbol) {
+      retrieveWaypoint(location.system, waypointSymbol, setWaypoint);
       orbitShip({ token, shipSymbol: ships.symbol });
-      retrieveAsteroids(token, location.system, setAsteroids);
     }
   }, []);
+
+  if (!waypoint) return <></>;
+
   return (
     <div className='flex flex-col'>
       <NavBar route={'/console'} />
-      <DisplayAsteroids asteroids={asteroids} setTime={setTime} />
+      <DisplayAsteroids asteroids={waypoint} setTime={setTime} />
       {renderCount(time)}
     </div>
   );

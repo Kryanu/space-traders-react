@@ -73,15 +73,6 @@ export function NavigationButtons() {
           marginRight: 'auto',
           marginTop: '0.75rem',
         }}
-        text={'Go Asteroid Mining'}
-        route={'/console/astroid-mining'}
-      />
-      <NavigateButton
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: '0.75rem',
-        }}
         text={'Go To Market'}
         route={'/console/market'}
       />

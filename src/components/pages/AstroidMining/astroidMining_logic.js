@@ -8,6 +8,14 @@ export const retrieveAsteroids = async (token, system, setAsteroids) => {
   setAsteroids(data);
 };
 
+export const retrieveWaypoint = async (
+  systemSymbol,
+  waypointSymbol,
+  setWaypoint
+) => {
+  setWaypoint(await API.getWaypoint(systemSymbol, waypointSymbol));
+};
+
 export const orbitShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   try {
     await API.orbitShip(token, shipSymbol);

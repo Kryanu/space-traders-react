@@ -6,7 +6,6 @@ import {
   ListItemButton,
   Divider,
 } from '@mui/material';
-import { isValidArray } from '../../../hooks';
 import {
   timedNavigateShip,
   dockShip,
@@ -33,62 +32,61 @@ export function DisplayAsteroids(props) {
   const { token } = useContext(TokenContext);
   const { ships, setIsToastVisible } = useContext(GameContext);
   const [isTraitsOpen, setIsTraitsOpen] = useState(false);
-  if ((!asteroids && !isValidArray(asteroids)) || !token) {
+  debugger;
+  const waypoint = asteroids;
+  if (!asteroids || !token) {
     return <></>;
   }
-  let asterdoidsData = asteroids.data;
   let shipSymbol = ships?.symbol;
   const actionProps = { token, shipSymbol, setIsToastVisible };
-  const AsteroidList = asterdoidsData.map((asteroid, index) => {
-    const actionRowConfig = [
-      {
-        text: 'Fly To',
-        callBack: timedNavigateShip,
-        callBackProps: {
-          waypointSymbol: asteroid.symbol,
-          setTime,
-          ...actionProps,
-        },
+  const actionRowConfig = [
+    {
+      text: 'Fly To',
+      callBack: timedNavigateShip,
+      callBackProps: {
+        waypointSymbol: waypoint.symbol,
+        setTime,
+        ...actionProps,
       },
-      {
-        text: 'Dock',
-        callBack: dockShip,
-        callBackProps: actionProps,
-      },
-      {
-        text: 'refuelShip',
-        callBack: refuelShip,
-        callBackProps: actionProps,
-      },
-      {
-        text: 'Orbit',
-        callBack: orbitShip,
-        callBackProps: actionProps,
-      },
-      {
-        text: 'Mine Asteroid',
-        callBack: mineAsteroid,
-        callBackProps: actionProps,
-      },
-    ];
-    return (
+    },
+    {
+      text: 'Dock',
+      callBack: dockShip,
+      callBackProps: actionProps,
+    },
+    {
+      text: 'refuelShip',
+      callBack: refuelShip,
+      callBackProps: actionProps,
+    },
+    {
+      text: 'Orbit',
+      callBack: orbitShip,
+      callBackProps: actionProps,
+    },
+    {
+      text: 'Mine Asteroid',
+      callBack: mineAsteroid,
+      callBackProps: actionProps,
+    },
+  ];
+  return (
+    <List>
       <ListItem
         sx={{ alignItems: 'start', color: '#32C832' }}
         className='flex flex-col border-2 rounded-md border-map-green mb-2'
-        key={index}
       >
-        <ListItemText>{`Symbol ${asteroid.symbol}`}</ListItemText>
-        <ListItemText>{`Type ${asteroid.type}`}</ListItemText>
+        <ListItemText>{`Symbol ${waypoint.symbol}`}</ListItemText>
+        <ListItemText>{`Type ${waypoint.type}`}</ListItemText>
         <ListItemButton onClick={() => setIsTraitsOpen(!isTraitsOpen)}>
           <ListItemText primary='Traits' style={{ color: '#32C832' }} />
         </ListItemButton>
         <Collapse in={isTraitsOpen}>
           <Divider />
-          <DisplayTraits asteroid={asteroid} />
+          <DisplayTraits asteroid={waypoint} />
         </Collapse>
         <ActionRow actions={actionRowConfig} />
       </ListItem>
-    );
-  });
-  return <List>{AsteroidList}</List>;
+    </List>
+  );
 }

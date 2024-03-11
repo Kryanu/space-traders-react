@@ -16,11 +16,12 @@ import {
   Scatter,
   ResponsiveContainer,
 } from 'recharts';
+import { TraitDetails } from './Map_children';
+import { NavigateButton } from '../../atoms';
 import { isValidArray } from '../../../hooks';
 import { Modal } from '../';
 import { useContext, useState } from 'react';
 import { GameContext, TokenContext } from '../../../context';
-import { navigateShip } from '../../../hooks/helpers';
 const customToolTip = (props) => {
   const { payload } = props;
   if (!isValidArray(payload)) {
@@ -41,18 +42,9 @@ const customToolTip = (props) => {
   );
 };
 
-function TraitDetails(props) {
-  const { traits } = props;
-  if (!isValidArray(traits)) return <></>;
-
-  return traits.map((trait, index) => {
-    return (
-      <ListItem key={index}>
-        <ListItemText primary={`${trait.name}`} />
-      </ListItem>
-    );
-  });
-}
+const navigate = async ({ closeModal }) => {
+  closeModal();
+};
 
 export default function Map(props) {
   const { data, title } = props;
@@ -129,18 +121,15 @@ export default function Map(props) {
               </Collapse>
             </ListItem>
           </List>
-          <Button
-            onClick={async () => {
-              await navigateShip({
-                token,
-                shipSymbol: ships.symbol,
-                waypointSymbol: selectedWaypoint.symbol,
-              });
-              closeModal();
+          <NavigateButton
+            text={'Navigate'}
+            callBack={navigate}
+            callBackProps={{
+              closeModal,
             }}
-          >
-            Navigate
-          </Button>
+            route={'/console/astroid-mining'}
+            state={{ waypointSymbol: selectedWaypoint.symbol }}
+          />
         </div>
       </Modal>
     </>
