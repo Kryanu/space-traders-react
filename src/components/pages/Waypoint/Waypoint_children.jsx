@@ -1,10 +1,6 @@
 import {
   ListItem,
   List,
-  ListItemText,
-  Collapse,
-  ListItemButton,
-  Divider,
 } from '@mui/material';
 import {
   timedNavigateShip,
@@ -12,7 +8,7 @@ import {
   refuelShip,
   orbitShip,
   mineAsteroid,
-} from './astroidMining_logic';
+} from './Waypoint_logic';
 import { ActionRow, Traits } from '../../molecules/index';
 import { useState, useContext } from 'react';
 import { TokenContext, GameContext } from '../../../context';

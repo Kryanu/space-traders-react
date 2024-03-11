@@ -121,7 +121,7 @@ export default function Map(props) {
             callBackProps={{
               closeModal,
             }}
-            route={'/console/astroid-mining'}
+            route={'/console/waypoint'}
             state={{ waypointSymbol: selectedWaypoint.symbol }}
           />
         </div>

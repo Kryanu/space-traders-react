@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
-import { orbitShip, retrieveWaypoint } from './astroidMining_logic';
-import { Waypoint } from './astroidMining_children';
+import { orbitShip, retrieveWaypoint } from './Waypoint_logic';
+import { Waypoint } from './Waypoint_children';
 import { NavBar } from '../../Layouts';
 import Countdown from '../../atoms/Countdown';
 import { TokenContext, GameContext } from '../../../context';
 import { useLocation } from 'react-router-dom';
+
 export default function AstroidMining() {
   const routerProps = useLocation();
   const { waypointSymbol } = routerProps.state;
