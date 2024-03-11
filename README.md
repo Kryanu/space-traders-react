@@ -7,7 +7,7 @@
 ## - Add Filter by Trait in Starchart Section - SP003
  - Waiting on SP009
 
-## - Add Action screen into bottom-left corner rather than new page for Waypoint details - SP004
+## ~~- Add Action screen into bottom-left corner rather than new page for Waypoint details - SP004~~
 
 ## - Add agent data update on key points - SP005
 
