@@ -250,12 +250,7 @@ export const API = {
     try {
       const res = await axios.get(
         `https://api.spacetraders.io/v2/systems/${system}/waypoints/${waypoint}/market`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        {}
       );
       return res?.data?.data || res.data || res;
     } catch (ex) {
