@@ -1,0 +1,10 @@
+.diagonal-line {
+  background: linear-gradient(
+    -45deg,
+    transparent -11.5%,
+    #32c832 15.5%,
+    #32c832 10.5%,
+    transparent 15.5%
+  ),
+  linear-gradient(-45deg, #121212 15%, #100910 0%)
+}

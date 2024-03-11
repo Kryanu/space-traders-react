@@ -1,7 +1,4 @@
-import {
-  ListItem,
-  List,
-} from '@mui/material';
+import { ListItem, List } from '@mui/material';
 import {
   timedNavigateShip,
   dockShip,
@@ -59,7 +56,7 @@ export function Waypoint(props) {
     <List>
       <ListItem
         sx={{ alignItems: 'start', color: '#32C832' }}
-        className='flex flex-col border-2 rounded-md border-map-green mb-2'
+        className='flex flex-col rounded-md '
       >
         <Traits
           waypoint={waypoint}

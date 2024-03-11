@@ -12,11 +12,13 @@ import NavBar from '../../Layouts/navbar';
 import { TokenContext, GameContext } from '../../../context/';
 import { Modal } from '../../organisms';
 import ShipViewer from '../ShipViewer/ShipViewer';
+import Waypoints from '../Waypoint/Waypoint';
 
 export default function PlayerConsole() {
   const navigate = useNavigate();
   const { token } = useContext(TokenContext);
-  const { agent, currentShip, systems, waypoints } = useContext(GameContext);
+  const { agent, currentShip, systems, waypoints, selectedWaypoint } =
+    useContext(GameContext);
   const [selectedContractId, setContractId] = useState(undefined);
   const [contracts, setContracts] = useState(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +27,6 @@ export default function PlayerConsole() {
   useEffect(() => {
     if (!currentShip) setIsModalOpen(true);
   }, []);
-
   useEffect(() => {
     if (token) {
       retrieveContracts(token, setContracts);
@@ -44,7 +45,7 @@ export default function PlayerConsole() {
 
   return (
     <div className='flex p-8 w-full h-screen space-x-4'>
-      <div className='flex flex-col mb-auto pb-2 border-b-2 border-b-map-green'>
+      <div className='flex flex-col mb-auto pb-2'>
         <NavBar route={'/'} />
         <div className='flex space-x-2'>
           <div className='flex flex-col'>
@@ -64,6 +65,7 @@ export default function PlayerConsole() {
           </div>
         </div>
         <NavigationButtons openModal={setIsModalOpen} />
+        <Waypoints waypointSymbol={selectedWaypoint.symbol} />
       </div>
       <MapSelector systems={systems} waypoints={waypoints} />
       <Modal isOpen={isModalOpen} onClose={closeModal}>

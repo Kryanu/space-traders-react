@@ -55,14 +55,13 @@ function App() {
   const [waypoints, setWaypoints] = useState(undefined);
   const [agent, setAgent] = useState(undefined);
   const [location, setLocation] = useState(undefined);
-  const [ships, setShips] = useState(undefined);
   const [currentShip, setCurrentShip] = useState(undefined);
+  const [selectedWaypoint, setSelectedWaypoint] = useState({ traits: [] });
   const [isToastVisible, setIsToastVisible] = useState({
     message: '',
     isVisible: false,
   });
   const [systems, setSystems] = useState(undefined);
-  //Sets token when handle changes and on page load
   useEffect(() => {
     const localToken = window.localStorage.getItem(tokenKey);
     if (!token) {
@@ -108,8 +107,6 @@ function App() {
             setAgent,
             location,
             setLocation,
-            ships,
-            setShips,
             isToastVisible,
             setIsToastVisible,
             systems,
@@ -117,6 +114,8 @@ function App() {
             waypoints,
             currentShip,
             setCurrentShip,
+            selectedWaypoint,
+            setSelectedWaypoint,
           }}
         >
           <RouterProvider router={router} />

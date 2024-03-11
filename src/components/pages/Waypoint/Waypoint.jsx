@@ -1,14 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { orbitShip, retrieveWaypoint } from './Waypoint_logic';
 import { Waypoint } from './Waypoint_children';
-import { NavBar } from '../../Layouts';
 import Countdown from '../../atoms/Countdown';
 import { TokenContext, GameContext } from '../../../context';
-import { useLocation } from 'react-router-dom';
+import './Waypoint.css';
+export default function Waypoints(props) {
+  const { waypointSymbol } = props;
 
-export default function AstroidMining() {
-  const routerProps = useLocation();
-  const { waypointSymbol } = routerProps.state;
   const { token } = useContext(TokenContext);
   const { location, currentShip } = useContext(GameContext);
   const [waypoint, setWaypoint] = useState(undefined);
@@ -19,13 +17,12 @@ export default function AstroidMining() {
       retrieveWaypoint(location.system, waypointSymbol, setWaypoint);
       orbitShip({ token, shipSymbol: currentShip.symbol });
     }
-  }, []);
+  }, [waypointSymbol]);
 
   if (!waypoint) return <></>;
 
   return (
-    <div className='flex flex-col'>
-      <NavBar route={'/console'} />
+    <div className='flex flex-col mt-4 p-4 rounded-md diagonal-line border-2 border-map-green'>
       <Waypoint asteroids={waypoint} setTime={setTime} />
       <Countdown arrival={time} />
     </div>

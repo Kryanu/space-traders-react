@@ -7,11 +7,10 @@ import {
   Scatter,
   ResponsiveContainer,
 } from 'recharts';
-import { NavigateButton } from '../../atoms';
 import { isValidArray } from '../../../hooks';
-import { Modal } from '../';
-import { useState } from 'react';
-import { Traits } from '../../molecules/';
+import { useContext } from 'react';
+import { GameContext } from '../../../context';
+
 const customToolTip = (props) => {
   const { payload } = props;
   if (!isValidArray(payload)) {
@@ -32,23 +31,13 @@ const customToolTip = (props) => {
   );
 };
 
-const navigate = async ({ closeModal }) => {
-  closeModal();
-};
-
 export default function Map(props) {
   const { data, title } = props;
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedWaypoint, setSelectedWaypoint] = useState({ traits: [] });
-  const [isTraitsOpen, setIsTraitsOpen] = useState(false);
+  const { setSelectedWaypoint } = useContext(GameContext);
 
-  const openModal = (waypoint) => {
-    setIsTraitsOpen(false);
+  const setNav = (waypoint) => {
     setSelectedWaypoint(waypoint);
-    setIsModalOpen(true);
   };
-
-  const closeModal = () => setIsModalOpen(false);
 
   if (!data) {
     return <></>;
@@ -69,14 +58,14 @@ export default function Map(props) {
               // axisLine={false}
               type='number'
               name='X'
-              strokeDasharray="3 3"
+              strokeDasharray='3 3'
             />
             <YAxis
               dataKey='y'
               tick={true}
               hide={false}
               // axisLine={false}
-              strokeDasharray="3 3"
+              strokeDasharray='3 3'
               type='number'
               name='Y'
             />
@@ -86,40 +75,12 @@ export default function Map(props) {
               data={data}
               fill='#32C832'
               onClick={(waypoint) => {
-                openModal(waypoint);
+                setNav(waypoint);
               }}
             />
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div className='p-4 rounded-md bg-blackie border-2 border-map-green'>
-          <Typography variant='h6' color={'#32C832'}>
-            Do you want to fly to this waypoint?
-          </Typography>
-          <List>
-            <ListItem
-              sx={{ alignItems: 'start', color: '#32C832' }}
-              className='flex flex-col border-2 rounded-md border-map-green mb-2'
-            >
-              <Traits
-                waypoint={selectedWaypoint}
-                isOpen={isTraitsOpen}
-                setIsOpen={setIsTraitsOpen}
-              />
-            </ListItem>
-          </List>
-          <NavigateButton
-            text={'View'}
-            callBack={navigate}
-            callBackProps={{
-              closeModal,
-            }}
-            route={'/console/waypoint'}
-            state={{ waypointSymbol: selectedWaypoint.symbol }}
-          />
-        </div>
-      </Modal>
     </>
   );
 }

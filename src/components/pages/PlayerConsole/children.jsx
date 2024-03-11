@@ -79,7 +79,7 @@ export function ContractIdList(props) {
 export function NavigationButtons(props) {
   const { openModal } = props;
   return (
-    <div className='flex'>
+    <div className='flex pb-2 border-b-2 border-map-green'>
       <NavigateButton
         style={{
           marginLeft: 'auto',
