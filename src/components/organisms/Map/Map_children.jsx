@@ -6,6 +6,12 @@ export function TraitDetails(props) {
   if (!isValidArray(traits)) return <></>;
 
   return traits.map((trait, index) => {
-    return <ListItemText key={index} primary={`${trait.name}`} />;
+    return (
+      <ListItemText
+        key={index}
+        style={{ color: '#32C832' }}
+        primary={` - ${trait.name}`}
+      />
+    );
   });
 }

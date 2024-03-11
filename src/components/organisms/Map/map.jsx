@@ -112,6 +112,10 @@ export default function Map(props) {
               sx={{ alignItems: 'start' }}
               className='flex flex-col border-2 rounded-md border-map-green mb-2'
             >
+              <ListItemText
+                primary={`Type: ${selectedWaypoint.type}`}
+                style={{ color: '#32C832' }}
+              ></ListItemText>
               <ListItemButton onClick={() => setIsTraitsOpen(!isTraitsOpen)}>
                 <ListItemText primary='Traits' style={{ color: '#32C832' }} />
               </ListItemButton>
@@ -122,7 +126,7 @@ export default function Map(props) {
             </ListItem>
           </List>
           <NavigateButton
-            text={'Navigate'}
+            text={'View'}
             callBack={navigate}
             callBackProps={{
               closeModal,
