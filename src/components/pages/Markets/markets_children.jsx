@@ -33,7 +33,7 @@ export const Actions = (token, shipSymbol, market, cargo) => {
 export function MarketList(props) {
   const { markets } = props;
   const { token } = useContext(TokenContext);
-  const { ships } = useContext(GameContext);
+  const { currentShip } = useContext(GameContext);
   if (!markets) {
     return <></>;
   }
@@ -45,7 +45,7 @@ export function MarketList(props) {
       >
         <Typography color={'#32C832'}>{`Symbol:${market.symbol}`}</Typography>
         <Typography color={'#32C832'}>{`Type:${market.type}`}</Typography>
-        {Actions(token, ships.symbol, market, ships.cargo)}
+        {Actions(token, currentShip.symbol, market, currentShip.cargo)}
       </div>
     );
   });

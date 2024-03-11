@@ -16,14 +16,14 @@ import ShipViewer from '../ShipViewer/ShipViewer';
 export default function PlayerConsole() {
   const navigate = useNavigate();
   const { token } = useContext(TokenContext);
-  const { agent, setShips, ship, systems, waypoints } = useContext(GameContext);
+  const { agent, currentShip, systems, waypoints } = useContext(GameContext);
   const [selectedContractId, setContractId] = useState(undefined);
   const [contracts, setContracts] = useState(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
-    if (!ship) setIsModalOpen(true);
+    if (!currentShip) setIsModalOpen(true);
   }, []);
 
   useEffect(() => {
