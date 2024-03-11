@@ -3,8 +3,6 @@
 -------------------------
 ## - Highlight Current waypoint on starchart - SP001
 
-## - Finish Refactor AstroidMining into Waypoint Page - SP002 
-
 ## - Add Filter by Trait in Starchart Section - SP003
 
 ## - Add Action screen into bottom-left corner rather than new page for Waypoint details - SP004
