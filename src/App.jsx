@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import './App.css';
 import { router } from './router/router.jsx';
@@ -8,14 +8,43 @@ import { retrieveToken } from './hooks/index.js';
 import { GameContext, TokenContext } from './context';
 import { Toast } from './components/molecules/Toast/Toast.jsx';
 import { API } from './api/service.js';
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+import { darkTheme } from './constants/';
 
 const retrieveSystems = async (setSystems) => {
   setSystems(await API.listSystems());
+};
+
+const retrieveWaypoints = async (token, system, updateWaypoints) => {
+  const { data, meta } = await API.listWaypoints(token, system, {
+    limit: 20,
+    page: 1,
+  });
+  let waypoints = [...data];
+  const pages = Math.ceil(meta.total / 20);
+  if (pages < 2) {
+    updateWaypoints(waypoints);
+    return;
+  }
+  for (let i = 2; i <= pages; i++) {
+    const waypointRes = await API.listWaypoints(token, system, {
+      limit: 20,
+      page: i,
+    });
+    waypoints = [...waypoints, ...waypointRes.data];
+  }
+  updateWaypoints(waypoints);
+};
+
+const setLocationDetails = (agent) => {
+  if (agent && agent?.headquarters.length > 0) {
+    const locations = agent.headquarters.split('-');
+
+    return {
+      sector: locations[0],
+      system: `${locations[0]}-${locations[1]}`,
+      waypoint: agent.headquarters,
+    };
+  }
 };
 
 function App() {
@@ -23,8 +52,9 @@ function App() {
   const handleKey = 'handle';
   const [token, setToken] = useState(undefined);
   const [handle, setHandle] = useState(
-    window.sessionStorage.getItem(handleKey)
+    window.localStorage.getItem(handleKey)
   );
+  const [waypoints, setWaypoints] = useState(undefined);
   const [agent, setAgent] = useState(undefined);
   const [location, setLocation] = useState(undefined);
   const [ships, setShips] = useState(undefined);
@@ -35,7 +65,7 @@ function App() {
   const [systems, setSystems] = useState(undefined);
   //Sets token when handle changes and on page load
   useEffect(() => {
-    const localToken = window.sessionStorage.getItem(tokenKey);
+    const localToken = window.localStorage.getItem(tokenKey);
     if (!token) {
       try {
         if (localToken && localToken !== 'undefined') {
@@ -43,7 +73,7 @@ function App() {
         } else {
           retrieveToken(handle, setToken);
           if (token) {
-            window.sessionStorage.setItem(tokenKey, token);
+            window.localStorage.setItem(tokenKey, token);
           }
         }
       } catch (ex) {
@@ -51,14 +81,23 @@ function App() {
       }
     } else {
       if (!localToken || localToken === 'undefined') {
-        window.sessionStorage.setItem(tokenKey, token);
+        window.localStorage.setItem(tokenKey, token);
       }
     }
   }, [handle]);
 
   useEffect(() => {
-    retrieveSystems(setSystems);
-  }, []);
+    if (!location && agent) {
+      setLocation(setLocationDetails(agent));
+    }
+  }, [agent]);
+
+  useEffect(() => {
+    if (location) {
+      retrieveSystems(setSystems);
+      retrieveWaypoints(token, location.system, setWaypoints);
+    }
+  }, [location]);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -76,6 +115,7 @@ function App() {
             setIsToastVisible,
             systems,
             setSystems,
+            waypoints,
           }}
         >
           <RouterProvider router={router} />

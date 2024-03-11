@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { intervalToDuration, formatDuration } from 'date-fns';
 export default function Countdown(props) {
   const { arrival } = props;
-  debugger;
   const arrivalMS = new Date(arrival).getTime();
   const nowMS = new Date().getTime();
   const diffMS = arrivalMS - nowMS;

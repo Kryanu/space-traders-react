@@ -1,4 +1,11 @@
-import { ListItem, List, ListItemText } from '@mui/material';
+import {
+  ListItem,
+  List,
+  ListItemText,
+  Collapse,
+  ListItemButton,
+  Divider,
+} from '@mui/material';
 import { isValidArray } from '../../../hooks';
 import {
   timedNavigateShip,
@@ -8,7 +15,8 @@ import {
   mineAsteroid,
 } from './astroidMining_logic';
 import { ActionRow } from '../../molecules/index';
-
+import { useState, useContext } from 'react';
+import { TokenContext, GameContext } from '../../../context';
 function DisplayTraits(props) {
   const { asteroid } = props;
   if (!asteroid.traits) {
@@ -16,20 +24,19 @@ function DisplayTraits(props) {
   }
 
   return asteroid.traits.map((trait, index) => {
-    return <ListItemText key={index}>{`Trait: ${trait.name}`}</ListItemText>;
+    return <ListItemText key={index}>{`- ${trait.name}`}</ListItemText>;
   });
 }
 
-export function DisplayAsteroids(
-  asteroids,
-  token,
-  shipSymbol,
-  setTime,
-  setIsToastVisible
-) {
+export function DisplayAsteroids(props) {
+  const { asteroids, setTime } = props;
+  const { token } = useContext(TokenContext);
+  const { ships, setIsToastVisible } = useContext(GameContext);
   if ((!asteroids && !isValidArray(asteroids)) || !token) {
     return <></>;
   }
+  const [isTraitsOpen, setIsTraitsOpen] = useState(false);
+  let shipSymbol = ships?.symbol;
   const actionProps = { token, shipSymbol, setIsToastVisible };
   const AsteroidList = asteroids.map((asteroid, index) => {
     const actionRowConfig = [
@@ -65,13 +72,19 @@ export function DisplayAsteroids(
     ];
     return (
       <ListItem
-        sx={{ alignItems: 'start' }}
-        className='flex flex-col border-2 rounded-md border-slate-300 mb-2'
+        sx={{ alignItems: 'start', color: '#32C832' }}
+        className='flex flex-col border-2 rounded-md border-map-green mb-2'
         key={index}
       >
         <ListItemText>{`Symbol ${asteroid.symbol}`}</ListItemText>
         <ListItemText>{`Type ${asteroid.type}`}</ListItemText>
-        <DisplayTraits asteroid={asteroid} />
+        <ListItemButton onClick={() => setIsTraitsOpen(!isTraitsOpen)}>
+          <ListItemText primary='Traits' style={{ color: '#32C832' }} />
+        </ListItemButton>
+        <Collapse in={isTraitsOpen}>
+          <Divider />
+          <DisplayTraits asteroid={asteroid} />
+        </Collapse>
         <ActionRow actions={actionRowConfig} />
       </ListItem>
     );

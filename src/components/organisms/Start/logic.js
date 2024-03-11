@@ -7,11 +7,23 @@ export const retrieveToken = async (handle) => {
   return data?.items[0]?.token;
 };
 
-export const handleLogin = async ({ handleInput, setToken, setHandle }) => {
+const setAgentDetails = async (token, setAgent) => {
+  const res = await API.viewAgent(token);
+  setAgent(res);
+};
+
+export const handleLogin = async ({
+  handleInput,
+  setToken,
+  setHandle,
+  setAgent,
+}) => {
   try {
-    setToken(await retrieveToken(handleInput));
+    const token = await retrieveToken(handleInput);
+    setToken(token);
     setHandle(handleInput);
-    window.sessionStorage.setItem('handle', handleInput);
+    window.localStorage.setItem('handle', handleInput);
+    await setAgentDetails(token, setAgent);
   } catch (ex) {
     throw new Error('Handle was incorrect');
   }
@@ -40,5 +52,5 @@ export const handleSignUp = async ({
   const data = await registerHandle(handle, faction);
   setToken(data.token);
   setHandle(handle);
-  window.sessionStorage.setItem('handle', handle);
+  window.localStorage.setItem('handle', handle);
 };

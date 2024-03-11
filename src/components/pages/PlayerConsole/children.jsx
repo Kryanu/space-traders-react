@@ -16,12 +16,12 @@ export function AgentDetails(props) {
     return <></>;
   }
   return (
-    <div className='flex flex-col rounded-md border-2 border-slate-300 p-4 mx-auto'>
-      <Typography variant='h6'>{`Symbol: ${agent.symbol}`}</Typography>
-      <Typography variant='h6'>{`HQ Coordinates: ${agent.headquarters}`}</Typography>
-      <Typography variant='h6'>{`Credits: ${agent.credits}`}</Typography>
-      <Typography variant='h6'>{`Faction: ${agent.startingFaction}`}</Typography>
-      <Typography variant='h6'>{`Ships: ${agent.shipCount}`}</Typography>
+    <div className='flex flex-col rounded-md border-2 border-map-green p-4 mx-auto'>
+      <Typography color={'#32C832'} variant='h6'>{`Symbol: ${agent.symbol}`}</Typography>
+      <Typography color={'#32C832'} variant='h6'>{`HQ Coordinates: ${agent.headquarters}`}</Typography>
+      <Typography color={'#32C832'} variant='h6'>{`Credits: ${agent.credits}`}</Typography>
+      <Typography color={'#32C832'} variant='h6'>{`Faction: ${agent.startingFaction}`}</Typography>
+      <Typography color={'#32C832'} variant='h6'>{`Ships: ${agent.shipCount}`}</Typography>
     </div>
   );
 }
@@ -35,8 +35,8 @@ export function ContractIdList(props) {
   const data = contracts.map((x) => {
     return (
       <ListItem
-        sx={{ alignItems: 'start' }}
-        className='flex flex-col border-2 rounded-md border-slate-300 mb-2'
+        sx={{ alignItems: 'start', color:'#32C832' }}
+        className='flex flex-col border-2 rounded-md border-map-green mb-2'
         key={x.id}
       >
         <ListItemText>{`Payment on Accepted: ${x.terms?.payment?.onAccepted}`}</ListItemText>
@@ -113,7 +113,6 @@ export function MapSelector(props) {
     <div className='flex flex-col space-y-4 border-l-4 border-l-map-green pl-8'>
       <div className='flex items-start space-x-2 border-2 border-green-700 p-2 rounded-md mr-auto'>
         <Button
-          variant='contained'
           onClick={() => {
             setSelectedMap(MAPS.systems);
           }}
@@ -121,7 +120,6 @@ export function MapSelector(props) {
           View Systems
         </Button>
         <Button
-          variant='contained'
           onClick={() => {
             setSelectedMap(MAPS.waypoints);
           }}

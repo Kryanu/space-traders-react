@@ -6,8 +6,7 @@ import Countdown from '../../atoms/Countdown';
 import { TokenContext, GameContext } from '../../../context';
 export default function AstroidMining() {
   const { token } = useContext(TokenContext);
-  const { location, ships, isToastVisible, setIsToastVisible } =
-    useContext(GameContext);
+  const { location, ships } = useContext(GameContext);
   const [asteroids, setAsteroids] = useState(undefined);
   const [time, setTime] = useState(0);
   const renderCount = () => {
@@ -25,13 +24,7 @@ export default function AstroidMining() {
   return (
     <div className='flex flex-col'>
       <NavBar route={'/console'} />
-      {DisplayAsteroids(
-        asteroids,
-        token,
-        ships.symbol,
-        setTime,
-        setIsToastVisible
-      )}
+      <DisplayAsteroids asteroids={asteroids} setTime={setTime} />
       {renderCount(time)}
     </div>
   );

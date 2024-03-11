@@ -4,7 +4,7 @@ import { handleLogin, handleSignUp } from './logic';
 import { Button, TextField } from '@mui/material';
 
 export const InitialComponents = (isSignUp, hooks) => {
-  const { setHandle, setSignUp, setToken } = hooks;
+  const { setHandle, setSignUp, setToken, setAgent } = hooks;
   const [handleInput, setHandleInput] = useState(undefined);
   if (isSignUp) {
     return <></>;
@@ -22,7 +22,6 @@ export const InitialComponents = (isSignUp, hooks) => {
       <div className='flex'>
         <Button
           onClick={async () => setSignUp(true)}
-          variant='contained'
           sx={{
             margin: 'auto',
           }}
@@ -33,7 +32,7 @@ export const InitialComponents = (isSignUp, hooks) => {
           isRendered={true}
           text={'Login'}
           callBack={handleLogin}
-          callBackProps={{ handleInput, setToken, setHandle }}
+          callBackProps={{ handleInput, setToken, setHandle, setAgent }}
           route={'/console'}
         />
       </div>

@@ -1,3 +1,5 @@
+export { darkTheme } from './material';
+
 const TRAITS = [
   'UNCHARTED',
   'UNDER_CONSTRUCTION',

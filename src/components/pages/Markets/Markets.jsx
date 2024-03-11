@@ -22,10 +22,10 @@ export default function Markets() {
       return (
         <div
           key={index}
-          className='flex flex-col text-left m-2 p-2 border-2 rounded-md border-slate-300 mb-2'
+          className='flex flex-col text-left m-2 p-2 border-2 rounded-md border-map-green mb-2'
         >
-          <Typography>{`Symbol:${market.symbol}`}</Typography>
-          <Typography>{`Type:${market.type}`}</Typography>
+          <Typography color={'#32C832'}>{`Symbol:${market.symbol}`}</Typography>
+          <Typography color={'#32C832'}>{`Type:${market.type}`}</Typography>
           {Actions(token, ships.symbol, market, ships.cargo)}
         </div>
       );

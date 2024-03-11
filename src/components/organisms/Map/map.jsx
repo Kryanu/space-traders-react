@@ -115,7 +115,7 @@ export default function Map(props) {
                 <ListItemText primary='Traits' style={{ color: '#32C832' }} />
               </ListItemButton>
               <Collapse in={isTraitsOpen}>
-                <Divider className='p-2' />
+                <Divider />
                 <TraitDetails traits={selectedWaypoint.traits} />
               </Collapse>
             </ListItem>

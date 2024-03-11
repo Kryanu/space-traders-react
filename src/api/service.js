@@ -81,12 +81,8 @@ export const API = {
     try {
       const res = await axios.get(url, {
         params,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
       });
-      return res?.data?.data || res.data || res;
+      return res?.data || res;
     } catch (ex) {
       throw new Error(ex);
     }

@@ -35,7 +35,6 @@ export default function NavigateButton(props) {
       onClick={async () => {
         await navigateCallBack();
       }}
-      variant='contained'
       sx={classes}
     >
       {text}
