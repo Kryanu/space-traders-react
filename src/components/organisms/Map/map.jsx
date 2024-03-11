@@ -56,7 +56,7 @@ export default function Map(props) {
 
   return (
     <>
-      <div className='flex flex-col grow items-start'>
+      <div className='flex flex-col grow items-start space-y-2'>
         <Typography variant='h4' color={'#32C832'}>
           {`${title}`}
         </Typography>
@@ -65,16 +65,18 @@ export default function Map(props) {
             <XAxis
               dataKey='x'
               tick={true}
-              hide={true}
-              axisLine={false}
+              hide={false}
+              // axisLine={false}
               type='number'
               name='X'
+              strokeDasharray="3 3"
             />
             <YAxis
               dataKey='y'
               tick={true}
-              hide={true}
-              axisLine={false}
+              hide={false}
+              // axisLine={false}
+              strokeDasharray="3 3"
               type='number'
               name='Y'
             />
