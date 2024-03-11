@@ -1,5 +1,4 @@
 import {
-  Button,
   List,
   ListItem,
   ListItemText,
@@ -16,12 +15,11 @@ import {
   Scatter,
   ResponsiveContainer,
 } from 'recharts';
-import { TraitDetails } from './Map_children';
 import { NavigateButton } from '../../atoms';
 import { isValidArray } from '../../../hooks';
 import { Modal } from '../';
-import { useContext, useState } from 'react';
-import { GameContext, TokenContext } from '../../../context';
+import { useState } from 'react';
+import { Traits } from '../../molecules/';
 const customToolTip = (props) => {
   const { payload } = props;
   if (!isValidArray(payload)) {
@@ -48,8 +46,6 @@ const navigate = async ({ closeModal }) => {
 
 export default function Map(props) {
   const { data, title } = props;
-  const { ships } = useContext(GameContext);
-  const { token } = useContext(TokenContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedWaypoint, setSelectedWaypoint] = useState({ traits: [] });
   const [isTraitsOpen, setIsTraitsOpen] = useState(false);
@@ -109,20 +105,14 @@ export default function Map(props) {
           </Typography>
           <List>
             <ListItem
-              sx={{ alignItems: 'start' }}
+              sx={{ alignItems: 'start', color: '#32C832' }}
               className='flex flex-col border-2 rounded-md border-map-green mb-2'
             >
-              <ListItemText
-                primary={`Type: ${selectedWaypoint.type}`}
-                style={{ color: '#32C832' }}
-              ></ListItemText>
-              <ListItemButton onClick={() => setIsTraitsOpen(!isTraitsOpen)}>
-                <ListItemText primary='Traits' style={{ color: '#32C832' }} />
-              </ListItemButton>
-              <Collapse in={isTraitsOpen}>
-                <Divider />
-                <TraitDetails traits={selectedWaypoint.traits} />
-              </Collapse>
+              <Traits
+                waypoint={selectedWaypoint}
+                isOpen={isTraitsOpen}
+                setIsOpen={setIsTraitsOpen}
+              />
             </ListItem>
           </List>
           <NavigateButton

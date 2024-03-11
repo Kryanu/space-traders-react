@@ -11,5 +11,12 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: '#32C832',
+        },
+      },
+    },
   },
 });

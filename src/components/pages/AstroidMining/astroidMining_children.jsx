@@ -13,26 +13,15 @@ import {
   orbitShip,
   mineAsteroid,
 } from './astroidMining_logic';
-import { ActionRow } from '../../molecules/index';
+import { ActionRow, Traits } from '../../molecules/index';
 import { useState, useContext } from 'react';
 import { TokenContext, GameContext } from '../../../context';
-function DisplayTraits(props) {
-  const { asteroid } = props;
-  if (!asteroid.traits) {
-    return <></>;
-  }
 
-  return asteroid.traits.map((trait, index) => {
-    return <ListItemText key={index}>{`- ${trait.name}`}</ListItemText>;
-  });
-}
-
-export function DisplayAsteroids(props) {
+export function Waypoint(props) {
   const { asteroids, setTime } = props;
   const { token } = useContext(TokenContext);
   const { ships, setIsToastVisible } = useContext(GameContext);
   const [isTraitsOpen, setIsTraitsOpen] = useState(false);
-  debugger;
   const waypoint = asteroids;
   if (!asteroids || !token) {
     return <></>;
@@ -76,15 +65,11 @@ export function DisplayAsteroids(props) {
         sx={{ alignItems: 'start', color: '#32C832' }}
         className='flex flex-col border-2 rounded-md border-map-green mb-2'
       >
-        <ListItemText>{`Symbol ${waypoint.symbol}`}</ListItemText>
-        <ListItemText>{`Type ${waypoint.type}`}</ListItemText>
-        <ListItemButton onClick={() => setIsTraitsOpen(!isTraitsOpen)}>
-          <ListItemText primary='Traits' style={{ color: '#32C832' }} />
-        </ListItemButton>
-        <Collapse in={isTraitsOpen}>
-          <Divider />
-          <DisplayTraits asteroid={waypoint} />
-        </Collapse>
+        <Traits
+          waypoint={waypoint}
+          isOpen={isTraitsOpen}
+          setIsOpen={setIsTraitsOpen}
+        />
         <ActionRow actions={actionRowConfig} />
       </ListItem>
     </List>
