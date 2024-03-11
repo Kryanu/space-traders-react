@@ -32,13 +32,14 @@ export function DisplayAsteroids(props) {
   const { asteroids, setTime } = props;
   const { token } = useContext(TokenContext);
   const { ships, setIsToastVisible } = useContext(GameContext);
+  const [isTraitsOpen, setIsTraitsOpen] = useState(false);
   if ((!asteroids && !isValidArray(asteroids)) || !token) {
     return <></>;
   }
-  const [isTraitsOpen, setIsTraitsOpen] = useState(false);
+  let asterdoidsData = asteroids.data;
   let shipSymbol = ships?.symbol;
   const actionProps = { token, shipSymbol, setIsToastVisible };
-  const AsteroidList = asteroids.map((asteroid, index) => {
+  const AsteroidList = asterdoidsData.map((asteroid, index) => {
     const actionRowConfig = [
       {
         text: 'Fly To',

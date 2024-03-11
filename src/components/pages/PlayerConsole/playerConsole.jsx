@@ -19,7 +19,7 @@ export default function PlayerConsole() {
   const [contracts, setContracts] = useState(undefined);
 
   useEffect(() => {
-    if (!agent && token) {
+    if (token) {
       retrieveContracts(token, setContracts);
       retrieveShips(token, setShips);
     } else if (!contracts && token) {
@@ -36,8 +36,8 @@ export default function PlayerConsole() {
   }, [selectedContractId]);
 
   return (
-    <div className='flex space-x-4'>
-      <div className='flex flex-col '>
+    <div className='flex p-8 w-full h-screen space-x-4'>
+      <div className='flex flex-col mb-auto pb-2 border-b-2 border-b-map-green'>
         <NavBar route={'/'} />
         <div className='flex space-x-2'>
           <div className='flex flex-col'>

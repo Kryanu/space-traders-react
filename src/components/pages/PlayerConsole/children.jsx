@@ -110,7 +110,7 @@ export function MapSelector(props) {
   }
 
   return (
-    <div className='flex flex-col space-y-4 border-l-4 border-l-map-green pl-8'>
+    <div className='flex flex-col grow space-y-4 border-l-4 border-l-map-green pl-8'>
       <div className='flex items-start space-x-2 border-2 border-green-700 p-2 rounded-md mr-auto'>
         <Button
           onClick={() => {

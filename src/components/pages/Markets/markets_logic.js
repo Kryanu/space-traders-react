@@ -1,11 +1,10 @@
 import { retrieveWaypoints } from '../../../hooks';
 import { API } from '../../../api/service';
 export const retrieveMarkets = async (token, system, setMarkets) => {
-  setMarkets(
-    await retrieveWaypoints(token, system, {
-      traits: 'MARKETPLACE',
-    })
-  );
+  const { data } = await retrieveWaypoints(token, system, {
+    traits: 'MARKETPLACE',
+  });
+  setMarkets(data);
 };
 
 export const orbitShip = async ({ token, shipSymbol }) => {
