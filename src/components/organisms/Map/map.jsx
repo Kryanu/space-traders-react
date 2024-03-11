@@ -91,7 +91,7 @@ export default function Map(props) {
         </ResponsiveContainer>
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div className='p-4 rounded-md bg-blackie'>
+        <div className='p-4 rounded-md bg-blackie border-2 border-map-green'>
           <Typography variant='h6' color={'#32C832'}>
             Do you want to fly to this waypoint?
           </Typography>

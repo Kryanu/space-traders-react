@@ -63,7 +63,7 @@ export default function PlayerConsole() {
             />
           </div>
         </div>
-        <NavigationButtons />
+        <NavigationButtons openModal={setIsModalOpen} />
       </div>
       <MapSelector systems={systems} waypoints={waypoints} />
       <Modal isOpen={isModalOpen} onClose={closeModal}>

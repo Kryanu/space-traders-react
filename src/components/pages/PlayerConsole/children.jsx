@@ -9,10 +9,12 @@ import {
 import { Map } from '../../organisms';
 import { NavigateButton } from '../../atoms';
 import { MAPS } from '../../../constants';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { GameContext } from '../../../context';
 export function AgentDetails(props) {
   const { agent } = props;
-  if (!agent) {
+  const { currentShip } = useContext(GameContext);
+  if (!agent || !currentShip) {
     return <></>;
   }
   return (
@@ -37,6 +39,10 @@ export function AgentDetails(props) {
         color={'#32C832'}
         variant='h6'
       >{`Ships: ${agent.shipCount}`}</Typography>
+      <Typography
+        color={'#32C832'}
+        variant='h6'
+      >{`Current Ship: ${currentShip.symbol}`}</Typography>
     </div>
   );
 }
@@ -70,7 +76,8 @@ export function ContractIdList(props) {
   return <List sx={{ paddingTop: '0px' }}>{data}</List>;
 }
 
-export function NavigationButtons() {
+export function NavigationButtons(props) {
+  const { openModal } = props;
   return (
     <div className='flex'>
       <NavigateButton
@@ -91,15 +98,18 @@ export function NavigationButtons() {
         text={'Go To Market'}
         route={'/console/market'}
       />
-      <NavigateButton
-        style={{
+      <Button
+        sx={{
           marginLeft: 'auto',
           marginRight: 'auto',
           marginTop: '0.75rem',
         }}
-        text={'View Ships'}
-        route={'/console/ships'}
-      />
+        onClick={() => {
+          openModal(true);
+        }}
+      >
+        Select Ship
+      </Button>
     </div>
   );
 }

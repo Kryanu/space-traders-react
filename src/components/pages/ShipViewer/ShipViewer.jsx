@@ -68,10 +68,5 @@ export default function ShipViewer(props) {
     retrieveShips(token, setShips);
   }, []);
 
-  return (
-    <>
-      <NavBar route='/console' />
-      {Ships(ships, setCurrentShip, closeModal)}
-    </>
-  );
+  return <>{Ships(ships, setCurrentShip, closeModal)}</>;
 }
