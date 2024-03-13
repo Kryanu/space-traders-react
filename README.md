@@ -18,6 +18,8 @@
 ## - TECHDEBT: Refactor Service to split file based on category - SP010
 
 ## - Add current waypoint data - SP011
+ ~~- Add current Ship tracking~~
+ - Add stationary ship data (probably yellow idky)
 
 # Closed!
 
