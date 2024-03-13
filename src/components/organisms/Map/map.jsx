@@ -1,4 +1,9 @@
-import { List, ListItem, ListItemText, Typography } from '@mui/material';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 import {
   ScatterChart,
   XAxis,
@@ -8,7 +13,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { isValidArray } from '../../../hooks';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { GameContext } from '../../../context';
 
 const customToolTip = (props) => {
@@ -33,11 +38,27 @@ const customToolTip = (props) => {
 
 export default function Map(props) {
   const { data, title } = props;
-  const { setSelectedWaypoint } = useContext(GameContext);
-
+  const { setSelectedWaypoint, currentShip } = useContext(GameContext);
+  const [shipWaypoint, setShipWaypoint] = useState(
+    currentShip?.nav?.waypointSymbol
+  );
   const setNav = (waypoint) => {
     setSelectedWaypoint(waypoint);
+    setShipWaypoint(waypoint.symbol);
   };
+
+  let filteredWaypoints;
+  let currentWaypoint;
+
+  if (data) {
+    if (shipWaypoint) {
+      filteredWaypoints = data.filter((item) => item.symbol !== shipWaypoint);
+      currentWaypoint = [data.find((item) => item.symbol === shipWaypoint)];
+    }
+  }
+  useEffect(() => {
+    setShipWaypoint(currentShip?.nav?.waypointSymbol);
+  }, [currentShip]);
 
   if (!data) {
     return <></>;
@@ -74,6 +95,14 @@ export default function Map(props) {
               name='A school'
               data={data}
               fill='#32C832'
+              onClick={(waypoint) => {
+                setNav(waypoint);
+              }}
+            />
+            <Scatter
+              name='A school'
+              data={currentWaypoint}
+              fill='#c832c8'
               onClick={(waypoint) => {
                 setNav(waypoint);
               }}

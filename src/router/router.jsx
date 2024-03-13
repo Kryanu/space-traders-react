@@ -3,10 +3,8 @@ import {
   PlayerConsole,
   ContractDetails,
   ShipShop,
-  Waypoint,
   Markets,
   KitchenSink,
-  ShipViewer,
 } from '../components/pages';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -28,10 +26,6 @@ export const router = createBrowserRouter([
     element: <ShipShop />,
   },
   {
-    path: '/console/waypoint',
-    element: <Waypoint />,
-  },
-  {
     path: '/console/market',
     element: <Markets />,
   },
@@ -39,8 +33,4 @@ export const router = createBrowserRouter([
     path: '/kitchen-sink',
     element: <KitchenSink />,
   },
-  {
-    path: '/console/ships',
-    element: <ShipViewer />
-  }
 ]);
