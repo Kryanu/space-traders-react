@@ -9,30 +9,9 @@ import { GameContext, TokenContext } from './context';
 import { Toast } from './components/molecules/Toast/Toast.jsx';
 import { API } from './api/service.js';
 import { darkTheme } from './constants/';
-
+import { retrieveMapWaypoints } from './hooks/helpers.js';
 const retrieveSystems = async (setSystems) => {
   setSystems(await API.listSystems());
-};
-
-const retrieveWaypoints = async (token, system, updateWaypoints) => {
-  const { data, meta } = await API.listWaypoints(token, system, {
-    limit: 20,
-    page: 1,
-  });
-  let waypoints = [...data];
-  const pages = Math.ceil(meta.total / 20);
-  if (pages < 2) {
-    updateWaypoints(waypoints);
-    return;
-  }
-  for (let i = 2; i <= pages; i++) {
-    const waypointRes = await API.listWaypoints(token, system, {
-      limit: 20,
-      page: i,
-    });
-    waypoints = [...waypoints, ...waypointRes.data];
-  }
-  updateWaypoints(waypoints);
 };
 
 const setLocationDetails = (agent) => {
@@ -93,7 +72,7 @@ function App() {
   useEffect(() => {
     if (location) {
       retrieveSystems(setSystems);
-      retrieveWaypoints(token, location.system, setWaypoints);
+      retrieveMapWaypoints(token, location.system, undefined, setWaypoints);
     }
   }, [location]);
 

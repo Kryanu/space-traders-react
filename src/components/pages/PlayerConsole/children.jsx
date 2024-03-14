@@ -15,7 +15,7 @@ import { NavigateButton } from '../../atoms';
 import { MAPS, SELECTED_TRAITS } from '../../../constants';
 import { useState, useContext, useEffect } from 'react';
 import { GameContext, TokenContext } from '../../../context';
-import { API } from '../../../api/service';
+import { retrieveMapWaypoints } from '../../../hooks/helpers';
 export function AgentDetails(props) {
   const { agent } = props;
   const { currentShip } = useContext(GameContext);
@@ -131,28 +131,6 @@ const FilterItems = () => {
   });
 };
 
-const retrieveWaypoints = async (token, system, traits, updateWaypoints) => {
-  const { data, meta } = await API.listWaypoints(token, system, {
-    limit: 20,
-    page: 1,
-    traits,
-  });
-  let waypoints = [...data];
-  const pages = Math.ceil(meta.total / 20);
-  if (pages < 2) {
-    updateWaypoints(waypoints);
-    return;
-  }
-  for (let i = 2; i <= pages; i++) {
-    const waypointRes = await API.listWaypoints(token, system, {
-      limit: 20,
-      page: i,
-    });
-    waypoints = [...waypoints, ...waypointRes.data];
-  }
-  updateWaypoints(waypoints);
-};
-
 export function MapSelector(props) {
   const [selectedMap, setSelectedMap] = useState(MAPS.waypoints);
   const { token } = useContext(TokenContext);
@@ -166,7 +144,7 @@ export function MapSelector(props) {
 
   useEffect(() => {
     if (currentShip?.nav?.systemSymbol) {
-      retrieveWaypoints(
+      retrieveMapWaypoints(
         token,
         currentShip.nav.systemSymbol,
         filter,
@@ -227,7 +205,7 @@ export function MapSelector(props) {
         </FormControl>
         <Button
           onClick={async () => {
-            await retrieveWaypoints(
+            await retrieveMapWaypoints(
               token,
               currentShip?.nav.systemSymbol,
               undefined,
