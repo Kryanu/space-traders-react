@@ -1,4 +1,4 @@
-import { retrieveContracts, retrieveShips } from './logic';
+import { retrieveContracts } from './logic';
 import { Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import {

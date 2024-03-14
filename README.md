@@ -5,8 +5,6 @@
  - Will different ships be displayed on the screen?
  - Waiting on SP011
 
-## - Add Filter by Trait in Starchart Section - SP003
- - Waiting on SP009
 
 ## - Add agent data update on key points - SP005
 
@@ -22,6 +20,8 @@
  - Add stationary ship data (probably yellow idky)
 
 # Closed!
+
+## ~~- Add Filter by Trait in Starchart Section - SP003~~
 
 ## ~~- Add Action screen into bottom-left corner rather than new page for Waypoint details - SP004~~
 
