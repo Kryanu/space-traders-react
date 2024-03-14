@@ -19,6 +19,12 @@
  ~~- Add current Ship tracking~~
  - Add stationary ship data (probably yellow idky)
 
+## - Add Cargo List into ship modal - SP012
+
+## - Allow View Shipyard - SP013
+
+## - Allow View Market Items up for barter - SP014
+
 # Closed!
 
 ## ~~- Add Filter by Trait in Starchart Section - SP003~~

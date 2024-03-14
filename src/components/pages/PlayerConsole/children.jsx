@@ -94,15 +94,6 @@ export function NavigationButtons(props) {
         text={'Go Ship Shopping'}
         route={'/console/ship-shop'}
       />
-      <NavigateButton
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: '0.75rem',
-        }}
-        text={'Go To Market'}
-        route={'/console/market'}
-      />
       <Button
         sx={{
           marginLeft: 'auto',
