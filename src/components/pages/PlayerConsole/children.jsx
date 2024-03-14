@@ -5,12 +5,17 @@ import {
   ListItemText,
   ListItemButton,
   Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import { Map } from '../../organisms';
 import { NavigateButton } from '../../atoms';
-import { MAPS } from '../../../constants';
-import { useState, useContext } from 'react';
-import { GameContext } from '../../../context';
+import { MAPS, SELECTED_TRAITS } from '../../../constants';
+import { useState, useContext, useEffect } from 'react';
+import { GameContext, TokenContext } from '../../../context';
+import { API } from '../../../api/service';
 export function AgentDetails(props) {
   const { agent } = props;
   const { currentShip } = useContext(GameContext);
@@ -114,9 +119,61 @@ export function NavigationButtons(props) {
   );
 }
 
+const FilterItems = () => {
+  return SELECTED_TRAITS.map((item, index) => {
+    return (
+      <MenuItem
+        sx={{ backgroundColor: '#121212', color: '#32C832' }}
+        key={index}
+        value={item}
+      >{`${item}`}</MenuItem>
+    );
+  });
+};
+
+const retrieveWaypoints = async (token, system, traits, updateWaypoints) => {
+  const { data, meta } = await API.listWaypoints(token, system, {
+    limit: 20,
+    page: 1,
+    traits,
+  });
+  let waypoints = [...data];
+  const pages = Math.ceil(meta.total / 20);
+  if (pages < 2) {
+    updateWaypoints(waypoints);
+    return;
+  }
+  for (let i = 2; i <= pages; i++) {
+    const waypointRes = await API.listWaypoints(token, system, {
+      limit: 20,
+      page: i,
+    });
+    waypoints = [...waypoints, ...waypointRes.data];
+  }
+  updateWaypoints(waypoints);
+};
+
 export function MapSelector(props) {
   const [selectedMap, setSelectedMap] = useState(MAPS.waypoints);
+  const { token } = useContext(TokenContext);
+  const { setWaypoints, currentShip } = useContext(GameContext);
+  const [filter, setFilter] = useState('');
   const { systems, waypoints } = props;
+
+  const handleChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  useEffect(() => {
+    if (currentShip?.nav?.systemSymbol) {
+      retrieveWaypoints(
+        token,
+        currentShip.nav.systemSymbol,
+        filter,
+        setWaypoints
+      );
+    }
+  }, [filter]);
 
   if (!selectedMap || !systems || !waypoints) return <></>;
   let selectedType;
@@ -150,6 +207,36 @@ export function MapSelector(props) {
           }}
         >
           View Waypoints
+        </Button>
+      </div>
+      <div className='flex items-center mr-auto space-x-2'>
+        <FormControl
+          color='primary'
+          sx={{ marginRight: 'auto', minWidth: 100 }}
+        >
+          <InputLabel sx={{ color: '#32C832', fontSize: '1.25rem' }}>
+            Traits
+          </InputLabel>
+          <Select
+            sx={{ color: '#32C832' }}
+            onChange={handleChange}
+            value={filter}
+          >
+            {FilterItems()}
+          </Select>
+        </FormControl>
+        <Button
+          onClick={async () => {
+            await retrieveWaypoints(
+              token,
+              currentShip?.nav.systemSymbol,
+              undefined,
+              setWaypoints
+            );
+            setFilter('');
+          }}
+        >
+          Reset
         </Button>
       </div>
       <Map data={selectedType} title={selectedTitle} />

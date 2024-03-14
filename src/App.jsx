@@ -112,6 +112,7 @@ function App() {
             systems,
             setSystems,
             waypoints,
+            setWaypoints,
             currentShip,
             setCurrentShip,
             selectedWaypoint,

@@ -1,6 +1,6 @@
 export { darkTheme } from './material';
 
-const TRAITS_ARR = [
+export const TRAITS_ARR = [
   'UNCHARTED',
   'UNDER_CONSTRUCTION',
   'MARKETPLACE',
@@ -72,9 +72,17 @@ const TRAITS_ARR = [
   'STRIPPED',
 ];
 
+export const SELECTED_TRAITS = [
+  'MARKETPLACE',
+  'SHIPYARD',
+  'COMMON_METAL_DEPOSITS',
+  'PRECIOUS_METAL_DEPOSITS',
+  'RARE_METAL_DEPOSITS',
+];
+
 export const TRAITS = {
   shipyard: 'SHIPYARD',
-  marketPlace: 'MARKETPLACE'
+  marketPlace: 'MARKETPLACE',
 };
 
 const WAYPOINT_TYPE = [

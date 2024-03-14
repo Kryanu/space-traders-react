@@ -18,5 +18,19 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          color: '#32C832',
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          borderColor: '#32C832'
+        },
+      },
+    },
   },
 });
