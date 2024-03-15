@@ -29,7 +29,7 @@ export const navigateShip = async ({ token, shipSymbol, waypointSymbol }) => {
     throw new Error('Token not found');
   }
   try {
-    return await API.navigateShip(token, shipSymbol, waypointSymbol);
+    return await API.fleet.navigateShip(token, shipSymbol, waypointSymbol);
   } catch {}
 };
 
@@ -39,7 +39,7 @@ export const retrieveMapWaypoints = async (
   traits,
   updateWaypoints
 ) => {
-  const { data, meta } = await API.listWaypoints(token, system, {
+  const { data, meta } = await API.system.listWaypoints(token, system, {
     limit: 20,
     page: 1,
     traits,
@@ -51,7 +51,7 @@ export const retrieveMapWaypoints = async (
     return;
   }
   for (let i = 2; i <= pages; i++) {
-    const waypointRes = await API.listWaypoints(token, system, {
+    const waypointRes = await API.system.listWaypoints(token, system, {
       limit: 20,
       page: i,
     });
@@ -63,7 +63,7 @@ export const retrieveMapWaypoints = async (
 export const sellCargo = async ({ token, shipSymbol, cargo }) => {
   for (let i = 0; i < cargo.inventory.length; i++) {
     try {
-      await API.sellCargo(token, shipSymbol, {
+      await API.fleet.sellCargo(token, shipSymbol, {
         symbol: cargo.inventory[i].symbol,
         units: cargo.inventory[i].units,
       });

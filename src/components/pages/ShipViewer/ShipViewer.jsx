@@ -1,12 +1,11 @@
 import { useState, useContext, useEffect } from 'react';
 import { TokenContext, GameContext } from '../../../context';
 import { API } from '../../../api/service';
-import { display, isValidArray } from '../../../hooks';
+import { isValidArray } from '../../../hooks';
 import { Button, Typography } from '@mui/material';
-import { NavBar } from '../../Layouts';
 
 const retrieveShips = async (token, setShips) => {
-  setShips(await API.getShips(token));
+  setShips(await API.fleet.getShips(token));
 };
 
 const Ships = (ships, setShip, closeModal) => {

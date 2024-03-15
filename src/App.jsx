@@ -11,7 +11,7 @@ import { API } from './api/service.js';
 import { darkTheme } from './constants/';
 import { retrieveMapWaypoints } from './hooks/helpers.js';
 const retrieveSystems = async (setSystems) => {
-  setSystems(await API.listSystems());
+  setSystems(await API.system.listSystems());
 };
 
 const setLocationDetails = (agent) => {

@@ -13,12 +13,12 @@ export const retrieveWaypoint = async (
   waypointSymbol,
   setWaypoint
 ) => {
-  setWaypoint(await API.getWaypoint(systemSymbol, waypointSymbol));
+  setWaypoint(await API.system.getWaypoint(systemSymbol, waypointSymbol));
 };
 
 export const orbitShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   try {
-    await API.orbitShip(token, shipSymbol);
+    await API.fleet.orbitShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Orbiting...' });
   } catch {}
 };
@@ -42,14 +42,14 @@ export const timedNavigateShip = async ({
 
 export const dockShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   try {
-    await API.dockShip(token, shipSymbol);
+    await API.fleet.dockShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Docking...' });
   } catch {}
 };
 
 export const refuelShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   try {
-    await API.refuelShip(token, shipSymbol);
+    await API.fleet.refuelShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Refueling...' });
   } catch {}
 };
@@ -60,7 +60,7 @@ export const mineAsteroid = async ({
   setIsToastVisible,
 }) => {
   try {
-    await API.mineAsteroid(token, shipSymbol);
+    await API.fleet.mineAsteroid(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Mining...' });
   } catch {}
 };

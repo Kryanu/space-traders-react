@@ -8,7 +8,7 @@ export const retrieveToken = async (handle) => {
 };
 
 const setAgentDetails = async (token, setAgent) => {
-  const res = await API.viewAgent(token);
+  const res = await API.agent.viewAgent(token);
   setAgent(res);
 };
 
@@ -35,7 +35,7 @@ const registerHandle = async (handle, faction) => {
   }
 
   try {
-    const startData = await API.registerAgent(handle, faction);
+    const startData = await API.agent.registerAgent(handle, faction);
     await addRecord(handle, startData?.token);
     return startData;
   } catch (ex) {

@@ -7,7 +7,7 @@ export const retrieveAllShips = async (token, system, setShips) => {
   });
   if (isValidArray(shipyards)) {
     const shipPromises = shipyards.map((shipyard) => {
-      return API.getShipyard(token, system, shipyard.symbol);
+      return API.system.getShipyard(token, system, shipyard.symbol);
     });
     const shipyardDetails = await Promise.all(shipPromises);
     const viableShipyards = shipyardDetails.filter(
@@ -25,7 +25,7 @@ export const purchaseShip = async ({
   setIsToastVisible,
 }) => {
   try {
-    const data = await API.purchaseShip(token, shipType, waypoint);
+    const data = await API.fleet.purchaseShip(token, shipType, waypoint);
     updateShips(data.ship);
     setIsToastVisible({
       isVisible: true,
