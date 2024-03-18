@@ -2,31 +2,13 @@ import { API } from '../../../api/service';
 import { addRecord } from '../../../api/pocketbase';
 import { filterRecordByHandle } from '../../../api/pocketbase';
 
-export const retrieveToken = async (handle) => {
-  const data = await filterRecordByHandle(handle);
-  return data?.items[0]?.token;
-};
-
-const setAgentDetails = async (token, setAgent) => {
-  const res = await API.agent.viewAgent(token);
-  setAgent(res);
-};
-
-export const handleLogin = async ({
-  handleInput,
-  setToken,
-  setHandle,
-  setAgent,
-}) => {
-  try {
-    const token = await retrieveToken(handleInput);
-    setToken(token);
-    setHandle(handleInput);
-    window.localStorage.setItem('handle', handleInput);
-    await setAgentDetails(token, setAgent);
-  } catch (ex) {
-    throw new Error('Handle was incorrect');
-  }
+export const retrieveToken = async ({ handleInput, queryClient }) => {
+  await queryClient.fetchQuery({
+    queryKey: ['token'],
+    queryFn: async () => {
+      return await filterRecordByHandle(handleInput);
+    },
+  });
 };
 
 const registerHandle = async (handle, faction) => {

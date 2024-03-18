@@ -8,12 +8,15 @@ import {
 } from './Waypoint_logic';
 import { ActionRow, Traits } from '../../molecules/index';
 import { useState, useContext } from 'react';
-import { TokenContext, GameContext } from '../../../context';
+import { GameContext } from '../../../context';
+import { useQueryClient } from '@tanstack/react-query';
+import { toToken } from '../../../api/adapters';
 
 export function Waypoint(props) {
   const { asteroids, setTime } = props;
-  const { token } = useContext(TokenContext);
   const { currentShip, setIsToastVisible } = useContext(GameContext);
+  const queryClient = useQueryClient();
+  const token = toToken(queryClient);
   const [isTraitsOpen, setIsTraitsOpen] = useState(false);
   const waypoint = asteroids;
   if (!asteroids || !token) {

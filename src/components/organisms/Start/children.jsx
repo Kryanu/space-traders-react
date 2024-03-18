@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { NavigateButton } from '../../atoms';
-import { handleLogin, handleSignUp } from './logic';
+import { handleSignUp, retrieveToken } from './logic';
 import { Button, TextField } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const InitialComponents = (isSignUp, hooks) => {
-  const { setHandle, setSignUp, setToken, setAgent } = hooks;
+  const { setSignUp } = hooks;
   const [handleInput, setHandleInput] = useState(undefined);
+  const queryClient = useQueryClient();
+
   if (isSignUp) {
     return <></>;
   }
@@ -31,8 +34,11 @@ export const InitialComponents = (isSignUp, hooks) => {
         <NavigateButton
           isRendered={true}
           text={'Login'}
-          callBack={handleLogin}
-          callBackProps={{ handleInput, setToken, setHandle, setAgent }}
+          callBack={retrieveToken}
+          callBackProps={{
+            handleInput,
+            queryClient,
+          }}
           route={'/console'}
         />
       </div>

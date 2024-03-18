@@ -14,8 +14,11 @@ import { Map } from '../../organisms';
 import { NavigateButton } from '../../atoms';
 import { MAPS, SELECTED_TRAITS } from '../../../constants';
 import { useState, useContext, useEffect } from 'react';
-import { GameContext, TokenContext } from '../../../context';
+import { GameContext } from '../../../context';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
+import { toToken } from '../../../api/adapters';
+import { useQueryClient } from '@tanstack/react-query';
+
 export function AgentDetails(props) {
   const { agent } = props;
   const { currentShip } = useContext(GameContext);
@@ -124,7 +127,8 @@ const FilterItems = () => {
 
 export function MapSelector(props) {
   const [selectedMap, setSelectedMap] = useState(MAPS.waypoints);
-  const { token } = useContext(TokenContext);
+  const queryClient = useQueryClient();
+  const token = toToken(queryClient);
   const { setWaypoints, currentShip } = useContext(GameContext);
   const [filter, setFilter] = useState('');
   const { systems, waypoints } = props;

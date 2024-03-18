@@ -1,47 +1,51 @@
-import { retrieveContracts } from './logic';
 import { Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import {
-  AgentDetails,
-  ContractIdList,
-  NavigationButtons,
-  MapSelector,
-} from './children';
-import { useNavigate } from 'react-router-dom';
+import { AgentDetails, NavigationButtons, MapSelector } from './children';
 import NavBar from '../../Layouts/navbar';
-import { TokenContext, GameContext } from '../../../context/';
+import { GameContext } from '../../../context/';
 import { Modal } from '../../organisms';
 import ShipViewer from '../ShipViewer/ShipViewer';
 import Waypoints from '../Waypoint/Waypoint';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { toToken } from '../../../api/adapters';
+import {
+  setLocationDetails,
+  retrieveAgent,
+  retrieveSystemsConfig,
+} from './logic';
+import { retrieveMapWaypoints } from '../../../hooks/helpers';
 
 export default function PlayerConsole() {
-  const navigate = useNavigate();
-  const { token } = useContext(TokenContext);
-  const { agent, currentShip, systems, waypoints, selectedWaypoint } =
-    useContext(GameContext);
-  const [selectedContractId, setContractId] = useState(undefined);
-  const [contracts, setContracts] = useState(undefined);
+  const { currentShip, selectedWaypoint } = useContext(GameContext);
+  const [location, setLocation] = useState(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [waypoints, setWaypoints] = useState(undefined);
+  const queryClient = useQueryClient();
+  const token = toToken(queryClient);
   const closeModal = () => setIsModalOpen(false);
+  const systems = useQuery(retrieveSystemsConfig).data;
+  const agent = useQuery({
+    queryKey: ['agent'],
+    queryFn: async () => {
+      return await retrieveAgent(token);
+    },
+  }).data;
 
   useEffect(() => {
     if (!currentShip) setIsModalOpen(true);
   }, []);
-  useEffect(() => {
-    if (token) {
-      retrieveContracts(token, setContracts);
-    } else if (!contracts && token) {
-      retrieveContracts(token, setContracts);
-    }
-  }, [token]);
 
   useEffect(() => {
-    if (selectedContractId) {
-      navigate(`/console/${selectedContractId}`, {
-        state: { contractId: selectedContractId },
-      });
+    if (!location && agent) {
+      setLocation(setLocationDetails(agent));
     }
-  }, [selectedContractId]);
+  }, [agent]);
+
+  useEffect(() => {
+    if (location) {
+      retrieveMapWaypoints(token, location.system, undefined, setWaypoints);
+    }
+  }, [location]);
 
   return (
     <div className='flex p-8 w-full h-screen space-x-4'>
@@ -54,18 +58,12 @@ export default function PlayerConsole() {
             </Typography>
             <AgentDetails agent={agent} />
           </div>
-          <div className='flex flex-col'>
-            <Typography color={'#32C832'} variant='h5'>
-              Contracts:
-            </Typography>
-            <ContractIdList
-              contracts={contracts}
-              setContractId={setContractId}
-            />
-          </div>
         </div>
         <NavigationButtons openModal={setIsModalOpen} />
-        <Waypoints waypointSymbol={selectedWaypoint.symbol} />
+        <Waypoints
+          waypointSymbol={selectedWaypoint.symbol}
+          location={location}
+        />
       </div>
       <MapSelector systems={systems} waypoints={waypoints} />
       <Modal isOpen={isModalOpen} onClose={closeModal}>

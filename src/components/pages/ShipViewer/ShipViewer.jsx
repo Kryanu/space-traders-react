@@ -1,8 +1,23 @@
 import { useState, useContext, useEffect } from 'react';
-import { TokenContext, GameContext } from '../../../context';
+import { GameContext } from '../../../context';
 import { API } from '../../../api/service';
 import { isValidArray } from '../../../hooks';
 import { Button, Typography } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
+import { toToken } from '../../../api/adapters';
+
+export default function ShipViewer(props) {
+  const { closeModal } = props;
+  const [ships, setShips] = useState(undefined);
+  const queryClient = useQueryClient();
+  const token = toToken(queryClient);
+  const { setCurrentShip } = useContext(GameContext);
+  useEffect(() => {
+    retrieveShips(token, setShips);
+  }, []);
+
+  return <>{Ships(ships, setCurrentShip, closeModal)}</>;
+}
 
 const retrieveShips = async (token, setShips) => {
   setShips(await API.fleet.getShips(token));
@@ -56,16 +71,4 @@ function Fuel(props) {
       <Typography>{`Fuel: ${fuel.current} /${fuel.capacity}`}</Typography>
     </div>
   );
-}
-
-export default function ShipViewer(props) {
-  const { closeModal } = props;
-  const [ships, setShips] = useState(undefined);
-  const { token } = useContext(TokenContext);
-  const { setCurrentShip } = useContext(GameContext);
-  useEffect(() => {
-    retrieveShips(token, setShips);
-  }, []);
-
-  return <>{Ships(ships, setCurrentShip, closeModal)}</>;
 }

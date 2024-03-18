@@ -9,8 +9,26 @@ export const retrieveShips = async (token, updateShips) => {
   updateShips(data[0]);
 };
 
-export const retrieveWaypoints = async (token, system, updateWaypoints) => {
-  updateWaypoints(
-    await API.system.listWaypoints(token, system, { limit: 20, page: 5 })
-  );
+export const setLocationDetails = (agent) => {
+  if (agent && agent?.headquarters?.length > 0) {
+    const locations = agent.headquarters.split('-');
+
+    return {
+      sector: locations[0],
+      system: `${locations[0]}-${locations[1]}`,
+      waypoint: agent.headquarters,
+    };
+  }
+};
+
+export const retrieveAgent = async (token) => {
+  return await API.agent.viewAgent(token);
+};
+
+export const retrieveSystemsConfig = {
+  queryKey: ['systems'],
+  queryFn: async () => {
+    return await API.system.listSystems();
+  },
+  staleTime: Infinity,
 };
