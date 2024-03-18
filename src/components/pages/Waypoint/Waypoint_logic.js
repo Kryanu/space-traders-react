@@ -1,12 +1,5 @@
-import { retrieveWaypoints } from '../../../hooks';
 import { API } from '../../../api/service';
 import { navigateShip } from '../../../hooks/helpers';
-export const retrieveAsteroids = async (token, system, setAsteroids) => {
-  const data = await retrieveWaypoints(token, system, {
-    type: 'ENGINEERED_ASTEROID',
-  });
-  setAsteroids(data);
-};
 
 export const retrieveWaypoint = async (
   systemSymbol,
@@ -47,10 +40,16 @@ export const dockShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   } catch {}
 };
 
-export const refuelShip = async ({ token, shipSymbol, setIsToastVisible }) => {
+export const refuelShip = async ({
+  token,
+  shipSymbol,
+  setIsToastVisible,
+  queryClient,
+}) => {
   try {
     await API.fleet.refuelShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Refueling...' });
+    queryClient.invalidateQueries({ queryKey: ['agent'] });
   } catch {}
 };
 

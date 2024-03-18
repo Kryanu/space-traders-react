@@ -23,7 +23,7 @@ export function Waypoint(props) {
     return <></>;
   }
   let shipSymbol = currentShip?.symbol;
-  const actionProps = { token, shipSymbol, setIsToastVisible };
+  const actionProps = { token, shipSymbol, setIsToastVisible, queryClient };
   const actionRowConfig = [
     {
       text: 'Fly To',

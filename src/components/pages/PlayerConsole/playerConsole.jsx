@@ -51,13 +51,11 @@ export default function PlayerConsole() {
     <div className='flex p-8 w-full h-screen space-x-4'>
       <div className='flex flex-col mb-auto pb-2'>
         <NavBar route={'/'} />
-        <div className='flex space-x-2'>
-          <div className='flex flex-col'>
-            <Typography color={'#32C832'} variant='h5'>
-              Agent Details:
-            </Typography>
-            <AgentDetails agent={agent} />
-          </div>
+        <div className='flex flex-col w-full'>
+          <Typography color={'#32C832'} variant='h5'>
+            Agent Details:
+          </Typography>
+          <AgentDetails agent={agent} />
         </div>
         <NavigationButtons openModal={setIsModalOpen} />
         <Waypoints

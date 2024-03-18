@@ -56,6 +56,7 @@ export const retrieveMapWaypoints = async (
       page: i,
     });
     waypoints = [...waypoints, ...waypointRes.data];
+    delay(300);
   }
   updateWaypoints(waypoints);
 };
