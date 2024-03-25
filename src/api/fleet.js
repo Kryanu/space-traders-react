@@ -1,6 +1,7 @@
 import axios from 'axios';
-export const fleet = {
+import { ERROR_MESSAGES } from './errorMappings';
 
+export const fleet = {
   purchaseShip: async (token, shipType, waypointSymbol) => {
     try {
       const res = await axios.post(
@@ -115,7 +116,7 @@ export const fleet = {
         }
       );
     } catch (ex) {
-      throw new Error(ex);
+      throw new Error(ERROR_MESSAGES[ex.response.data.error.code]);
     }
   },
   mineAsteroid: async (token, shipSymbol) => {
@@ -132,7 +133,7 @@ export const fleet = {
         }
       );
     } catch (ex) {
-      throw new Error(ex);
+      throw new Error(ERROR_MESSAGES[ex.response.data.error.code]);
     }
   },
   listShipCargo: async (token, shipSymbol) => {
@@ -168,4 +169,4 @@ export const fleet = {
       throw new Error(ex);
     }
   },
-}
+};

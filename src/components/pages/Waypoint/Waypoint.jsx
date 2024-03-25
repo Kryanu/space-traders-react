@@ -19,7 +19,6 @@ export default function Waypoints(props) {
   useEffect(() => {
     if (token && location?.system && currentShip && waypointSymbol) {
       retrieveWaypoint(location.system, waypointSymbol, setWaypoint);
-      orbitShip({ token, shipSymbol: currentShip.symbol });
     }
   }, [waypointSymbol]);
 

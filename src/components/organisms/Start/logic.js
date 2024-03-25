@@ -8,6 +8,7 @@ export const retrieveToken = async ({ handleInput, queryClient }) => {
     queryFn: async () => {
       return await filterRecordByHandle(handleInput);
     },
+    staleTime: Infinity,
   });
 };
 

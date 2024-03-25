@@ -19,38 +19,36 @@ import { retrieveMapWaypoints } from '../../../hooks/helpers';
 import { toToken } from '../../../api/adapters';
 import { useQueryClient } from '@tanstack/react-query';
 
+const detailMapping = {
+  symbol: 'Symbol',
+  headquarters: 'HQ Coordinates',
+  credits: 'Credits',
+  startingFaction: 'Faction',
+  shipCount: 'Ships',
+};
+
 export function AgentDetails(props) {
   const { agent } = props;
   const { currentShip } = useContext(GameContext);
+
   if (!agent || !currentShip) {
     return <></>;
   }
+
+  const keys = Object.keys(agent).filter((item) => item !== 'accountId');
+  const details = keys.map((item, index) => {
+    return (
+      <Typography
+        color={'#32C832'}
+        variant='h6'
+        key={index}
+      >{`${detailMapping[item]}: ${agent[item]}`}</Typography>
+    );
+  });
+
   return (
     <div className='flex flex-col rounded-md border-2 border-map-green p-4 mx-auto'>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Symbol: ${agent.symbol}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`HQ Coordinates: ${agent.headquarters}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Credits: ${agent.credits}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Faction: ${agent.startingFaction}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Ships: ${agent.shipCount}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Current Ship: ${currentShip.symbol}`}</Typography>
+      {details}
     </div>
   );
 }
@@ -109,6 +107,18 @@ export function NavigationButtons(props) {
       >
         Select Ship
       </Button>
+      <Button
+        sx={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '0.75rem',
+        }}
+        onClick={() => {
+          console.log('Opening Contracts')
+        }}
+      >
+        View Contracts
+      </Button>
     </div>
   );
 }
@@ -129,14 +139,13 @@ export function MapSelector(props) {
   const [selectedMap, setSelectedMap] = useState(MAPS.waypoints);
   const queryClient = useQueryClient();
   const token = toToken(queryClient);
-  const { setWaypoints, currentShip } = useContext(GameContext);
+  const { currentShip } = useContext(GameContext);
   const [filter, setFilter] = useState('');
-  const { systems, waypoints } = props;
+  const { systems, waypoints, setWaypoints } = props;
 
   const handleChange = (e) => {
     setFilter(e.target.value);
   };
-
   useEffect(() => {
     if (currentShip?.nav?.systemSymbol) {
       retrieveMapWaypoints(
@@ -200,12 +209,6 @@ export function MapSelector(props) {
         </FormControl>
         <Button
           onClick={async () => {
-            await retrieveMapWaypoints(
-              token,
-              currentShip?.nav.systemSymbol,
-              undefined,
-              setWaypoints
-            );
             setFilter('');
           }}
         >

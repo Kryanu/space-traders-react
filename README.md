@@ -5,25 +5,24 @@
  - Will different ships be displayed on the screen?
  - Waiting on SP011
 
-
 ## - Add agent data update on key points - SP005
 
 ## - Allow persistent storage of key data - SP006
  - Current Location of Ships
 
-## - Add Select Component for SP003 - SP009
-
-## - TECHDEBT: Refactor Service to split file based on category - SP010
-
 ## - Add current waypoint data - SP011
  ~~- Add current Ship tracking~~
  - Add stationary ship data (probably yellow idky)
 
-## - Add Cargo List into ship modal - SP012
-
 ## - Allow View Shipyard - SP013
 
 ## - Allow View Market Items up for barter - SP014
+
+## - Waypoint actions not referencing selected waypoint - SP015
+
+## - Add Contract Details to the player console page - SP016
+
+## - Figure out why token is being invalidated - SP017
 
 # Closed!
 
@@ -34,3 +33,9 @@
 ## ~~- Add View ships functionality SP007~~
 
 ## ~~- Add Select Current Ship functionality - SP008~~
+
+## ~~- TECHDEBT: Refactor Service to split file based on category - SP010~~
+
+## ~~- Add Select Component for SP003 - SP009~~ 
+
+## ~~- Add Cargo List into ship modal - SP012~~

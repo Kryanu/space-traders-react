@@ -50,7 +50,9 @@ export const refuelShip = async ({
     await API.fleet.refuelShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Refueling...' });
     queryClient.invalidateQueries({ queryKey: ['agent'] });
-  } catch {}
+  } catch (ex) {
+    setIsToastVisible({ isVisible: true, message: ex.message });
+  }
 };
 
 export const mineAsteroid = async ({
@@ -61,5 +63,7 @@ export const mineAsteroid = async ({
   try {
     await API.fleet.mineAsteroid(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Mining...' });
-  } catch {}
+  } catch (ex) {
+    setIsToastVisible({ isVisible: true, message: ex.message });
+  }
 };

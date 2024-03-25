@@ -40,7 +40,7 @@ export function Waypoint(props) {
       callBackProps: actionProps,
     },
     {
-      text: 'refuelShip',
+      text: 'refuel Ship',
       callBack: refuelShip,
       callBackProps: actionProps,
     },

@@ -4,8 +4,7 @@ import { AgentDetails, NavigationButtons, MapSelector } from './children';
 import NavBar from '../../Layouts/navbar';
 import { GameContext } from '../../../context/';
 import { Modal } from '../../organisms';
-import ShipViewer from '../ShipViewer/ShipViewer';
-import Waypoints from '../Waypoint/Waypoint';
+import { ShipViewer, Waypoints } from '../index';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
 import {
@@ -49,7 +48,7 @@ export default function PlayerConsole() {
 
   return (
     <div className='flex p-8 w-full h-screen space-x-4'>
-      <div className='flex flex-col mb-auto pb-2'>
+      <div className='flex flex-col w-1/3 mb-auto pb-2'>
         <NavBar route={'/'} />
         <div className='flex flex-col w-full'>
           <Typography color={'#32C832'} variant='h5'>
@@ -63,7 +62,11 @@ export default function PlayerConsole() {
           location={location}
         />
       </div>
-      <MapSelector systems={systems} waypoints={waypoints} />
+      <MapSelector
+        systems={systems}
+        waypoints={waypoints}
+        setWaypoints={setWaypoints}
+      />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
           <Typography variant='h3'>Select a Ship</Typography>
