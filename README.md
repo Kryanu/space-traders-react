@@ -1,18 +1,11 @@
 # TODO:
 
 -------------------------
-## - Highlight Current waypoint on starchart - SP001
- - Will different ships be displayed on the screen?
- - Waiting on SP011
 
 ## - Add agent data update on key points - SP005
 
 ## - Allow persistent storage of key data - SP006
  - Current Location of Ships
-
-## - Add current waypoint data - SP011
- ~~- Add current Ship tracking~~
- - Add stationary ship data (probably yellow idky)
 
 ## - Allow View Shipyard - SP013
 
@@ -39,3 +32,11 @@
 ## ~~- Add Select Component for SP003 - SP009~~ 
 
 ## ~~- Add Cargo List into ship modal - SP012~~
+
+## ~~- Add current waypoint data - SP011~~
+ ~~- Add current Ship tracking~~
+ ~~- Add stationary ship data (probably yellow idky)~~
+
+## ~~- Highlight Current waypoint on starchart - SP001~~
+~~- Will different ships be displayed on the screen?~~
+~~ - Waiting on SP011~~
