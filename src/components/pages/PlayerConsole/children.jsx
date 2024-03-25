@@ -11,13 +11,14 @@ import {
   InputLabel,
 } from '@mui/material';
 import { Map } from '../../organisms';
-import { NavigateButton } from '../../atoms';
 import { MAPS, SELECTED_TRAITS } from '../../../constants';
 import { useState, useContext, useEffect } from 'react';
 import { GameContext } from '../../../context';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
 import { toToken } from '../../../api/adapters';
 import { useQueryClient } from '@tanstack/react-query';
+import { ShipViewer } from '../index';
+import { MODAL_TYPE } from '../../../constants';
 
 const detailMapping = {
   symbol: 'Symbol',
@@ -53,8 +54,8 @@ export function AgentDetails(props) {
   );
 }
 
-export function ContractIdList(props) {
-  const { contracts, setContractId } = props;
+function ContractIdList(props) {
+  const { contracts } = props;
   if (!Array.isArray(contracts) || contracts.length === 0) {
     return <></>;
   }
@@ -68,11 +69,7 @@ export function ContractIdList(props) {
       >
         <ListItemText>{`Payment on Accepted: ${x.terms?.payment?.onAccepted}`}</ListItemText>
         <ListItemText>{`Payment when Fulfilled: ${x.terms?.payment?.onFulfilled}`}</ListItemText>
-        <ListItemButton
-          onClick={() => {
-            setContractId(x.id);
-          }}
-        >
+        <ListItemButton onClick={() => {}}>
           <ListItemText primary='View Details' />
         </ListItemButton>
       </ListItem>
@@ -83,18 +80,9 @@ export function ContractIdList(props) {
 }
 
 export function NavigationButtons(props) {
-  const { openModal } = props;
+  const { openModal, setModalType } = props;
   return (
     <div className='flex pb-2 border-b-2 border-map-green'>
-      <NavigateButton
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: '0.75rem',
-        }}
-        text={'Go Ship Shopping'}
-        route={'/console/ship-shop'}
-      />
       <Button
         sx={{
           marginLeft: 'auto',
@@ -103,6 +91,7 @@ export function NavigationButtons(props) {
         }}
         onClick={() => {
           openModal(true);
+          setModalType(MODAL_TYPE.ships);
         }}
       >
         Select Ship
@@ -114,7 +103,7 @@ export function NavigationButtons(props) {
           marginTop: '0.75rem',
         }}
         onClick={() => {
-          console.log('Opening Contracts')
+          setModalType(MODAL_TYPE.ships);
         }}
       >
         View Contracts
@@ -218,4 +207,25 @@ export function MapSelector(props) {
       <Map data={selectedType} title={selectedTitle} />
     </div>
   );
+}
+
+export function ModalSelector(props) {
+  const { type, closeModal, contracts, ships } = props;
+
+  switch (type) {
+    case MODAL_TYPE.ships:
+      return (
+        <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
+          <Typography variant='h3'>Select a Ship</Typography>
+          <ShipViewer ships={ships} closeModal={closeModal} />
+        </div>
+      );
+    case MODAL_TYPE.contracts:
+      <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
+        <Typography variant='h3'>Select a Contract</Typography>
+        <ContractIdList contracts={contracts} />
+      </div>;
+      break;
+  }
+  return <></>;
 }

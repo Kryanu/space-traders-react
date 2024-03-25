@@ -136,3 +136,8 @@ export const MAPS = {
   systems: 'systems',
   waypoints: 'waypoints',
 };
+
+export const MODAL_TYPE = {
+  ships: 'shipViewer',
+  contracts: 'contracts',
+};

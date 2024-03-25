@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { orbitShip, retrieveWaypoint } from './Waypoint_logic';
+import { retrieveWaypoint } from './Waypoint_logic';
 import { Waypoint } from './Waypoint_children';
 import Countdown from '../../atoms/Countdown';
 import { GameContext } from '../../../context';
@@ -15,7 +15,6 @@ export default function Waypoints(props) {
   const { currentShip } = useContext(GameContext);
   const [waypoint, setWaypoint] = useState(undefined);
   const [time, setTime] = useState(0);
-
   useEffect(() => {
     if (token && location?.system && currentShip && waypointSymbol) {
       retrieveWaypoint(location.system, waypointSymbol, setWaypoint);

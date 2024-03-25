@@ -1,12 +1,19 @@
 import { Typography } from '@mui/material';
+import { MODAL_TYPE } from '../../../constants';
 import { useContext, useEffect, useState } from 'react';
-import { AgentDetails, NavigationButtons, MapSelector } from './children';
+import {
+  AgentDetails,
+  NavigationButtons,
+  MapSelector,
+  ModalSelector,
+} from './children';
 import NavBar from '../../Layouts/navbar';
 import { GameContext } from '../../../context/';
 import { Modal } from '../../organisms';
-import { ShipViewer, Waypoints } from '../index';
+import { Waypoints } from '../index';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
+import { API } from '../../../api/service';
 import {
   setLocationDetails,
   retrieveAgent,
@@ -22,11 +29,20 @@ export default function PlayerConsole() {
   const queryClient = useQueryClient();
   const token = toToken(queryClient);
   const closeModal = () => setIsModalOpen(false);
+  const [modalType, setModalType] = useState(MODAL_TYPE.ships);
   const systems = useQuery(retrieveSystemsConfig).data;
   const agent = useQuery({
     queryKey: ['agent'],
     queryFn: async () => {
       return await retrieveAgent(token);
+    },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  }).data;
+  const ships = useQuery({
+    queryKey: ['ships'],
+    queryFn: async () => {
+      return await API.fleet.getShips(token);
     },
   }).data;
 
@@ -56,7 +72,10 @@ export default function PlayerConsole() {
           </Typography>
           <AgentDetails agent={agent} />
         </div>
-        <NavigationButtons openModal={setIsModalOpen} />
+        <NavigationButtons
+          openModal={setIsModalOpen}
+          setModalType={setModalType}
+        />
         <Waypoints
           waypointSymbol={selectedWaypoint.symbol}
           location={location}
@@ -68,10 +87,7 @@ export default function PlayerConsole() {
         setWaypoints={setWaypoints}
       />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
-          <Typography variant='h3'>Select a Ship</Typography>
-          <ShipViewer closeModal={closeModal} />
-        </div>
+        <ModalSelector ships={ships} type={modalType} closeModal={closeModal} />
       </Modal>
     </div>
   );
