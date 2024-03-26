@@ -5,7 +5,7 @@ import {
   ListItemText,
   ListItemButton,
 } from '@mui/material';
-import { ShipViewer } from '../index';
+import { ShipViewer } from '../../organisms';
 import { MODAL_TYPE } from '../../../constants';
 
 function ContractIdList(props) {

@@ -3,9 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { ModalSelector } from './children';
 import NavBar from '../../Layouts/navbar';
 import { GameContext } from '../../../context/';
-import { Modal, MapSelector } from '../../organisms';
+import { Modal, MapSelector, Waypoints } from '../../organisms';
 import { AgentDetails, ModalBar } from '../../molecules';
-import { Waypoints } from '../index';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
 import { API } from '../../../api/service';
@@ -15,7 +14,7 @@ import {
   retrieveSystemsConfig,
 } from './logic';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
-import { Ship } from '../ShipViewer/ShipViewer_children';
+import { Ship } from '../../organisms/ShipViewer/ShipViewer_children';
 
 export default function PlayerConsole() {
   const { currentShip, selectedWaypoint } = useContext(GameContext);
