@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { MODAL_TYPE } from '../../../constants';
 import { useContext, useEffect, useState } from 'react';
 import {
@@ -20,6 +19,7 @@ import {
   retrieveSystemsConfig,
 } from './logic';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
+import { Ship } from '../ShipViewer/ShipViewer_children';
 
 export default function PlayerConsole() {
   const { currentShip, selectedWaypoint } = useContext(GameContext);
@@ -30,6 +30,13 @@ export default function PlayerConsole() {
   const token = toToken(queryClient);
   const closeModal = () => setIsModalOpen(false);
   const [modalType, setModalType] = useState(MODAL_TYPE.ships);
+
+  const contracts = useQuery({
+    queryKey: ['contracts'],
+    queryFn: async () => {
+      return await API.agent.viewContracts(token);
+    },
+  }).data;
   const systems = useQuery(retrieveSystemsConfig).data;
   const agent = useQuery({
     queryKey: ['agent'],
@@ -45,7 +52,7 @@ export default function PlayerConsole() {
       return await API.fleet.getShips(token);
     },
   }).data;
-  
+
   useEffect(() => {
     if (!currentShip) setIsModalOpen(true);
   }, []);
@@ -66,12 +73,11 @@ export default function PlayerConsole() {
     <div className='flex p-8 w-full h-screen space-x-4'>
       <div className='flex flex-col w-1/3 mb-auto pb-2'>
         <NavBar route={'/'} />
-        <div className='flex flex-col w-full'>
-          <Typography color={'#32C832'} variant='h5'>
-            Agent Details:
-          </Typography>
+        <div className='flex items-stretch justify-between space-x-4'>
           <AgentDetails agent={agent} />
+          <Ship ship={currentShip} />
         </div>
+
         <NavigationButtons
           openModal={setIsModalOpen}
           setModalType={setModalType}
@@ -87,7 +93,12 @@ export default function PlayerConsole() {
         setWaypoints={setWaypoints}
       />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <ModalSelector ships={ships} type={modalType} closeModal={closeModal} />
+        <ModalSelector
+          ships={ships}
+          contracts={contracts}
+          type={modalType}
+          closeModal={closeModal}
+        />
       </Modal>
     </div>
   );

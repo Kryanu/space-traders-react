@@ -48,7 +48,7 @@ export function AgentDetails(props) {
   });
 
   return (
-    <div className='flex flex-col rounded-md border-2 border-map-green p-4 mx-auto'>
+    <div className='flex flex-col text-left rounded-md border-2 border-map-green p-4 '>
       {details}
     </div>
   );
@@ -81,34 +81,42 @@ function ContractIdList(props) {
 
 export function NavigationButtons(props) {
   const { openModal, setModalType } = props;
+
+  const modalConfig = [
+    {
+      label: 'Select Ship',
+      action: () => {
+        openModal(true);
+        setModalType(MODAL_TYPE.ships);
+      },
+    },
+    {
+      label: 'View Contracts',
+      action: () => {
+        openModal(true);
+        setModalType(MODAL_TYPE.contracts);
+      },
+    },
+  ];
+
+  const modalButtons = modalConfig.map((item, index) => {
+    return (
+      <Button
+        key={index}
+        sx={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '0.75rem',
+        }}
+        onClick={() => item.action()}
+      >
+        {item.label}
+      </Button>
+    );
+  });
+
   return (
-    <div className='flex pb-2 border-b-2 border-map-green'>
-      <Button
-        sx={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: '0.75rem',
-        }}
-        onClick={() => {
-          openModal(true);
-          setModalType(MODAL_TYPE.ships);
-        }}
-      >
-        Select Ship
-      </Button>
-      <Button
-        sx={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: '0.75rem',
-        }}
-        onClick={() => {
-          setModalType(MODAL_TYPE.ships);
-        }}
-      >
-        View Contracts
-      </Button>
-    </div>
+    <div className='flex pb-2 border-b-2 border-map-green'>{modalButtons}</div>
   );
 }
 
@@ -211,7 +219,6 @@ export function MapSelector(props) {
 
 export function ModalSelector(props) {
   const { type, closeModal, contracts, ships } = props;
-
   switch (type) {
     case MODAL_TYPE.ships:
       return (
@@ -221,11 +228,12 @@ export function ModalSelector(props) {
         </div>
       );
     case MODAL_TYPE.contracts:
-      <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
-        <Typography variant='h3'>Select a Contract</Typography>
-        <ContractIdList contracts={contracts} />
-      </div>;
-      break;
+      return (
+        <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
+          <Typography variant='h3'>Select a Contract</Typography>
+          <ContractIdList contracts={contracts} />
+        </div>
+      );
   }
   return <></>;
 }
