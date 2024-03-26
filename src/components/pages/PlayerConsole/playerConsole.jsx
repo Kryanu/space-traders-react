@@ -1,19 +1,13 @@
 import { MODAL_TYPE } from '../../../constants';
 import { useContext, useEffect, useState } from 'react';
-import { ModalSelector } from './children';
+import { ModalSelector, useAllQueries } from './children';
 import NavBar from '../../Layouts/navbar';
 import { GameContext } from '../../../context/';
 import { Modal, MapSelector, Waypoints, ShipDetails } from '../../organisms';
 import { AgentDetails, ModalBar } from '../../molecules';
-import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
-import {
-  setLocationDetails,
-  retrieveAgent,
-  retrieveContracts,
-  retrieveShips,
-  retrieveSystemsConfig,
-} from './logic';
+import { setLocationDetails } from './logic';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
 
 export default function PlayerConsole() {
@@ -25,22 +19,7 @@ export default function PlayerConsole() {
   const token = toToken(queryClient);
   const closeModal = () => setIsModalOpen(false);
   const [modalType, setModalType] = useState(MODAL_TYPE.ships);
-
-  const contracts = useQuery({
-    queryKey: ['contracts'],
-    queryFn: async () => await retrieveContracts(token),
-  }).data;
-  const systems = useQuery(retrieveSystemsConfig).data;
-  const agent = useQuery({
-    queryKey: ['agent'],
-    queryFn: async () => await retrieveAgent(token),
-    refetchOnWindowFocus: false,
-  }).data;
-  const ships = useQuery({
-    queryKey: ['ships'],
-    queryFn: async () => await retrieveShips(token),
-  }).data;
-
+  const { contracts, systems, agent, ships } = useAllQueries(token);
   useEffect(() => {
     if (!currentShip) setIsModalOpen(true);
   }, []);
@@ -83,6 +62,7 @@ export default function PlayerConsole() {
           contracts={contracts}
           type={modalType}
           closeModal={closeModal}
+          token={token}
         />
       </Modal>
     </div>

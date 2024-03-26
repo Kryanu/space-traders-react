@@ -9,8 +9,6 @@
 
 ## - Allow View Market Items up for barter - SP014
 
-## - Add Contract Details to the player console page - SP016
-
 ## - Figure out why token is being invalidated - SP017
 
 # Closed!
@@ -40,3 +38,5 @@
 ## ~~- Waypoint actions not referencing selected waypoint - SP015~~
 
 ## ~~- Add agent data update on key points - SP005~~
+
+## ~~- Add Contract Details to the player console page - SP016~~
