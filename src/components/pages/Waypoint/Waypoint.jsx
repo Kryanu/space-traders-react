@@ -1,21 +1,23 @@
 import { useContext, useEffect, useState } from 'react';
-import { orbitShip, retrieveWaypoint } from './Waypoint_logic';
+import { retrieveWaypoint } from './Waypoint_logic';
 import { Waypoint } from './Waypoint_children';
 import Countdown from '../../atoms/Countdown';
-import { TokenContext, GameContext } from '../../../context';
+import { GameContext } from '../../../context';
 import './Waypoint.css';
-export default function Waypoints(props) {
-  const { waypointSymbol } = props;
+import { useQueryClient } from '@tanstack/react-query';
+import { toToken } from '../../../api/adapters';
 
-  const { token } = useContext(TokenContext);
-  const { location, currentShip } = useContext(GameContext);
+export default function Waypoints(props) {
+  const { waypointSymbol, location } = props;
+
+  const queryClient = useQueryClient();
+  const token = toToken(queryClient);
+  const { currentShip } = useContext(GameContext);
   const [waypoint, setWaypoint] = useState(undefined);
   const [time, setTime] = useState(0);
-
   useEffect(() => {
     if (token && location?.system && currentShip && waypointSymbol) {
       retrieveWaypoint(location.system, waypointSymbol, setWaypoint);
-      orbitShip({ token, shipSymbol: currentShip.symbol });
     }
   }, [waypointSymbol]);
 

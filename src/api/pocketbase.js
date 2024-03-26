@@ -13,13 +13,13 @@ export const addRecord = async (handle, token) => {
 };
 
 export const filterRecordByHandle = async (handle) => {
-    if(handle) {
-        try {
-            return await pb.collection('players').getList(1,1,{
-                filter: `handle = '${handle}'`
-            });
-        }catch (ex) {
-            console.error(ex);
-        }
+  if (handle) {
+    try {
+      return await pb.collection('players').getList(1, 1, {
+        filter: `handle = '${handle}'`,
+      });
+    } catch (ex) {
+      console.error(ex);
     }
-}
+  }
+};

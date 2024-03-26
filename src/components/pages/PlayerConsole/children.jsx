@@ -11,49 +11,51 @@ import {
   InputLabel,
 } from '@mui/material';
 import { Map } from '../../organisms';
-import { NavigateButton } from '../../atoms';
 import { MAPS, SELECTED_TRAITS } from '../../../constants';
 import { useState, useContext, useEffect } from 'react';
-import { GameContext, TokenContext } from '../../../context';
+import { GameContext } from '../../../context';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
+import { toToken } from '../../../api/adapters';
+import { useQueryClient } from '@tanstack/react-query';
+import { ShipViewer } from '../index';
+import { MODAL_TYPE } from '../../../constants';
+
+const detailMapping = {
+  symbol: 'Symbol',
+  headquarters: 'HQ Coordinates',
+  credits: 'Credits',
+  startingFaction: 'Faction',
+  shipCount: 'Ships',
+};
+
 export function AgentDetails(props) {
   const { agent } = props;
   const { currentShip } = useContext(GameContext);
+
   if (!agent || !currentShip) {
     return <></>;
   }
+
+  const keys = Object.keys(agent).filter((item) => item !== 'accountId');
+  const details = keys.map((item, index) => {
+    return (
+      <Typography
+        color={'#32C832'}
+        variant='h6'
+        key={index}
+      >{`${detailMapping[item]}: ${agent[item]}`}</Typography>
+    );
+  });
+
   return (
     <div className='flex flex-col rounded-md border-2 border-map-green p-4 mx-auto'>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Symbol: ${agent.symbol}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`HQ Coordinates: ${agent.headquarters}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Credits: ${agent.credits}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Faction: ${agent.startingFaction}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Ships: ${agent.shipCount}`}</Typography>
-      <Typography
-        color={'#32C832'}
-        variant='h6'
-      >{`Current Ship: ${currentShip.symbol}`}</Typography>
+      {details}
     </div>
   );
 }
 
-export function ContractIdList(props) {
-  const { contracts, setContractId } = props;
+function ContractIdList(props) {
+  const { contracts } = props;
   if (!Array.isArray(contracts) || contracts.length === 0) {
     return <></>;
   }
@@ -67,11 +69,7 @@ export function ContractIdList(props) {
       >
         <ListItemText>{`Payment on Accepted: ${x.terms?.payment?.onAccepted}`}</ListItemText>
         <ListItemText>{`Payment when Fulfilled: ${x.terms?.payment?.onFulfilled}`}</ListItemText>
-        <ListItemButton
-          onClick={() => {
-            setContractId(x.id);
-          }}
-        >
+        <ListItemButton onClick={() => {}}>
           <ListItemText primary='View Details' />
         </ListItemButton>
       </ListItem>
@@ -82,18 +80,9 @@ export function ContractIdList(props) {
 }
 
 export function NavigationButtons(props) {
-  const { openModal } = props;
+  const { openModal, setModalType } = props;
   return (
     <div className='flex pb-2 border-b-2 border-map-green'>
-      <NavigateButton
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: '0.75rem',
-        }}
-        text={'Go Ship Shopping'}
-        route={'/console/ship-shop'}
-      />
       <Button
         sx={{
           marginLeft: 'auto',
@@ -102,9 +91,22 @@ export function NavigationButtons(props) {
         }}
         onClick={() => {
           openModal(true);
+          setModalType(MODAL_TYPE.ships);
         }}
       >
         Select Ship
+      </Button>
+      <Button
+        sx={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '0.75rem',
+        }}
+        onClick={() => {
+          setModalType(MODAL_TYPE.ships);
+        }}
+      >
+        View Contracts
       </Button>
     </div>
   );
@@ -124,15 +126,15 @@ const FilterItems = () => {
 
 export function MapSelector(props) {
   const [selectedMap, setSelectedMap] = useState(MAPS.waypoints);
-  const { token } = useContext(TokenContext);
-  const { setWaypoints, currentShip } = useContext(GameContext);
+  const queryClient = useQueryClient();
+  const token = toToken(queryClient);
+  const { currentShip } = useContext(GameContext);
   const [filter, setFilter] = useState('');
-  const { systems, waypoints } = props;
+  const { systems, waypoints, setWaypoints } = props;
 
   const handleChange = (e) => {
     setFilter(e.target.value);
   };
-
   useEffect(() => {
     if (currentShip?.nav?.systemSymbol) {
       retrieveMapWaypoints(
@@ -196,12 +198,6 @@ export function MapSelector(props) {
         </FormControl>
         <Button
           onClick={async () => {
-            await retrieveMapWaypoints(
-              token,
-              currentShip?.nav.systemSymbol,
-              undefined,
-              setWaypoints
-            );
             setFilter('');
           }}
         >
@@ -211,4 +207,25 @@ export function MapSelector(props) {
       <Map data={selectedType} title={selectedTitle} />
     </div>
   );
+}
+
+export function ModalSelector(props) {
+  const { type, closeModal, contracts, ships } = props;
+
+  switch (type) {
+    case MODAL_TYPE.ships:
+      return (
+        <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
+          <Typography variant='h3'>Select a Ship</Typography>
+          <ShipViewer ships={ships} closeModal={closeModal} />
+        </div>
+      );
+    case MODAL_TYPE.contracts:
+      <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
+        <Typography variant='h3'>Select a Contract</Typography>
+        <ContractIdList contracts={contracts} />
+      </div>;
+      break;
+  }
+  return <></>;
 }

@@ -2,13 +2,13 @@ import '../../../App.css';
 import { useContext, useEffect, useState } from 'react';
 import { SignUpComponents, InitialComponents } from './children';
 import { Typography } from '@mui/material';
-import { GameContext, TokenContext } from '../../../context';
+import { TokenContext } from '../../../context';
 
 export default function Start() {
   const [faction, changeFaction] = useState(undefined);
   const { token, setToken, handle, setHandle } = useContext(TokenContext);
-  const { setAgent } = useContext(GameContext);
   const [isSignUp, setSignUp] = useState(false);
+
   useEffect(() => {
     if (token) {
       window.localStorage.setItem('token', token);
@@ -25,7 +25,9 @@ export default function Start() {
         { changeFaction, setHandle, setToken },
         { handle, faction }
       )}
-      {InitialComponents(isSignUp, { setSignUp, setHandle, setToken, setAgent })}
+      {InitialComponents(isSignUp, {
+        setSignUp,
+      })}
     </>
   );
 }
