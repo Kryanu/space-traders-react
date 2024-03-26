@@ -1,14 +1,10 @@
 import { MODAL_TYPE } from '../../../constants';
 import { useContext, useEffect, useState } from 'react';
-import {
-  AgentDetails,
-  NavigationButtons,
-  MapSelector,
-  ModalSelector,
-} from './children';
+import { ModalSelector } from './children';
 import NavBar from '../../Layouts/navbar';
 import { GameContext } from '../../../context/';
-import { Modal } from '../../organisms';
+import { Modal, MapSelector } from '../../organisms';
+import { AgentDetails, ModalBar } from '../../molecules';
 import { Waypoints } from '../index';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
@@ -78,10 +74,7 @@ export default function PlayerConsole() {
           <Ship ship={currentShip} />
         </div>
 
-        <NavigationButtons
-          openModal={setIsModalOpen}
-          setModalType={setModalType}
-        />
+        <ModalBar openModal={setIsModalOpen} setModalType={setModalType} />
         <Waypoints
           waypointSymbol={selectedWaypoint.symbol}
           location={location}
