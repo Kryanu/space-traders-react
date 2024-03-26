@@ -9,38 +9,28 @@ import {
 } from '@mui/material';
 
 function Nav(props) {
-  const { nav } = props;
+  const { nav, fuel } = props;
   if (!nav) return <></>;
 
   return (
     <>
-      <Typography>{`Waypoint: ${nav.waypointSymbol}`}</Typography>
-      <Typography>{`Status: ${nav.status}`}</Typography>
+      <Typography variant='h6'>{`Waypoint: ${nav.waypointSymbol}`}</Typography>
+      <Typography variant='h6'>{`Status: ${nav.status}`}</Typography>
+      <Typography variant='h6'>{`Fuel: ${fuel.current} /${fuel.capacity}`}</Typography>
     </>
-  );
-}
-
-function Fuel(props) {
-  const { fuel } = props;
-  if (!fuel) return <></>;
-
-  return (
-    <div>
-      <Typography>{`Fuel: ${fuel.current} /${fuel.capacity}`}</Typography>
-    </div>
   );
 }
 
 function Cargo(props) {
   const { cargo } = props;
   const [isOpen, setIsOpen] = useState(false);
+
   if (!cargo || !isValidArray(cargo?.inventory))
     return (
       <>
-        <Typography sx={{padding: '0.75rem'}}>Cargo Empty</Typography>
+        <Typography variant='h6' >Cargo: Empty</Typography>
       </>
     );
-
   const inventory = cargo?.inventory.map((item, index) => {
     return (
       <Typography
@@ -62,6 +52,19 @@ function Cargo(props) {
   );
 }
 
+export function Ship(props) {
+  const { ship } = props;
+
+  if (!ship) return <></>;
+  return (
+    <div className='flex flex-col p-4 text-left bg-blackie border-2 border-map-green text-map-green rounded-md grow'>
+      <Typography variant='h6'> {`Name: ${ship.symbol}`}</Typography>
+      <Nav nav={ship.nav} fuel={ship.fuel} />
+      <Cargo cargo={ship.cargo} />
+    </div>
+  );
+}
+
 export function Ships(props) {
   const { ships, setShip, closeModal } = props;
   if (!isValidArray(ships)) return <></>;
@@ -71,9 +74,8 @@ export function Ships(props) {
         key={index}
         className='flex flex-col p-4 text-left space-y-2 bg-blackie border-2 border-map-green text-map-green rounded-md m-2'
       >
-        <Typography> {`Name: ${ship.symbol}`}</Typography>
-        <Nav nav={ship.nav} />
-        <Fuel fuel={ship.fuel} />
+        <Typography variant='h6'> {`Name: ${ship.symbol}`}</Typography>
+        <Nav nav={ship.nav} fuel={ship.fuel} />
         <Cargo cargo={ship.cargo} />
         <div className='flex flex-col-reverse h-full mt-auto'>
           <Button
