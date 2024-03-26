@@ -8,7 +8,7 @@ import { toToken } from '../../../api/adapters';
 
 export function Waypoint(props) {
   const { asteroids, setTime } = props;
-  const { currentShip, setIsToastVisible } = useContext(GameContext);
+  const { currentShip, setCurrentShip, setIsToastVisible  } = useContext(GameContext);
   const queryClient = useQueryClient();
   const token = toToken(queryClient);
   const [isTraitsOpen, setIsTraitsOpen] = useState(false);
@@ -19,7 +19,6 @@ export function Waypoint(props) {
   }
   let shipSymbol = currentShip?.symbol;
   const actionProps = { token, shipSymbol, setIsToastVisible, queryClient };
-
   return (
     <List>
       <ListItem
@@ -31,7 +30,7 @@ export function Waypoint(props) {
           isOpen={isTraitsOpen}
           setIsOpen={setIsTraitsOpen}
         />
-        <ActionRow actions={actionsConfig(actionProps, waypoint, setTime)} />
+        <ActionRow actions={actionsConfig(actionProps, waypoint, setTime, currentShip?.nav?.waypointSymbol, setCurrentShip, currentShip)} />
       </ListItem>
     </List>
   );

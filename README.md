@@ -2,16 +2,12 @@
 
 -------------------------
 
-## - Add agent data update on key points - SP005
-
 ## - Allow persistent storage of key data - SP006
  - Current Location of Ships
 
 ## - Allow View Shipyard - SP013
 
 ## - Allow View Market Items up for barter - SP014
-
-## - Waypoint actions not referencing selected waypoint - SP015
 
 ## - Add Contract Details to the player console page - SP016
 
@@ -40,3 +36,7 @@
 ## ~~- Highlight Current waypoint on starchart - SP001~~
 ~~- Will different ships be displayed on the screen?~~
 ~~ - Waiting on SP011~~
+
+## ~~- Waypoint actions not referencing selected waypoint - SP015~~
+
+## ~~- Add agent data update on key points - SP005~~

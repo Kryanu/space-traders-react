@@ -23,13 +23,17 @@ const timedNavigateShip = async ({
   setTime,
   setIsToastVisible,
   queryClient,
+  currentShip,
+  setCurrentShip
 }) => {
   if (!token) {
     throw new Error('Token not found');
   }
   try {
     const data = await navigateShip({ token, shipSymbol, waypointSymbol });
-    queryClient.invalidateQueries(['ships']);
+    await queryClient.invalidateQueries(['ships']);
+
+    setCurrentShip(queryClient.getQueryData(['ships']).find(ship => ship.symbol === currentShip.symbol));
     setTime(data.nav.route.arrival);
     setIsToastVisible({ isVisible: true, message: 'Navigation ongoing' });
   } catch {}
@@ -70,7 +74,14 @@ export const mineAsteroid = async ({
     setIsToastVisible({ isVisible: true, message: ex.message });
   }
 };
-export const actionsConfig = (actionProps, waypoint, setTime) => {
+export const actionsConfig = (
+  actionProps,
+  waypoint,
+  setTime,
+  shipWaypoint,
+  setCurrentShip,
+  currentShip
+) => {
   const actions = [
     {
       text: 'refuel Ship',
@@ -101,9 +112,14 @@ export const actionsConfig = (actionProps, waypoint, setTime) => {
       callBackProps: {
         waypointSymbol: waypoint.symbol,
         setTime,
+        currentShip,
+        setCurrentShip,
         ...actionProps,
       },
     },
   ];
-  return actionRowConfig.concat(actions);
+  if (waypoint.symbol === shipWaypoint) {
+    return actionRowConfig.concat(actions);
+  }
+  return actionRowConfig;
 };

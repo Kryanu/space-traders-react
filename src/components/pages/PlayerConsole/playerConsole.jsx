@@ -45,7 +45,7 @@ export default function PlayerConsole() {
       return await API.fleet.getShips(token);
     },
   }).data;
-
+  
   useEffect(() => {
     if (!currentShip) setIsModalOpen(true);
   }, []);
