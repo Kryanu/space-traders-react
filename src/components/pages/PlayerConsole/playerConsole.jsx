@@ -3,18 +3,18 @@ import { useContext, useEffect, useState } from 'react';
 import { ModalSelector } from './children';
 import NavBar from '../../Layouts/navbar';
 import { GameContext } from '../../../context/';
-import { Modal, MapSelector, Waypoints } from '../../organisms';
+import { Modal, MapSelector, Waypoints, ShipDetails } from '../../organisms';
 import { AgentDetails, ModalBar } from '../../molecules';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
-import { API } from '../../../api/service';
 import {
   setLocationDetails,
   retrieveAgent,
+  retrieveContracts,
+  retrieveShips,
   retrieveSystemsConfig,
 } from './logic';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
-import { Ship } from '../../organisms/ShipViewer/ShipViewer_children';
 
 export default function PlayerConsole() {
   const { currentShip, selectedWaypoint } = useContext(GameContext);
@@ -28,24 +28,17 @@ export default function PlayerConsole() {
 
   const contracts = useQuery({
     queryKey: ['contracts'],
-    queryFn: async () => {
-      return await API.agent.viewContracts(token);
-    },
+    queryFn: async () => await retrieveContracts(token),
   }).data;
   const systems = useQuery(retrieveSystemsConfig).data;
   const agent = useQuery({
     queryKey: ['agent'],
-    queryFn: async () => {
-      return await retrieveAgent(token);
-    },
-    refetchOnMount: false,
+    queryFn: async () => await retrieveAgent(token),
     refetchOnWindowFocus: false,
   }).data;
   const ships = useQuery({
     queryKey: ['ships'],
-    queryFn: async () => {
-      return await API.fleet.getShips(token);
-    },
+    queryFn: async () => await retrieveShips(token),
   }).data;
 
   useEffect(() => {
@@ -70,7 +63,7 @@ export default function PlayerConsole() {
         <NavBar route={'/'} />
         <div className='flex items-stretch justify-between space-x-4'>
           <AgentDetails agent={agent} />
-          <Ship ship={currentShip} />
+          <ShipDetails ship={currentShip} />
         </div>
 
         <ModalBar openModal={setIsModalOpen} setModalType={setModalType} />
