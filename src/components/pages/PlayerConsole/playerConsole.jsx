@@ -49,6 +49,8 @@ export default function PlayerConsole() {
         <Waypoints
           waypointSymbol={selectedWaypoint.symbol}
           location={location}
+          setModalType={setModalType}
+          openModal={setIsModalOpen}
         />
       </div>
       <MapSelector
@@ -63,6 +65,7 @@ export default function PlayerConsole() {
           type={modalType}
           closeModal={closeModal}
           token={token}
+          location={selectedWaypoint}
         />
       </Modal>
     </div>

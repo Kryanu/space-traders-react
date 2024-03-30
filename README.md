@@ -5,8 +5,6 @@
 ## - Allow persistent storage of key data - SP006
  - Current Location of Ships
 
-## - Allow View Shipyard - SP013
-
 ## - Allow View Market Items up for barter - SP014
 
 ## - Figure out why token is being invalidated - SP017
@@ -40,3 +38,5 @@
 ## ~~- Add agent data update on key points - SP005~~
 
 ## ~~- Add Contract Details to the player console page - SP016~~
+
+## ~~- Allow View Shipyard - SP013~~

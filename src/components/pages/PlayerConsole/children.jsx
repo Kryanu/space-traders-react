@@ -6,7 +6,7 @@ import {
   ListItemButton,
   Collapse,
 } from '@mui/material';
-import { ShipViewer } from '../../organisms';
+import { ShipListing, ShipViewer } from '../../organisms';
 import { MODAL_TYPE } from '../../../constants';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -100,7 +100,7 @@ function ContractIdList(props) {
 }
 
 export function ModalSelector(props) {
-  const { type, closeModal, contracts, ships, token } = props;
+  const { type, closeModal, contracts, ships, token, location } = props;
   switch (type) {
     case MODAL_TYPE.ships:
       return (
@@ -118,6 +118,13 @@ export function ModalSelector(props) {
             token={token}
             closeModal={closeModal}
           />
+        </div>
+      );
+    case MODAL_TYPE.shipyard:
+      return (
+        <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
+          <Typography variant='h3'>Buy a Ship</Typography>
+          <ShipListing waypoint={location} closeModal={closeModal} />
         </div>
       );
   }

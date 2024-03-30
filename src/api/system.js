@@ -47,7 +47,7 @@ export const system = {
       throw new Error(ex);
     }
   },
-  getMarket: async (token, system, waypoint) => {
+  getMarket: async (system, waypoint) => {
     try {
       const res = await axios.get(
         `https://api.spacetraders.io/v2/systems/${system}/waypoints/${waypoint}/market`,

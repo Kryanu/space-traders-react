@@ -9,7 +9,7 @@ export const retrieveWaypoint = async (
   setWaypoint(await API.system.getWaypoint(systemSymbol, waypointSymbol));
 };
 
-export const orbitShip = async ({ token, shipSymbol, setIsToastVisible }) => {
+const orbitShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   try {
     await API.fleet.orbitShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Orbiting...' });
@@ -24,7 +24,7 @@ const timedNavigateShip = async ({
   setIsToastVisible,
   queryClient,
   currentShip,
-  setCurrentShip
+  setCurrentShip,
 }) => {
   if (!token) {
     throw new Error('Token not found');
@@ -33,20 +33,24 @@ const timedNavigateShip = async ({
     const data = await navigateShip({ token, shipSymbol, waypointSymbol });
     await queryClient.invalidateQueries(['ships']);
 
-    setCurrentShip(queryClient.getQueryData(['ships']).find(ship => ship.symbol === currentShip.symbol));
+    setCurrentShip(
+      queryClient
+        .getQueryData(['ships'])
+        .find((ship) => ship.symbol === currentShip.symbol)
+    );
     setTime(data.nav.route.arrival);
     setIsToastVisible({ isVisible: true, message: 'Navigation ongoing' });
   } catch {}
 };
 
-export const dockShip = async ({ token, shipSymbol, setIsToastVisible }) => {
+const dockShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   try {
     await API.fleet.dockShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Docking...' });
   } catch {}
 };
 
-export const refuelShip = async ({
+const refuelShip = async ({
   token,
   shipSymbol,
   setIsToastVisible,
@@ -62,11 +66,7 @@ export const refuelShip = async ({
   }
 };
 
-export const mineAsteroid = async ({
-  token,
-  shipSymbol,
-  setIsToastVisible,
-}) => {
+const mineAsteroid = async ({ token, shipSymbol, setIsToastVisible }) => {
   try {
     await API.fleet.mineAsteroid(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Mining...' });
@@ -74,14 +74,27 @@ export const mineAsteroid = async ({
     setIsToastVisible({ isVisible: true, message: ex.message });
   }
 };
+
+function viewShips({ setModalType, openModal }) {
+  setModalType('shipyard');
+  openModal(true);
+}
+
 export const actionsConfig = (
   actionProps,
   waypoint,
   setTime,
   shipWaypoint,
   setCurrentShip,
-  currentShip
+  currentShip,
+  setModalType,
+  openModal
 ) => {
+  const shipyard = {
+    text: 'View Ships',
+    callBack: viewShips,
+    callBackProps: { setModalType, openModal },
+  };
   const actions = [
     {
       text: 'refuel Ship',
@@ -119,6 +132,9 @@ export const actionsConfig = (
     },
   ];
   if (waypoint.symbol === shipWaypoint) {
+    if (waypoint.traits.find((trait) => trait.symbol === 'SHIPYARD')) {
+      actionRowConfig.push(shipyard);
+    }
     return actionRowConfig.concat(actions);
   }
   return actionRowConfig;

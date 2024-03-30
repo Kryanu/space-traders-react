@@ -15,5 +15,5 @@ export default function ActionRow(props) {
     );
   });
 
-  return <div>{buttons}</div>;
+  return <div className='mr-10'>{buttons}</div>;
 }

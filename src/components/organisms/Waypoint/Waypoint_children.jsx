@@ -7,8 +7,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
 
 export function Waypoint(props) {
-  const { asteroids, setTime } = props;
-  const { currentShip, setCurrentShip, setIsToastVisible  } = useContext(GameContext);
+  const { asteroids, setTime, setModalType, openModal } = props;
+  const { currentShip, setCurrentShip, setIsToastVisible } =
+    useContext(GameContext);
   const queryClient = useQueryClient();
   const token = toToken(queryClient);
   const [isTraitsOpen, setIsTraitsOpen] = useState(false);
@@ -17,6 +18,7 @@ export function Waypoint(props) {
   if (!asteroids || !token) {
     return <></>;
   }
+
   let shipSymbol = currentShip?.symbol;
   const actionProps = { token, shipSymbol, setIsToastVisible, queryClient };
   return (
@@ -30,7 +32,18 @@ export function Waypoint(props) {
           isOpen={isTraitsOpen}
           setIsOpen={setIsTraitsOpen}
         />
-        <ActionRow actions={actionsConfig(actionProps, waypoint, setTime, currentShip?.nav?.waypointSymbol, setCurrentShip, currentShip)} />
+        <ActionRow
+          actions={actionsConfig(
+            actionProps,
+            waypoint,
+            setTime,
+            currentShip?.nav?.waypointSymbol,
+            setCurrentShip,
+            currentShip,
+            setModalType,
+            openModal
+          )}
+        />
       </ListItem>
     </List>
   );

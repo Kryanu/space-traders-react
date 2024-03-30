@@ -10,8 +10,8 @@ export const display = (obj) => {
   }
 };
 
-export const retrieveWaypoints = async (token, system, params) => {
-  return await API.listWaypoints(token, system, params);
+export const retrieveWaypoints = async (system, params) => {
+  return await API.system.listWaypoints(system, params);
 };
 
 export const delay = (ms) => {

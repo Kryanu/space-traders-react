@@ -5,3 +5,4 @@ export { default as MapSelector } from './MapSelector/MapSelector';
 export { default as ShipViewer } from './ShipViewer/ShipViewer';
 export { default as Waypoints } from './Waypoint/Waypoint';
 export { default as ShipDetails } from './ShipDetails/ShipDetails';
+export { default as ShipListing } from './ShipListing/ShipListing';

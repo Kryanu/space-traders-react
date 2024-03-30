@@ -140,4 +140,5 @@ export const MAPS = {
 export const MODAL_TYPE = {
   ships: 'shipViewer',
   contracts: 'contracts',
+  shipyard: 'shipyard'
 };
