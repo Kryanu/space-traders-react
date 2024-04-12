@@ -1,3 +1,31 @@
+# Disclaimer
+
+- This project is a Work In progress, treat it as such. 
+
+# Setting up the project
+
+- You'll require a node version of 20.11.0 or higher.
+- Run npm install in the directory of the project 
+- run npm run dev to start the project
+- run ./pocketBase/pocketbase.exe serve to start the pocketbase server (which will be used to store your unique token)
+
+# Instructions
+
+- Go to Sign up and create a username and input "COSMIC" as the faction ( Will eventually be a selectable list (SP018))
+
+- When Signed in, press back and login with the credentials (Sign up should not redirect to main screen its a bug (SP019))
+
+- Once logged in, The 'Select a ship' pop up will be displayed kindly select one (Mining Drone is suggested)
+
+- The pink waypoint is your current ship's location, press it to interact with the waypoint.
+
+- To Refuel and Trade at the market (WIP) your ship needs to be docked. 
+
+- To Mine and navigate your ship needs to be in orbit. The required buttons will be displayed on the left of the screen.
+
+- What you mine can be sold eventually at the market (That feature is still a work in progress).
+
+- Currently contracts are a possible feature but the API has not supported more than the initial one. 
 # TODO:
 
 -------------------------
@@ -7,7 +35,15 @@
 
 ## - Allow View Market Items up for barter - SP014
 
+## - Allow Buying and Selling of cargo from the market - SP020
+
 ## - Figure out why token is being invalidated - SP017
+
+## - Create list of factions in sign up page - SP018
+
+## - Fix Sign up taking to main screen bug - SP019
+
+
 
 # Closed!
 
