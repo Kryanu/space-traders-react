@@ -43,6 +43,11 @@
 
 ## - Fix Sign up taking to main screen bug - SP019
 
+## - Remake map using d3.js
+
+# WIP
+
+## - Relocate sign up into different route - SP020
 
 
 # Closed!
