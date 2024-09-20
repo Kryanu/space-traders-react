@@ -5,6 +5,7 @@ import {
   ListItemText,
   ListItemButton,
   Collapse,
+  Divider,
 } from '@mui/material';
 import { ShipListing, ShipViewer } from '../../organisms';
 import { MODAL_TYPE } from '../../../constants';
@@ -17,8 +18,10 @@ import {
 } from './logic';
 import { useState } from 'react';
 import { API } from '../../../api/service';
+import { useQueryClient } from '@tanstack/react-query';
+import { isValidArray } from '../../../hooks';
 
-export const useAllQueries = (token) => {
+export const useAllQueries = (token, system, waypoint) => {
   const contracts = useQuery({
     queryKey: ['contracts'],
     queryFn: async () => await retrieveContracts(token),
@@ -100,7 +103,9 @@ function ContractIdList(props) {
 }
 
 export function ModalSelector(props) {
+  const queryClient = useQueryClient();
   const { type, closeModal, contracts, ships, token, location } = props;
+
   switch (type) {
     case MODAL_TYPE.ships:
       return (
@@ -127,8 +132,74 @@ export function ModalSelector(props) {
           <ShipListing waypoint={location} closeModal={closeModal} />
         </div>
       );
+    case MODAL_TYPE.markets:
+      const market = queryClient.getQueryData(['market']);
+      console.log(market);
+      return (
+        <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
+          <Typography variant='h3'>Marketplace</Typography>
+          <Marketplace market={market} />
+        </div>
+      );
   }
   return <></>;
+}
+
+const mapArrayToText = (arr) => {
+  return arr.map((item, index) => {
+    return (
+      <Typography sx={{ textAlign: 'left', paddingLeft: '1.5rem' }} key={index}>
+        {item.name}
+      </Typography>
+    );
+  });
+};
+
+function MarketTraits(props) {
+  const { data, title } = props;
+  const [show, setShow] = useState(false);
+  let message = 'Show';
+  if (!isValidArray(data)) return <></>;
+  if (show) {
+    message = 'Hide';
+  }
+  const list = data.map((item, index) => {
+    return (
+      <Typography sx={{ textAlign: 'left', paddingLeft: '1.5rem' }} key={index}>
+        {item.name}
+      </Typography>
+    );
+  });
+
+  return (
+    <>
+      <Typography>{title}</Typography>
+      <ListItemButton
+        sx={{ color: '#32C832' }}
+        onClick={() => {
+          setShow(!show);
+        }}
+      >
+        {message}
+      </ListItemButton>
+      <Collapse in={show}>{list}</Collapse>
+    </>
+  );
+}
+
+function Marketplace(props) {
+  const { market } = props;
+  if (!market) return <></>;
+
+  return (
+    <div className='flex flex-col text-left'>
+      <MarketTraits data={market.exchange} title={'Exchange:'} />
+      <Divider />
+      <MarketTraits data={market.exports} title={'Exports:'} />
+      <Divider />
+      <MarketTraits data={market.imports} title={'Imports:'} />
+    </div>
+  );
 }
 
 function DeliverablesList(props) {

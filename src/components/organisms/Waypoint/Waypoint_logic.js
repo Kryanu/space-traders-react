@@ -1,5 +1,6 @@
 import { API } from '../../../api/service';
 import { navigateShip } from '../../../hooks/helpers';
+import { MODAL_TYPE } from '../../../constants';
 
 export const retrieveWaypoint = async (
   systemSymbol,
@@ -76,7 +77,12 @@ const mineAsteroid = async ({ token, shipSymbol, setIsToastVisible }) => {
 };
 
 function viewShips({ setModalType, openModal }) {
-  setModalType('shipyard');
+  setModalType(MODAL_TYPE.shipyard);
+  openModal(true);
+}
+
+function viewMarket({ setModalType, openModal }) {
+  setModalType(MODAL_TYPE.markets);
   openModal(true);
 }
 
@@ -93,6 +99,11 @@ export const actionsConfig = (
   const shipyard = {
     text: 'View Ships',
     callBack: viewShips,
+    callBackProps: { setModalType, openModal },
+  };
+  const market = {
+    text: 'Go To Market',
+    callBack: viewMarket,
     callBackProps: { setModalType, openModal },
   };
   const actions = [
@@ -134,6 +145,9 @@ export const actionsConfig = (
   if (waypoint.symbol === shipWaypoint) {
     if (waypoint.traits.find((trait) => trait.symbol === 'SHIPYARD')) {
       actionRowConfig.push(shipyard);
+    }
+    if (waypoint.traits.find((trait) => trait.symbol === 'MARKETPLACE')) {
+      actionRowConfig.push(market);
     }
     return actionRowConfig.concat(actions);
   }

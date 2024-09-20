@@ -20,6 +20,7 @@ export default function PlayerConsole() {
   const closeModal = () => setIsModalOpen(false);
   const [modalType, setModalType] = useState(MODAL_TYPE.ships);
   const { contracts, systems, agent, ships } = useAllQueries(token);
+
   useEffect(() => {
     if (!currentShip) setIsModalOpen(true);
   }, []);
