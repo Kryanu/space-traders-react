@@ -14,11 +14,12 @@ export default function PlayerConsole() {
   const { currentShip, selectedWaypoint } = useContext(GameContext);
   const [location, setLocation] = useState(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(MODAL_TYPE.ships);
   const [waypoints, setWaypoints] = useState(undefined);
+  
   const queryClient = useQueryClient();
   const token = toToken(queryClient);
   const closeModal = () => setIsModalOpen(false);
-  const [modalType, setModalType] = useState(MODAL_TYPE.ships);
   const { contracts, systems, agent, ships } = useAllQueries(token);
 
   useEffect(() => {
@@ -58,6 +59,7 @@ export default function PlayerConsole() {
         systems={systems}
         waypoints={waypoints}
         setWaypoints={setWaypoints}
+        currentShip={currentShip}
       />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <ModalSelector

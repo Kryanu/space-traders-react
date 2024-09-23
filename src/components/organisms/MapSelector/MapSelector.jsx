@@ -7,8 +7,7 @@ import {
 } from '@mui/material';
 import { Map } from '../../organisms';
 import { MAPS, SELECTED_TRAITS } from '../../../constants';
-import { useState, useContext, useEffect } from 'react';
-import { GameContext } from '../../../context';
+import { useState, useEffect } from 'react';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
 import { toToken } from '../../../api/adapters';
 import { useQueryClient } from '@tanstack/react-query';
@@ -47,13 +46,27 @@ function SelectionButtons(props) {
   );
 }
 
+const mapDetails = (selectedMap, systems, waypoints) => {
+  let type = waypoints;
+  let title = 'Waypoints Map';
+
+  if (selectedMap === MAPS.systems) {
+    type = systems;
+    title = 'Systems Map';
+  }
+
+  return {
+    type,
+    title,
+  };
+};
+
 export default function MapSelector(props) {
   const [selectedMap, setSelectedMap] = useState(MAPS.waypoints);
   const queryClient = useQueryClient();
   const token = toToken(queryClient);
-  const { currentShip } = useContext(GameContext);
   const [filter, setFilter] = useState('');
-  const { systems, waypoints, setWaypoints } = props;
+  const { systems, waypoints, setWaypoints, currentShip } = props;
 
   const handleChange = (e) => {
     setFilter(e.target.value);
@@ -70,16 +83,8 @@ export default function MapSelector(props) {
   }, [filter]);
 
   if (!selectedMap || !systems || !waypoints) return <></>;
-  let selectedType;
-  let selectedTitle;
 
-  if (selectedMap === MAPS.systems) {
-    selectedType = systems;
-    selectedTitle = 'Systems Map';
-  } else if (selectedMap === MAPS.waypoints) {
-    selectedType = waypoints;
-    selectedTitle = 'Waypoints Map';
-  }
+  const mapConfig = mapDetails(selectedMap, systems, waypoints);
 
   return (
     <div className='flex flex-col grow space-y-4 border-l-4 border-l-map-green pl-8'>
@@ -108,7 +113,11 @@ export default function MapSelector(props) {
           Reset
         </Button>
       </div>
-      <Map data={selectedType} title={selectedTitle} />
+      <Map
+        data={mapConfig.type}
+        title={mapConfig.title}
+        activeShipLocation={currentShip?.nav?.waypointSymbol}
+      />
     </div>
   );
 }
