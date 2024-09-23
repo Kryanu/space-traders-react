@@ -6,21 +6,15 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-export default function Cargo(props) {
-  const { cargo } = props;
+export default function Cargo({ cargo }) {
   const [isOpen, setIsOpen] = useState(false);
 
   if (!cargo || !isValidArray(cargo?.inventory))
+    return <Typography variant='h6'>Cargo: Empty</Typography>;
+  const { inventory, units, capacity } = cargo;
+  const inventoryDetails = inventory.map(({ name, units }, index) => {
     return (
-      <>
-        <Typography variant='h6'>Cargo: Empty</Typography>
-      </>
-    );
-  const inventory = cargo?.inventory.map((item, index) => {
-    return (
-      <Typography
-        key={index}
-      >{`${item.name}: ${item.units}/${cargo.capacity}`}</Typography>
+      <Typography key={index}>{`${name}: ${units}/${capacity}`}</Typography>
     );
   });
 
@@ -30,8 +24,8 @@ export default function Cargo(props) {
         <ListItemText primary='Show Cargo' />
       </ListItemButton>
       <Collapse in={isOpen}>
-        <Typography>{`Cargo ${cargo.units}/${cargo.capacity}`}</Typography>
-        {inventory}
+        <Typography>{`Cargo ${units}/${capacity}`}</Typography>
+        {inventoryDetails}
       </Collapse>
     </>
   );

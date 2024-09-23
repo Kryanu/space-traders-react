@@ -8,9 +8,7 @@ const detailMapping = {
   shipCount: 'Ships',
 };
 
-export default function AgentDetails(props) {
-  const { agent } = props;
-
+export default function AgentDetails({ agent }) {
   if (!agent) {
     return <></>;
   }
