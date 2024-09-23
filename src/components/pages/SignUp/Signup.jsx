@@ -2,8 +2,8 @@ import { TextField } from '@mui/material';
 import { useState } from 'react';
 import { addRecord } from '../../../api/pocketbase';
 import { API } from '../../../api/service';
+import { retrieveToken } from '../../../api/queries.js';
 import { NavigateButton } from '../../atoms/index.js';
-import { retrieveToken } from '../../organisms/Start/logic.js';
 import { useQueryClient } from '@tanstack/react-query';
 
 const registerHandle = async ({ handle, faction, queryClient }) => {
@@ -45,7 +45,6 @@ export function SignUp() {
       </div>
 
       <NavigateButton
-        isRendered={true}
         text={'Sign Up'}
         callBack={registerHandle}
         callBackProps={{
