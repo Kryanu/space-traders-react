@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
-export default function ActionRow(props) {
-  const { actions } = props;
+export default function ActionRow({ actions, style }) {
+  const classes = `${style}`;
 
   const buttons = actions.map((action, index) => {
     return (
@@ -15,5 +15,5 @@ export default function ActionRow(props) {
     );
   });
 
-  return <div className='mr-10'>{buttons}</div>;
+  return <div className={classes}>{buttons}</div>;
 }

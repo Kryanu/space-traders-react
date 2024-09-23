@@ -10,7 +10,7 @@ export const retrieveWaypoint = async (
   setWaypoint(await API.system.getWaypoint(systemSymbol, waypointSymbol));
 };
 
-const orbitShip = async ({ token, shipSymbol, setIsToastVisible }) => {
+export const orbitShip = async ({ token, shipSymbol, setIsToastVisible }) => {
   try {
     await API.fleet.orbitShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Orbiting...' });
@@ -44,14 +44,20 @@ const timedNavigateShip = async ({
   } catch {}
 };
 
-const dockShip = async ({ token, shipSymbol, setIsToastVisible }) => {
+export const dockShip = async ({
+  token,
+  shipSymbol,
+  setIsToastVisible,
+  setCurrentShip,
+}) => {
   try {
     await API.fleet.dockShip(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Docking...' });
+    queryClient.invalidateQueries({ queryKey: ['ships'] });
   } catch {}
 };
 
-const refuelShip = async ({
+export const refuelShip = async ({
   token,
   shipSymbol,
   setIsToastVisible,
@@ -67,7 +73,11 @@ const refuelShip = async ({
   }
 };
 
-const mineAsteroid = async ({ token, shipSymbol, setIsToastVisible }) => {
+export const mineAsteroid = async ({
+  token,
+  shipSymbol,
+  setIsToastVisible,
+}) => {
   try {
     await API.fleet.mineAsteroid(token, shipSymbol);
     setIsToastVisible({ isVisible: true, message: 'Mining...' });
@@ -106,28 +116,6 @@ export const actionsConfig = (
     callBack: viewMarket,
     callBackProps: { setModalType, openModal },
   };
-  const actions = [
-    {
-      text: 'refuel Ship',
-      callBack: refuelShip,
-      callBackProps: { ...actionProps },
-    },
-    {
-      text: 'Orbit',
-      callBack: orbitShip,
-      callBackProps: { ...actionProps },
-    },
-    {
-      text: 'Mine Asteroid',
-      callBack: mineAsteroid,
-      callBackProps: { ...actionProps },
-    },
-    {
-      text: 'Dock',
-      callBack: dockShip,
-      callBackProps: { ...actionProps },
-    },
-  ];
 
   let actionRowConfig = [
     {
@@ -149,7 +137,7 @@ export const actionsConfig = (
     if (waypoint.traits.find((trait) => trait.symbol === 'MARKETPLACE')) {
       actionRowConfig.push(market);
     }
-    return actionRowConfig.concat(actions);
+    return actionRowConfig;
   }
   return actionRowConfig;
 };

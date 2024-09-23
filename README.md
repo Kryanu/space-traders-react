@@ -1,6 +1,8 @@
 # Disclaimer
+- *Zip sound*
+- You're probably wondering how I got in this situation, it all started with me being bored.
 
-- This project is a Work In progress, treat it as such. 
+- Jokes aside, after coming back to this project, I realised that the structure I decided to follow is not sustainable to grow into a larger codebase. This happened because I changed approaches for certain core concepts like 2-3 times (Token management, State Management). Too many loose-ends in the project and I have decided to do a re-write in another project. Will be linking it soon.
 
 # Setting up the project
 
@@ -26,6 +28,7 @@
 - What you mine can be sold eventually at the market (That feature is still a work in progress).
 
 - Currently contracts are a possible feature but the API has not supported more than the initial one. 
+
 # TODO:
 
 -------------------------
@@ -41,8 +44,9 @@
 
 ## - Create list of factions in sign up page - SP018
 
+## - Create Action bar for ship - SP022
 
-## - Remake map using d3.js
+## - Remake map using d3.js - SP100
 
 # WIP
 

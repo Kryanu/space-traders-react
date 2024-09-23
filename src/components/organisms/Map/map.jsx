@@ -41,6 +41,7 @@ export default function Map({ data, title, activeShipLocation }) {
 
   const queryClient = useQueryClient();
   const ships = queryClient.getQueryData(['ships']);
+
   const shipLocations = ships.map((ship) => {
     return ship.nav.waypointSymbol;
   });
@@ -71,7 +72,7 @@ export default function Map({ data, title, activeShipLocation }) {
             dataKey='x'
             tick={true}
             hide={false}
-            // axisLine={false}
+            axisLine={false}
             type='number'
             name='X'
             strokeDasharray='3 3'
@@ -80,7 +81,7 @@ export default function Map({ data, title, activeShipLocation }) {
             dataKey='y'
             tick={true}
             hide={false}
-            // axisLine={false}
+            axisLine={false}
             strokeDasharray='3 3'
             type='number'
             name='Y'
