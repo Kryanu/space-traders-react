@@ -41,16 +41,17 @@
 
 ## - Create list of factions in sign up page - SP018
 
-## - Fix Sign up taking to main screen bug - SP019
 
 ## - Remake map using d3.js
 
 # WIP
 
-## - Relocate sign up into different route - SP020
-
 
 # Closed!
+
+## ~~- Relocate sign up into different route - SP020~~
+
+## ~~- Fix Sign up taking to main screen bug - SP019~~
 
 ## ~~- Add Filter by Trait in Starchart Section - SP003~~
 

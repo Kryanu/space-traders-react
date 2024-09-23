@@ -49,13 +49,11 @@ export default function Map(props) {
 
   let currentWaypoint;
   let shipCurrentWaypoints;
-  if (data) {
-    if (shipWaypoint) {
-      currentWaypoint = [data.find((item) => item.symbol === shipWaypoint)];
-      shipCurrentWaypoints = data.filter((waypoint) =>
+  if (data && shipWaypoint) {
+    currentWaypoint = [data.find((item) => item.symbol === shipWaypoint)];
+    shipCurrentWaypoints = data.filter((waypoint) =>
         shipLocations.includes(waypoint.symbol)
-      );
-    }
+    );
   }
   useEffect(() => {
     setShipWaypoint(currentShip?.nav?.waypointSymbol);
