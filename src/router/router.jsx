@@ -1,9 +1,9 @@
 import { Start } from '../components/organisms';
 import { PlayerConsole } from '../components/pages';
-import { createBrowserRouter } from 'react-router-dom';
+import { createMemoryRouter } from 'react-router-dom';
 import { SignUp } from '../components/pages/SignUp/Signup';
 
-export const router = createBrowserRouter([
+export const router = createMemoryRouter([
   {
     path: '/',
     element: <Start />,
@@ -14,6 +14,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/sign-up',
-    element: <SignUp />
-  }
+    element: <SignUp />,
+  },
 ]);

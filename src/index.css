@@ -1,6 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-blackie: #121212;
+  --color-map-green: #32c832;
+  --color-overlay-gray: #00000080;
+}
 
 :root {
   line-height: 1.5;
