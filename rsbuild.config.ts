@@ -11,4 +11,7 @@ export default defineConfig({
       index: './src/main.jsx',
     },
   },
+  server: {
+    port: 5174,
+  },
 });
