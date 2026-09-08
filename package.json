@@ -26,6 +26,7 @@
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
+    "@module-federation/rsbuild-plugin": "^2.9.0",
     "@rsbuild/core": "^2.2.3",
     "@rsbuild/plugin-react": "^2.1.0",
     "@types/react": "^18.2.55",
