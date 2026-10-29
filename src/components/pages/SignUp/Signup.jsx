@@ -5,6 +5,7 @@ import { API } from '../../../api/service';
 import { retrieveToken } from '../../../api/queries.js';
 import { NavigateButton } from '../../atoms/index.js';
 import { useQueryClient } from '@tanstack/react-query';
+import { isMockMode } from '../../../api/mode';
 
 const registerHandle = async ({ handle, faction, queryClient }) => {
   if (!handle || !faction) {
@@ -13,7 +14,9 @@ const registerHandle = async ({ handle, faction, queryClient }) => {
 
   try {
     const startData = await API.agent.registerAgent(handle, faction);
-    await addRecord(handle, startData?.token);
+    if (!isMockMode()) {
+      await addRecord(handle, startData?.token);
+    }
   } catch (ex) {
     console.error(ex);
   }

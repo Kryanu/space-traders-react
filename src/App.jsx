@@ -8,6 +8,8 @@ import { GameContext } from './context';
 import { Toast } from './components/molecules/Toast/Toast.jsx';
 import { darkTheme } from './constants/';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { FormControlLabel, Switch } from '@mui/material';
+import { DATA_MODE, getDataMode, saveDataMode } from './api/mode';
 
 const queryClient = new QueryClient();
 
@@ -19,6 +21,15 @@ function App() {
     message: '',
     isVisible: false,
   });
+  const [dataMode, setDataMode] = useState(getDataMode);
+
+  const handleDataModeChange = (event) => {
+    const nextMode = event.target.checked ? DATA_MODE.mock : DATA_MODE.live;
+    saveDataMode(nextMode);
+    setDataMode(nextMode);
+    queryClient.clear();
+    router.navigate('/');
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -36,6 +47,18 @@ function App() {
             setSelectedWaypoint,
           }}
         >
+          <FormControlLabel
+            control={
+              <Switch
+                checked={dataMode === DATA_MODE.mock}
+                onChange={handleDataModeChange}
+                color='success'
+                inputProps={{ 'aria-label': 'Use mock data' }}
+              />
+            }
+            label={dataMode === DATA_MODE.mock ? 'Mock data' : 'Live data'}
+            sx={{ position: 'fixed', top: 8, right: 16, zIndex: 1300, color: '#32C832' }}
+          />
           <RouterProvider router={router} />
           <Toast
             isVisible={isToastVisible.isVisible}

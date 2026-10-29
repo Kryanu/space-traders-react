@@ -40,7 +40,7 @@ export default function Map({ data, title, activeShipLocation }) {
   };
 
   const queryClient = useQueryClient();
-  const ships = queryClient.getQueryData(['ships']);
+  const ships = queryClient.getQueryData(['ships']) || [];
 
   const shipLocations = ships.map((ship) => {
     return ship.nav.waypointSymbol;
