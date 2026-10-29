@@ -5,7 +5,7 @@ const pb = new PocketBase('http://127.0.0.1:8090');
 export const addRecord = async (handle, token) => {
   if (handle) {
     try {
-      await pb.collection('players').create({ handle, token });
+      await pb.collection('agents').create({ symbol: handle, token });
     } catch (ex) {
       console.error(ex);
     }
@@ -15,8 +15,8 @@ export const addRecord = async (handle, token) => {
 export const filterRecordByHandle = async (handle) => {
   if (handle) {
     try {
-      return await pb.collection('players').getList(1, 1, {
-        filter: `handle = '${handle}'`,
+      return await pb.collection('agents').getList(1, 1, {
+        filter: `symbol = '${handle}'`,
       });
     } catch (ex) {
       console.error(ex);
