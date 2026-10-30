@@ -10,7 +10,7 @@ interface TraitsProps {
 }
 
 export default function Traits({ waypoint, isOpen, setIsOpen }: TraitsProps) {
-  if (!isValidArray(waypoint.traits)) {
+  if (waypoint.traits.length === 0) {
     return null;
   }
 

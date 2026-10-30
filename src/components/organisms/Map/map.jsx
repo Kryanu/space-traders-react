@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemText, Typography } from '@mui/material';
+import { List, ListItem, Typography } from '@mui/material';
 import {
   ScatterChart,
   XAxis,
@@ -7,25 +7,21 @@ import {
   Scatter,
   ResponsiveContainer,
 } from 'recharts';
-import { isValidArray } from '../../../hooks';
 import { useContext, useEffect, useState } from 'react';
 import { GameContext } from '../../../context';
 import { useQueryClient } from '@tanstack/react-query';
+
 const customToolTip = ({ payload }) => {
-  if (!isValidArray(payload)) {
+  if (!Array.isArray(payload) || payload.length === 0) {
     return <></>;
   }
   const item = payload[0].payload;
   return (
     <div className='bg-blackie border-2 border-map-green text-map-green rounded-md'>
-      <List>
-        <ListItem>
-          <ListItemText>{`Symbol:${item.symbol}`}</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemText>{`Type:${item.type}`}</ListItemText>
-        </ListItem>
-      </List>
+      <div style={{ padding: '16px' }}>
+        <p style={{ paddingBottom: '8px' }}>{`Symbol:${item.symbol}`}</p>
+        <p>{`Type:${item.type}`}</p>
+      </div>
     </div>
   );
 };
@@ -51,7 +47,7 @@ export default function Map({ data, title, activeShipLocation }) {
   if (data && shipWaypoint) {
     currentWaypoint = [data.find((item) => item.symbol === shipWaypoint)];
     shipCurrentWaypoints = data.filter((waypoint) =>
-      shipLocations.includes(waypoint.symbol)
+      shipLocations.includes(waypoint.symbol),
     );
   }
   useEffect(() => {
@@ -63,9 +59,7 @@ export default function Map({ data, title, activeShipLocation }) {
   }
   return (
     <div className='flex flex-col grow items-start space-y-2'>
-      <Typography variant='h4' color={'#32C832'}>
-        {`${title}`}
-      </Typography>
+      <p style={{ color: '#32C832' }}>{`${title}`}</p>
       <ResponsiveContainer width='100%' height='100%'>
         <ScatterChart width={900} height={700}>
           <XAxis

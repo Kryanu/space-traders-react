@@ -20,8 +20,19 @@ import { useState } from 'react';
 import { API } from '../../../api/service';
 import { useQueryClient } from '@tanstack/react-query';
 import { isValidArray } from '../../../hooks';
+import type {
+  Contract,
+  ContractDeliverable,
+  Market,
+  MarketItem,
+  MarketTrait,
+  Ship,
+  Waypoint,
+} from '@types';
 
-export const useAllQueries = (token, system, waypoint) => {
+type ModalType = (typeof MODAL_TYPE)[keyof typeof MODAL_TYPE];
+
+export const useAllQueries = (token: string) => {
   const contracts = useQuery({
     queryKey: ['contracts'],
     queryFn: async () => await retrieveContracts(token),
@@ -45,36 +56,24 @@ export const useAllQueries = (token, system, waypoint) => {
   };
 };
 
-const acceptContract = async (token, contractId) => {
+async function acceptContract(token: string, contractId: string) {
   try {
     await API.agent.acceptContract(token, contractId);
   } catch (ex) {}
-};
-
-function AcceptButton(props) {
-  const { accepted, closeModal, token, id } = props;
-  if (accepted) return <></>;
-
-  return (
-    <ListItemButton
-      onClick={async () => {
-        try {
-          await acceptContract(token, id);
-        } catch {}
-        closeModal();
-      }}
-    >
-      <ListItemText primary='Accept' />
-    </ListItemButton>
-  );
 }
 
-function ContractIdList(props) {
+function ContractIdList(props: {
+  contracts: Contract[] | undefined;
+  token: string;
+  closeModal: () => void;
+}) {
   const { contracts, token, closeModal } = props;
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  if (!Array.isArray(contracts) || contracts.length === 0) {
+
+  if (!contracts || contracts.length === 0) {
     return <></>;
   }
+
   const data = contracts.map((x) => {
     return (
       <ListItem
@@ -82,20 +81,26 @@ function ContractIdList(props) {
         className='flex flex-col border-2 rounded-md border-map-green mb-2 mr-auto'
         key={x.id}
       >
-        <ListItemText>{`Payment on Accepted: ${x.terms?.payment?.onAccepted}`}</ListItemText>
-        <ListItemText>{`Payment when Fulfilled: ${x.terms?.payment?.onFulfilled}`}</ListItemText>
-        <ListItemButton onClick={() => setIsPaymentOpen(!isPaymentOpen)}>
-          <ListItemText primary='View Deliverables' />
-        </ListItemButton>
+        <p>{`Payment on Accepted: ${x.terms?.payment?.onAccepted}`}</p>
+        <p>{`Payment when Fulfilled: ${x.terms?.payment?.onFulfilled}`}</p>
+        <button onClick={() => setIsPaymentOpen(!isPaymentOpen)}>
+          <p>View Deliverables</p>
+        </button>
         <Collapse in={isPaymentOpen}>
           <DeliverablesList deliver={x.terms.deliver} />
         </Collapse>
-        <AcceptButton
-          accepted={x.accepted}
-          closeModal={closeModal}
-          token={token}
-          id={x.id}
-        />
+        {!x.accepted && (
+          <button
+            onClick={async () => {
+              try {
+                await acceptContract(token, x.id);
+              } catch {}
+              closeModal();
+            }}
+          >
+            Accept
+          </button>
+        )}
       </ListItem>
     );
   });
@@ -103,7 +108,16 @@ function ContractIdList(props) {
   return <List sx={{ paddingTop: '0px' }}>{data}</List>;
 }
 
-export function ModalSelector(props) {
+interface ModalSelectorProps {
+  type: ModalType;
+  closeModal: () => void;
+  contracts: Contract[] | undefined;
+  ships: Ship[] | undefined;
+  token: string;
+  location: Waypoint | undefined;
+}
+
+export function ModalSelector(props: ModalSelectorProps) {
   const queryClient = useQueryClient();
   const { type, closeModal, contracts, ships, token, location } = props;
 
@@ -112,7 +126,7 @@ export function ModalSelector(props) {
       return (
         <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
           <Typography variant='h3'>Select a Ship</Typography>
-          <ShipViewer ships={ships} closeModal={closeModal} />
+          <ShipViewer ships={ships ?? []} closeModal={closeModal} />
         </div>
       );
     case MODAL_TYPE.contracts:
@@ -134,8 +148,7 @@ export function ModalSelector(props) {
         </div>
       );
     case MODAL_TYPE.markets:
-      const market = queryClient.getQueryData(['market']);
-      console.log(market);
+      const market = queryClient.getQueryData<Market>(['market']);
       return (
         <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
           <Typography variant='h3'>Marketplace</Typography>
@@ -146,17 +159,7 @@ export function ModalSelector(props) {
   return <></>;
 }
 
-const mapArrayToText = (arr) => {
-  return arr.map((item, index) => {
-    return (
-      <Typography sx={{ textAlign: 'left', paddingLeft: '1.5rem' }} key={index}>
-        {item.name}
-      </Typography>
-    );
-  });
-};
-
-function MarketTraits(props) {
+function MarketTraits(props: MarketTrait) {
   const { data, title } = props;
   const [show, setShow] = useState(false);
   let message = 'Show';
@@ -164,17 +167,13 @@ function MarketTraits(props) {
   if (show) {
     message = 'Hide';
   }
-  const list = data.map((item, index) => {
-    return (
-      <Typography sx={{ textAlign: 'left', paddingLeft: '1.5rem' }} key={index}>
-        {item.name}
-      </Typography>
-    );
+  const list = data.map((item: MarketItem, index: number) => {
+    return <p key={index}>{item.name}</p>;
   });
 
   return (
     <>
-      <Typography>{title}</Typography>
+      <p>{title}</p>
       <ListItemButton
         sx={{ color: '#32C832' }}
         onClick={() => {
@@ -188,8 +187,7 @@ function MarketTraits(props) {
   );
 }
 
-function Marketplace(props) {
-  const { market } = props;
+function Marketplace({ market }: { market: Market | undefined }) {
   if (!market) return <></>;
 
   return (
@@ -203,7 +201,7 @@ function Marketplace(props) {
   );
 }
 
-function DeliverablesList(props) {
+function DeliverablesList(props: { deliver: ContractDeliverable[] }) {
   const { deliver } = props;
   const data = deliver.map((x) => {
     return (
@@ -212,10 +210,10 @@ function DeliverablesList(props) {
         sx={{ alignItems: 'start' }}
         className='flex flex-col'
       >
-        <ListItemText>{`TradeSymbol: ${x.tradeSymbol}`}</ListItemText>
-        <ListItemText>{`Destination ${x.destinationSymbol}`}</ListItemText>
-        <ListItemText>{`Units: ${x.unitsRequired}`}</ListItemText>
-        <ListItemText>{`Fulfilled: ${x.unitsFulfilled}`}</ListItemText>
+        <p>{`TradeSymbol: ${x.tradeSymbol}`}</p>
+        <p>{`Destination ${x.destinationSymbol}`}</p>
+        <p>{`Units: ${x.unitsRequired}`}</p>
+        <p>{`Fulfilled: ${x.unitsFulfilled}`}</p>
       </ListItem>
     );
   });

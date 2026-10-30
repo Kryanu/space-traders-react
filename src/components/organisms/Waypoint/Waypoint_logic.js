@@ -1,11 +1,19 @@
 import { API } from '../../../api/service';
-import { navigateShip } from '../../../hooks/helpers';
 import { MODAL_TYPE } from '../../../constants';
+
+async function navigateShip({ token, shipSymbol, waypointSymbol }) {
+  if (!token) {
+    throw new Error('Token not found');
+  }
+  try {
+    return await API.fleet.navigateShip(token, shipSymbol, waypointSymbol);
+  } catch {}
+}
 
 export const retrieveWaypoint = async (
   systemSymbol,
   waypointSymbol,
-  setWaypoint
+  setWaypoint,
 ) => {
   setWaypoint(await API.system.getWaypoint(systemSymbol, waypointSymbol));
 };
@@ -37,7 +45,7 @@ const timedNavigateShip = async ({
     setCurrentShip(
       queryClient
         .getQueryData(['ships'])
-        .find((ship) => ship.symbol === currentShip.symbol)
+        .find((ship) => ship.symbol === currentShip.symbol),
     );
     setTime(data.nav.route.arrival);
     setIsToastVisible({ isVisible: true, message: 'Navigation ongoing' });
@@ -104,7 +112,7 @@ export const actionsConfig = (
   setCurrentShip,
   currentShip,
   setModalType,
-  openModal
+  openModal,
 ) => {
   const shipyard = {
     text: 'View Ships',
