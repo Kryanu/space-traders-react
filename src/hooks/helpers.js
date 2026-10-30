@@ -4,12 +4,6 @@ export const isValidArray = (array) => {
   return Array.isArray(array) && array.length > 0;
 };
 
-export const display = (obj) => {
-  if (obj) {
-    console.log(obj);
-  }
-};
-
 export const retrieveWaypoints = async (system, params) => {
   return await API.system.listWaypoints(system, params);
 };
@@ -31,7 +25,7 @@ export const retrieveMapWaypoints = async (
   token,
   system,
   traits,
-  updateWaypoints
+  updateWaypoints,
 ) => {
   const { data, meta } = await API.system.listWaypoints(token, system, {
     limit: 20,

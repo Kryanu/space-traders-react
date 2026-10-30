@@ -44,6 +44,7 @@ export const useAllQueries = (token, system, waypoint) => {
     ships,
   };
 };
+
 const acceptContract = async (token, contractId) => {
   try {
     await API.agent.acceptContract(token, contractId);

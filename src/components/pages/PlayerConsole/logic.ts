@@ -1,6 +1,7 @@
 import { API } from '../../../api/service';
+import type { Agent } from '@types';
 
-export const setLocationDetails = (agent) => {
+export const setLocationDetails = (agent: Agent) => {
   if (agent && agent?.headquarters?.length > 0) {
     const locations = agent.headquarters.split('-');
 
@@ -12,7 +13,7 @@ export const setLocationDetails = (agent) => {
   }
 };
 
-export const retrieveAgent = async (token) => {
+export const retrieveAgent = async (token: string) => {
   return await API.agent.viewAgent(token);
 };
 
@@ -24,10 +25,10 @@ export const retrieveSystemsConfig = {
   staleTime: Infinity,
 };
 
-export const retrieveContracts = async (token) => {
+export const retrieveContracts = async (token: string) => {
   return await API.agent.viewContracts(token);
 };
 
-export const retrieveShips = async (token) => {
+export const retrieveShips = async (token: string) => {
   return await API.fleet.getShips(token);
 };

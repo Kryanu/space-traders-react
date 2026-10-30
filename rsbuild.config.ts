@@ -23,6 +23,9 @@ export default defineConfig({
     template: './index.html',
   },
   source: {
+    alias: {
+      '@types': './src/types',
+    },
     entry: {
     index: './src/main.tsx',
     },

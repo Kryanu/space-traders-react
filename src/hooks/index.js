@@ -1,1 +1,1 @@
-export { isValidArray, display, retrieveWaypoints } from './helpers';
+export { isValidArray, retrieveWaypoints } from './helpers';

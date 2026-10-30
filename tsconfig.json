@@ -8,6 +8,10 @@
     "noEmit": true,
     "allowJs": true,
     "checkJs": false,
+    "paths": {
+      "@types": ["./src/types/index.ts"],
+      "@types/*": ["./src/types/*"]
+    },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
