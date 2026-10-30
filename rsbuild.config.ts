@@ -11,7 +11,7 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './App': './src/App.jsx',
-        './mount': './src/mount.jsx',
+        './mount': './src/mount.tsx',
       },
       shared: {
         react: { singleton: true },
@@ -24,7 +24,7 @@ export default defineConfig({
   },
   source: {
     entry: {
-      index: './src/main.jsx',
+    index: './src/main.tsx',
     },
   },
   server: {

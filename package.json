@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "rsbuild",
     "build": "rsbuild build",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "rsbuild preview"
   },
@@ -29,13 +30,15 @@
     "@module-federation/rsbuild-plugin": "^2.9.0",
     "@rsbuild/core": "^2.2.3",
     "@rsbuild/plugin-react": "^2.1.0",
+    "@rsbuild/plugin-tailwindcss": "^2.0.3",
+    "@types/node": "^26.6.6",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
-    "@rsbuild/plugin-tailwindcss": "^2.0.3",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.1.13",
+    "typescript": "^7.0.2"
   }
 }
