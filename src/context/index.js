@@ -1,2 +1,1 @@
-import { GameContext } from './GameContext';
-export { GameContext };
+export { GameContext, useGameContext } from './GameContext';

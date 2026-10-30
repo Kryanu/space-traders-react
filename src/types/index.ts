@@ -1,5 +1,10 @@
 export interface Agent {
+  accountId?: string;
+  symbol: string;
   headquarters: string;
+  credits: number;
+  startingFaction: string;
+  shipCount: number;
 }
 
 export interface CargoItem {
@@ -15,6 +20,7 @@ export interface CargoData {
   capacity: number;
 }
 export interface Trait {
+  symbol: string;
   name: string;
 }
 
@@ -23,11 +29,32 @@ export interface Waypoint {
   symbol: string;
   type: string;
 }
+
+export interface MapPoint {
+  symbol: string;
+  type: string;
+  x: number;
+  y: number;
+  traits?: Trait[];
+  systemSymbol?: string;
+}
+
+export interface Navigation {
+  waypointSymbol: string;
+  status: string;
+  systemSymbol?: string;
+}
+
+export interface Fuel {
+  current: number;
+  capacity: number;
+}
+
 export interface Ship {
   cargo: CargoData;
   symbol: string;
-  nav: unknown;
-  fuel: unknown;
+  nav: Navigation;
+  fuel: Fuel;
 }
 
 export interface MarketTrait {

@@ -6,7 +6,7 @@ import { retrieveToken } from '../../../api/queries';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function Start() {
-  const [handleInput, setHandleInput] = useState(undefined);
+  const [handleInput, setHandleInput] = useState<string | undefined>(undefined);
   const queryClient = useQueryClient();
 
   return (

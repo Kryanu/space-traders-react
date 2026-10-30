@@ -6,8 +6,15 @@ import { retrieveToken } from '../../../api/queries.js';
 import { NavigateButton } from '../../atoms/index.js';
 import { useQueryClient } from '@tanstack/react-query';
 import { isMockMode } from '../../../api/mode';
+import type { QueryClient } from '@tanstack/react-query';
 
-const registerHandle = async ({ handle, faction, queryClient }) => {
+interface RegisterHandleProps {
+  handle: string | undefined;
+  faction: string | undefined;
+  queryClient: QueryClient;
+}
+
+const registerHandle = async ({ handle, faction, queryClient }: RegisterHandleProps) => {
   if (!handle || !faction) {
     return 'Handle or Faction cannot be undefined';
   }
@@ -24,8 +31,8 @@ const registerHandle = async ({ handle, faction, queryClient }) => {
 };
 
 export function SignUp() {
-  const [handle, setHandle] = useState(undefined);
-  const [faction, setFaction] = useState(undefined);
+  const [handle, setHandle] = useState<string | undefined>(undefined);
+  const [faction, setFaction] = useState<string | undefined>(undefined);
   const queryClient = useQueryClient();
 
   return (

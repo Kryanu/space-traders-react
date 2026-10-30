@@ -1,4 +1,3 @@
-import { List, ListItem, Typography } from '@mui/material';
 import {
   ScatterChart,
   XAxis,
@@ -8,14 +7,20 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { useContext, useEffect, useState } from 'react';
-import { GameContext } from '../../../context';
+import { useGameContext } from '../../../context';
 import { useQueryClient } from '@tanstack/react-query';
+import type { TooltipProps } from 'recharts';
+import type {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
+import type { MapPoint, Ship } from '@types';
 
-const customToolTip = ({ payload }) => {
-  if (!Array.isArray(payload) || payload.length === 0) {
-    return <></>;
-  }
-  const item = payload[0].payload;
+const customToolTip = ({
+  payload,
+}: TooltipProps<ValueType, NameType>) => {
+  const item = payload?.[0]?.payload as MapPoint | undefined;
+  if (!item) return null;
   return (
     <div className='bg-blackie border-2 border-map-green text-map-green rounded-md'>
       <div style={{ padding: '16px' }}>
@@ -26,37 +31,41 @@ const customToolTip = ({ payload }) => {
   );
 };
 
-export default function Map({ data, title, activeShipLocation }) {
-  const { setSelectedWaypoint } = useContext(GameContext);
+interface MapProps {
+  data: MapPoint[];
+  title: string;
+  activeShipLocation: string | undefined;
+}
+
+export default function Map({
+  data,
+  title,
+  activeShipLocation,
+}: MapProps) {
+  const { setSelectedWaypoint } = useGameContext();
   const [shipWaypoint, setShipWaypoint] = useState(activeShipLocation);
 
-  const setNav = (waypoint) => {
-    setSelectedWaypoint(waypoint);
+  const setNav = (waypoint: MapPoint) => {
+    setSelectedWaypoint({ ...waypoint, traits: waypoint.traits ?? [] });
     setShipWaypoint(waypoint.symbol);
   };
 
   const queryClient = useQueryClient();
-  const ships = queryClient.getQueryData(['ships']) || [];
+  const ships = queryClient.getQueryData<Ship[]>(['ships']) ?? [];
 
   const shipLocations = ships.map((ship) => {
     return ship.nav.waypointSymbol;
   });
 
-  let currentWaypoint;
-  let shipCurrentWaypoints;
-  if (data && shipWaypoint) {
-    currentWaypoint = [data.find((item) => item.symbol === shipWaypoint)];
-    shipCurrentWaypoints = data.filter((waypoint) =>
-      shipLocations.includes(waypoint.symbol),
-    );
-  }
+  const currentWaypoint = shipWaypoint
+    ? data.filter((item) => item.symbol === shipWaypoint)
+    : [];
+  const shipCurrentWaypoints = data.filter((waypoint) =>
+    shipLocations.includes(waypoint.symbol),
+  );
   useEffect(() => {
     setShipWaypoint(activeShipLocation);
   }, [activeShipLocation]);
-
-  if (!data) {
-    return <></>;
-  }
   return (
     <div className='flex flex-col grow items-start space-y-2'>
       <p style={{ color: '#32C832' }}>{`${title}`}</p>

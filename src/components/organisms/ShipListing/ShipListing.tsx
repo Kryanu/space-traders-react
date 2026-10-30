@@ -2,12 +2,37 @@ import { API } from '../../../api/service';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
 import { ListItemButton, Typography } from '@mui/material';
-const retrieveAvailableShips = async (token, system, symbol) => {
+import type { Waypoint } from '@types';
+
+interface AvailableShip {
+  type: string;
+  name: string;
+  purchasePrice: number;
+}
+
+interface ShipListingItemProps {
+  ships: AvailableShip[];
+  symbol: string;
+  closeModal: () => void;
+  token: string;
+}
+
+interface ShipListingProps {
+  waypoint: Waypoint | undefined;
+  closeModal: () => void;
+}
+
+const retrieveAvailableShips = async (
+  token: string,
+  system: string,
+  symbol: string,
+): Promise<{ ships: AvailableShip[] }> => {
   return await API.system.getShipyard(token, system, symbol);
 };
 
-function ShipDetails(props) {
-  const { ships, symbol, closeModal, token, client } = props;
+function ShipDetails(props: ShipListingItemProps) {
+  const { ships, symbol, closeModal, token } = props;
+  const client = useQueryClient();
 
   const data = ships.map((ship, index) => {
     return (
@@ -20,7 +45,7 @@ function ShipDetails(props) {
         <ListItemButton
           onClick={async () => {
             await API.fleet.purchaseShip(token, ship.type, symbol);
-            client.invalidateQueries('agent');
+            client.invalidateQueries({ queryKey: ['agent'] });
             closeModal();
           }}
           sx={{ color: '#A8A8A8' }}
@@ -34,7 +59,10 @@ function ShipDetails(props) {
   return <div className='flex mt-4'>{data}</div>;
 }
 
-export default function ShipListing({ waypoint, closeModal }) {
+export default function ShipListing({
+  waypoint,
+  closeModal,
+}: ShipListingProps) {
   const queryClient = useQueryClient();
   const token = toToken(queryClient);
 

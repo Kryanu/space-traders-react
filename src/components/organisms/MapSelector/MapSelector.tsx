@@ -11,6 +11,18 @@ import { useState, useEffect } from 'react';
 import { retrieveMapWaypoints } from '../../../hooks/helpers';
 import { toToken } from '../../../api/adapters';
 import { useQueryClient } from '@tanstack/react-query';
+import type { SelectChangeEvent } from '@mui/material';
+import type { Dispatch, SetStateAction } from 'react';
+import type { MapPoint, Ship } from '@types';
+
+type MapType = 'systems' | 'waypoints';
+
+interface MapSelectorProps {
+  systems: MapPoint[] | undefined;
+  waypoints: MapPoint[] | undefined;
+  setWaypoints: Dispatch<SetStateAction<MapPoint[] | undefined>>;
+  currentShip: Ship | undefined;
+}
 
 const FilterItems = () => {
   return SELECTED_TRAITS.map((item, index) => {
@@ -24,20 +36,22 @@ const FilterItems = () => {
   });
 };
 
-function SelectionButtons(props) {
+function SelectionButtons(props: {
+  setSelectedMap: Dispatch<SetStateAction<MapType>>;
+}) {
   const { setSelectedMap } = props;
   return (
     <div className='flex items-start space-x-2 border-2 border-green-700 p-2 rounded-md mr-auto'>
       <Button
         onClick={() => {
-          setSelectedMap(MAPS.systems);
+          setSelectedMap('systems');
         }}
       >
         View Systems
       </Button>
       <Button
         onClick={() => {
-          setSelectedMap(MAPS.waypoints);
+          setSelectedMap('waypoints');
         }}
       >
         View Waypoints
@@ -46,7 +60,11 @@ function SelectionButtons(props) {
   );
 }
 
-const mapDetails = (selectedMap, systems, waypoints) => {
+const mapDetails = (
+  selectedMap: MapType,
+  systems: MapPoint[],
+  waypoints: MapPoint[],
+) => {
   let type = waypoints;
   let title = 'Waypoints Map';
 
@@ -61,14 +79,14 @@ const mapDetails = (selectedMap, systems, waypoints) => {
   };
 };
 
-export default function MapSelector(props) {
-  const [selectedMap, setSelectedMap] = useState(MAPS.waypoints);
+export default function MapSelector(props: MapSelectorProps) {
+  const [selectedMap, setSelectedMap] = useState<MapType>('waypoints');
   const queryClient = useQueryClient();
   const token = toToken(queryClient);
   const [filter, setFilter] = useState('');
   const { systems, waypoints, setWaypoints, currentShip } = props;
 
-  const handleChange = (e) => {
+  const handleChange = (e: SelectChangeEvent<string>) => {
     setFilter(e.target.value);
   };
   useEffect(() => {

@@ -1,7 +1,15 @@
-import { Button } from '@mui/material';
 import { MODAL_TYPE } from '../../../constants';
+import { Button } from '@mui/material';
+import type { Dispatch, SetStateAction } from 'react';
 
-export default function NavigationButtons(props) {
+type ModalType = (typeof MODAL_TYPE)[keyof typeof MODAL_TYPE];
+
+interface NavigationButtonsProps {
+  openModal: (open: boolean) => void;
+  setModalType: Dispatch<SetStateAction<ModalType>>;
+}
+
+export default function NavigationButtons(props: NavigationButtonsProps) {
   const { openModal, setModalType } = props;
 
   const modalConfig = [

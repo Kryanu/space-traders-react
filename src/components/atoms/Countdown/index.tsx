@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { intervalToDuration, formatDuration } from 'date-fns';
 import { Typography } from '@mui/material';
-export default function Countdown(props) {
+export default function Countdown(props: { arrival: string | number }) {
   const { arrival } = props;
   const arrivalMS = new Date(arrival).getTime();
   const nowMS = new Date().getTime();

@@ -1,8 +1,9 @@
 import { MODAL_TYPE } from '../../../constants';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { ModalSelector, useAllQueries } from './children';
 import NavBar from '../../Layouts/navbar';
-import { GameContext } from '../../../context/';
+import { useGameContext } from '../../../context/';
 import { Modal, MapSelector, Waypoints, ShipDetails } from '../../organisms';
 import { ActionRow, AgentDetails, ModalBar } from '../../molecules';
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,14 +16,23 @@ import {
   refuelShip,
   mineAsteroid,
 } from '../../organisms/Waypoint/Waypoint_logic';
+import type { MapPoint } from '@types';
+
+interface LocationDetails {
+  sector: string;
+  system: string;
+  waypoint: string;
+}
+
+type ModalType = (typeof MODAL_TYPE)[keyof typeof MODAL_TYPE];
 
 export default function PlayerConsole() {
   const { currentShip, selectedWaypoint, setIsToastVisible, setCurrentShip } =
-    useContext(GameContext);
-  const [location, setLocation] = useState(undefined);
+    useGameContext();
+  const [location, setLocation] = useState<LocationDetails | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(MODAL_TYPE.ships);
-  const [waypoints, setWaypoints] = useState(undefined);
+  const [modalType, setModalType] = useState<ModalType>(MODAL_TYPE.ships);
+  const [waypoints, setWaypoints] = useState<MapPoint[] | undefined>(undefined);
 
   const queryClient = useQueryClient();
   const token = toToken(queryClient);

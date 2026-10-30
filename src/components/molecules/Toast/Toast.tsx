@@ -1,9 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import { GameContext } from '../../../context';
+import { useEffect } from 'react';
+import { useGameContext } from '../../../context';
 import './Toast.css'; // Import CSS for styling
 
-export const Toast = ({ message, isVisible }) => {
-  const { setIsToastVisible } = useContext(GameContext);
+interface ToastProps {
+  message: string;
+  isVisible: boolean;
+}
+
+export const Toast = ({ message, isVisible }: ToastProps) => {
+  const { setIsToastVisible } = useGameContext();
 
   useEffect(() => {
     if (isVisible) {

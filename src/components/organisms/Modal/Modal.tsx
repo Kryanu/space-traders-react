@@ -1,6 +1,13 @@
 import { Button } from '@mui/material';
+import type { ReactNode } from 'react';
 
-export default function Modal({ isOpen, onClose, children }) {
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}
+
+export default function Modal({ isOpen, onClose, children }: ModalProps) {
   if (!isOpen) return <></>;
 
   return (
