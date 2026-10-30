@@ -1,5 +1,4 @@
 import { Collapse, Divider, ListItemButton } from '@mui/material';
-import { isValidArray } from '../../../hooks';
 import type { Dispatch, SetStateAction } from 'react';
 import { Waypoint } from '@types';
 

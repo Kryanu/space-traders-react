@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { GameContext } from '../../../context';
-import { isValidArray } from '../../../hooks';
 import { Nav, Cargo } from '../../molecules';
 import { Ship } from '@types';
 
@@ -13,7 +12,8 @@ function Ships({
   setShip: Function;
   closeModal: Function;
 }) {
-  if (!isValidArray(ships)) return <></>;
+  
+  if(ships.length === 0) return <></>
   return ships.map((ship, index) => {
     return (
       <div

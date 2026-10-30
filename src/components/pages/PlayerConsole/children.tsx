@@ -19,7 +19,6 @@ import {
 import { useState } from 'react';
 import { API } from '../../../api/service';
 import { useQueryClient } from '@tanstack/react-query';
-import { isValidArray } from '../../../hooks';
 import type {
   Contract,
   ContractDeliverable,
@@ -163,7 +162,8 @@ function MarketTraits(props: MarketTrait) {
   const { data, title } = props;
   const [show, setShow] = useState(false);
   let message = 'Show';
-  if (!isValidArray(data)) return <></>;
+
+  if (data.length === 0) return <></>;
   if (show) {
     message = 'Hide';
   }
