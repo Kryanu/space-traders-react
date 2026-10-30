@@ -1,10 +1,10 @@
 {
   "latestErrorEvent": {
     "code": "TYPE-001",
-    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"npx tsc --project C:\\\\Users\\\\andre\\\\repositories\\\\project-portfolio\\\\space-traders-react\\\\node_modules\\\\.federation\\\\tsconfig.da9a09470ec8474cf76f2518f18c5724.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
+    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"npx tsc --project C:\\\\Users\\\\andre\\\\repositories\\\\project-portfolio\\\\space-traders-react\\\\node_modules\\\\.federation\\\\tsconfig.82cc99f8b81b4ca77c4de46249053bf2.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
     "args": {
-      "cmd": "npx tsc --project C:\\Users\\andre\\repositories\\project-portfolio\\space-traders-react\\node_modules\\.federation\\tsconfig.da9a09470ec8474cf76f2518f18c5724.json"
+      "cmd": "npx tsc --project C:\\Users\\andre\\repositories\\project-portfolio\\space-traders-react\\node_modules\\.federation\\tsconfig.82cc99f8b81b4ca77c4de46249053bf2.json"
     },
-    "timestamp": 1793388952529
+    "timestamp": 1793389826060
   }
 }

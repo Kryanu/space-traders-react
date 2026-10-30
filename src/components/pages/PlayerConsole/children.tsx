@@ -18,7 +18,7 @@ import type {
   MarketItem,
   MarketTrait,
   Ship,
-  Waypoint,
+  WaypointSummary,
 } from '@types';
 
 type ModalType = (typeof MODAL_TYPE)[keyof typeof MODAL_TYPE];
@@ -105,7 +105,7 @@ interface ModalSelectorProps {
   contracts: Contract[] | undefined;
   ships: Ship[] | undefined;
   token: string;
-  location: Waypoint | undefined;
+  location: WaypointSummary | undefined;
 }
 
 export function ModalSelector(props: ModalSelectorProps) {

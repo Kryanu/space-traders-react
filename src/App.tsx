@@ -11,14 +11,14 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { FormControlLabel, Switch } from '@mui/material';
 import { DATA_MODE, getDataMode, saveDataMode } from './api/mode';
 import type { ChangeEvent } from 'react';
-import type { Ship, Waypoint } from '@types';
+import type { Ship, WaypointSummary } from '@types';
 
 const queryClient = new QueryClient();
 
 function App() {
-  const [waypoints, setWaypoints] = useState<Waypoint[] | undefined>(undefined);
+  const [waypoints, setWaypoints] = useState<WaypointSummary[] | undefined>(undefined);
   const [currentShip, setCurrentShip] = useState<Ship | undefined>(undefined);
-  const [selectedWaypoint, setSelectedWaypoint] = useState<Waypoint>({
+  const [selectedWaypoint, setSelectedWaypoint] = useState<WaypointSummary>({
     traits: [],
     symbol: '',
     type: '',

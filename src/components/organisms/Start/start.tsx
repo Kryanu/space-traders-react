@@ -25,6 +25,8 @@ export default function Start() {
         />
         <div className='flex'>
           <NavigateButton text={'Sign-Up'} route={'/sign-up'} />
+          <NavigateButton text={'Sign-Up V2'} route={'/sign-up-v2'} />
+          <NavigateButton text={'Console V2'} route={'/console-v2'} />
           <NavigateButton
             text={'Login'}
             callBack={retrieveToken}

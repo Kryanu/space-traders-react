@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import type { Ship, Waypoint } from '@types';
+import type { Ship, WaypointSummary } from '@types';
 
 export interface ToastState {
 	message: string;
@@ -10,12 +10,12 @@ export interface ToastState {
 export interface GameContextValue {
 	isToastVisible: ToastState;
 	setIsToastVisible: Dispatch<SetStateAction<ToastState>>;
-	waypoints: Waypoint[] | undefined;
-	setWaypoints: Dispatch<SetStateAction<Waypoint[] | undefined>>;
+	waypoints: WaypointSummary[] | undefined;
+	setWaypoints: Dispatch<SetStateAction<WaypointSummary[] | undefined>>;
 	currentShip: Ship | undefined;
 	setCurrentShip: Dispatch<SetStateAction<Ship | undefined>>;
-	selectedWaypoint: Waypoint;
-	setSelectedWaypoint: Dispatch<SetStateAction<Waypoint>>;
+	selectedWaypoint: WaypointSummary;
+	setSelectedWaypoint: Dispatch<SetStateAction<WaypointSummary>>;
 }
 
 export const GameContext = createContext<GameContextValue | undefined>(undefined);

@@ -1,5 +1,5 @@
 import { Start } from '../components/organisms';
-import { PlayerConsole } from '../components/pages';
+import { PlayerConsole, PlayerConsoleV2, SignUpV2 } from '../components/pages';
 import { createMemoryRouter } from 'react-router-dom';
 import { SignUp } from '../components/pages/SignUp/Signup';
 
@@ -13,7 +13,15 @@ export const router = createMemoryRouter([
     element: <PlayerConsole />,
   },
   {
+    path: '/console-v2',
+    element: <PlayerConsoleV2 />,
+  },
+  {
     path: '/sign-up',
     element: <SignUp />,
+  },
+  {
+    path: '/sign-up-v2',
+    element: <SignUpV2 />,
   },
 ]);

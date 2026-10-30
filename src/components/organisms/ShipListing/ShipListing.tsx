@@ -1,7 +1,7 @@
 import { API } from '../../../api/service';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
-import type { Waypoint } from '@types';
+import type { WaypointSummary } from '@types';
 
 interface AvailableShip {
   type: string;
@@ -17,7 +17,7 @@ interface ShipListingItemProps {
 }
 
 interface ShipListingProps {
-  waypoint: Waypoint | undefined;
+  waypoint: WaypointSummary | undefined;
   closeModal: () => void;
 }
 

@@ -1,9 +1,9 @@
 import { Collapse, Divider } from '@mui/material';
 import type { Dispatch, SetStateAction } from 'react';
-import { Waypoint } from '@types';
+import type { WaypointSummary } from '@types';
 
 interface TraitsProps {
-  waypoint: Waypoint;
+  waypoint: WaypointSummary;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
