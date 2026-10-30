@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { intervalToDuration, formatDuration } from 'date-fns';
-import { Typography } from '@mui/material';
 export default function Countdown(props: { arrival: string | number }) {
   const { arrival } = props;
   const arrivalMS = new Date(arrival).getTime();
@@ -22,11 +21,11 @@ export default function Countdown(props: { arrival: string | number }) {
   }
 
   if (diffMS <= 0) {
-    return <Typography>Arrived</Typography>;
+    return <p>Arrived</p>;
   }
   return (
-    <Typography>{`Time Left till arrival: ${formatDuration(
-      intervalToDuration({ end: new Date(arrival), start: new Date() })
-    )}`}</Typography>
+    <p>{`Time Left till arrival: ${formatDuration(
+      intervalToDuration({ end: new Date(arrival), start: new Date() }),
+    )}`}</p>
   );
 }

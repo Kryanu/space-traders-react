@@ -1,7 +1,6 @@
 import { API } from '../../../api/service';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toToken } from '../../../api/adapters';
-import { ListItemButton, Typography } from '@mui/material';
 import type { Waypoint } from '@types';
 
 interface AvailableShip {
@@ -40,18 +39,18 @@ function ShipDetails(props: ShipListingItemProps) {
         key={index}
         className='text-left p-4 border-2 rounded-md border-map-green m-2'
       >
-        <Typography> {`Type: ${ship.name}`}</Typography>
-        <Typography> {`Price: ${ship.purchasePrice}`}</Typography>
-        <ListItemButton
+        <p> {`Type: ${ship.name}`}</p>
+        <p> {`Price: ${ship.purchasePrice}`}</p>
+        <button
           onClick={async () => {
             await API.fleet.purchaseShip(token, ship.type, symbol);
             client.invalidateQueries({ queryKey: ['agent'] });
             closeModal();
           }}
-          sx={{ color: '#A8A8A8' }}
+          style={{ color: '#A8A8A8' }}
         >
           Buy This
-        </ListItemButton>
+        </button>
       </div>
     );
   });

@@ -1,12 +1,4 @@
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemButton,
-  Collapse,
-  Divider,
-} from '@mui/material';
+import { List, ListItem, Collapse, Divider } from '@mui/material';
 import { ShipListing, ShipViewer } from '../../organisms';
 import { MODAL_TYPE } from '../../../constants';
 import { useQuery } from '@tanstack/react-query';
@@ -31,7 +23,7 @@ import type {
 
 type ModalType = (typeof MODAL_TYPE)[keyof typeof MODAL_TYPE];
 
-export const useAllQueries = (token: string) => {
+export function useAllQueries(token: string) {
   const contracts = useQuery({
     queryKey: ['contracts'],
     queryFn: async () => await retrieveContracts(token),
@@ -53,7 +45,7 @@ export const useAllQueries = (token: string) => {
     agent,
     ships,
   };
-};
+}
 
 async function acceptContract(token: string, contractId: string) {
   try {
@@ -124,14 +116,14 @@ export function ModalSelector(props: ModalSelectorProps) {
     case MODAL_TYPE.ships:
       return (
         <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
-          <Typography variant='h3'>Select a Ship</Typography>
+          <p>Select a Ship</p>
           <ShipViewer ships={ships ?? []} closeModal={closeModal} />
         </div>
       );
     case MODAL_TYPE.contracts:
       return (
         <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
-          <Typography variant='h3'>Select a Contract</Typography>
+          <p>Select a Contract</p>
           <ContractIdList
             contracts={contracts}
             token={token}
@@ -142,7 +134,7 @@ export function ModalSelector(props: ModalSelectorProps) {
     case MODAL_TYPE.shipyard:
       return (
         <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
-          <Typography variant='h3'>Buy a Ship</Typography>
+          <p>Buy a Ship</p>
           <ShipListing waypoint={location} closeModal={closeModal} />
         </div>
       );
@@ -150,7 +142,7 @@ export function ModalSelector(props: ModalSelectorProps) {
       const market = queryClient.getQueryData<Market>(['market']);
       return (
         <div className='bg-blackie p-4 rounded-lg border-2 border-map-green'>
-          <Typography variant='h3'>Marketplace</Typography>
+          <p>Marketplace</p>
           <Marketplace market={market} />
         </div>
       );
@@ -174,14 +166,14 @@ function MarketTraits(props: MarketTrait) {
   return (
     <>
       <p>{title}</p>
-      <ListItemButton
-        sx={{ color: '#32C832' }}
+      <button
+        style={{ color: '#32C832' }}
         onClick={() => {
           setShow(!show);
         }}
       >
         {message}
-      </ListItemButton>
+      </button>
       <Collapse in={show}>{list}</Collapse>
     </>
   );

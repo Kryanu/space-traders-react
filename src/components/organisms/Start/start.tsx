@@ -1,6 +1,6 @@
 import '../../../App.css';
 import { useState } from 'react';
-import { Typography, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { NavigateButton } from '../../atoms';
 import { retrieveToken } from '../../../api/queries';
 import { useQueryClient } from '@tanstack/react-query';
@@ -11,9 +11,9 @@ export default function Start() {
 
   return (
     <>
-      <Typography color={'#32C832'} sx={{ marginBottom: '2rem' }} variant='h2'>
+      <h2 color={'#32C832'} style={{ marginBottom: '2rem' }}>
         Space Traders
-      </Typography>
+      </h2>
 
       <div className='flex flex-col space-y-4'>
         <TextField
