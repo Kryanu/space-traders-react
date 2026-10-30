@@ -1,4 +1,4 @@
-import { Collapse, Divider, ListItemButton } from '@mui/material';
+import { Collapse, Divider } from '@mui/material';
 import type { Dispatch, SetStateAction } from 'react';
 import { Waypoint } from '@types';
 
@@ -24,9 +24,9 @@ export default function Traits({ waypoint, isOpen, setIsOpen }: TraitsProps) {
       <p>{`Name: ${symbol}`}</p>
       <p>{`Type: ${type}`}</p>
 
-      <ListItemButton onClick={() => setIsOpen(!isOpen)}>
+      <button onClick={() => setIsOpen(!isOpen)}>
         <p style={{ color: '#32C832' }}>Traits</p>
-      </ListItemButton>
+      </button>
       <Collapse in={isOpen}>
         <Divider />
         {traitDetails}

@@ -1,22 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
-import type { SxProps, Theme } from '@mui/material/styles';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 interface NavigateButtonProps {
   callBack?: (...args: never[]) => unknown;
   text: ReactNode;
   route: string;
   callBackProps?: unknown;
-  style?: SxProps<Theme>;
+  style?: CSSProperties;
 }
 
 export default function NavigateButton(props: NavigateButtonProps) {
   const { callBack, text, route, callBackProps, style } = props;
-  let classes: SxProps<Theme> = { margin: 'auto' };
-  if (style) {
-    classes = style;
-  }
+  const classes: CSSProperties = style ?? { margin: 'auto' };
   const navigate = useNavigate();
 
   const navigateCallBack = async () => {
@@ -27,13 +22,13 @@ export default function NavigateButton(props: NavigateButtonProps) {
   };
 
   return (
-    <Button
+    <button
       onClick={async () => {
         await navigateCallBack();
       }}
-      sx={classes}
+      style={classes}
     >
       {text}
-    </Button>
+    </button>
   );
 }

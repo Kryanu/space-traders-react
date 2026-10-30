@@ -1,10 +1,4 @@
-import {
-  Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { Map } from '../../organisms';
 import { MAPS, SELECTED_TRAITS } from '../../../constants';
 import { useState, useEffect } from 'react';
@@ -42,20 +36,20 @@ function SelectionButtons(props: {
   const { setSelectedMap } = props;
   return (
     <div className='flex items-start space-x-2 border-2 border-green-700 p-2 rounded-md mr-auto'>
-      <Button
+      <button
         onClick={() => {
           setSelectedMap('systems');
         }}
       >
         View Systems
-      </Button>
-      <Button
+      </button>
+      <button
         onClick={() => {
           setSelectedMap('waypoints');
         }}
       >
         View Waypoints
-      </Button>
+      </button>
     </div>
   );
 }
@@ -95,7 +89,7 @@ export default function MapSelector(props: MapSelectorProps) {
         token,
         currentShip.nav.systemSymbol,
         filter,
-        setWaypoints
+        setWaypoints,
       );
     }
   }, [filter]);
@@ -123,13 +117,13 @@ export default function MapSelector(props: MapSelectorProps) {
             {FilterItems()}
           </Select>
         </FormControl>
-        <Button
+        <button
           onClick={() => {
             setFilter('');
           }}
         >
           Reset
-        </Button>
+        </button>
       </div>
       <Map
         data={mapConfig.type}

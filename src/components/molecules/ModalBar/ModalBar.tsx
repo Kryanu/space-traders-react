@@ -1,5 +1,4 @@
 import { MODAL_TYPE } from '../../../constants';
-import { Button } from '@mui/material';
 import type { Dispatch, SetStateAction } from 'react';
 
 type ModalType = (typeof MODAL_TYPE)[keyof typeof MODAL_TYPE];
@@ -31,9 +30,9 @@ export default function NavigationButtons(props: NavigationButtonsProps) {
 
   const modalButtons = modalConfig.map((item, index) => {
     return (
-      <Button
+      <button
         key={index}
-        sx={{
+        style={{
           marginLeft: 'auto',
           marginRight: 'auto',
           marginTop: '0.75rem',
@@ -41,7 +40,7 @@ export default function NavigationButtons(props: NavigationButtonsProps) {
         onClick={() => item.action()}
       >
         {item.label}
-      </Button>
+      </button>
     );
   });
 

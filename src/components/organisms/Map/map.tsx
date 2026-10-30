@@ -6,7 +6,7 @@ import {
   Scatter,
   ResponsiveContainer,
 } from 'recharts';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGameContext } from '../../../context';
 import { useQueryClient } from '@tanstack/react-query';
 import type { TooltipProps } from 'recharts';
@@ -16,9 +16,7 @@ import type {
 } from 'recharts/types/component/DefaultTooltipContent';
 import type { MapPoint, Ship } from '@types';
 
-const customToolTip = ({
-  payload,
-}: TooltipProps<ValueType, NameType>) => {
+const customToolTip = ({ payload }: TooltipProps<ValueType, NameType>) => {
   const item = payload?.[0]?.payload as MapPoint | undefined;
   if (!item) return null;
   return (
@@ -37,11 +35,7 @@ interface MapProps {
   activeShipLocation: string | undefined;
 }
 
-export default function Map({
-  data,
-  title,
-  activeShipLocation,
-}: MapProps) {
+export default function Map({ data, title, activeShipLocation }: MapProps) {
   const { setSelectedWaypoint } = useGameContext();
   const [shipWaypoint, setShipWaypoint] = useState(activeShipLocation);
 
