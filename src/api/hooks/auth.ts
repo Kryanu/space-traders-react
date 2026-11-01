@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Pocketbase from 'pocketbase';
 import { Fetch } from '../http/http-client';
+import type { Agent } from '@types';
 
 export interface AccountRegisterPayload {
   symbol: string;
@@ -26,6 +27,15 @@ export function useLogin(symbol: string) {
       setToStorage(token);
       return token;
     },
+  });
+}
+
+export function useAgentDetails(symbol: string, token?: string) {
+  return useQuery<Agent>({
+    queryKey: ['my/agent', symbol],
+    enabled: !!token,
+    queryFn: () =>
+      Fetch.get('my/agent', { Authorization: `Bearer ${token}` }),
   });
 }
 

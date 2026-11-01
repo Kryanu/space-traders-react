@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLogin, useRegister } from '@api-hooks';
+import { useAgentDetails, useLogin, useRegister } from '@api-hooks';
 
 export default function PlayerConsoleV2() {
   const [symbol, setSymbol] = useState('');
@@ -7,6 +7,8 @@ export default function PlayerConsoleV2() {
 
   const login = useLogin(symbol);
   const register = useRegister();
+
+  const agent = useAgentDetails(symbol, login.data);
 
   return (
     <div>
@@ -18,6 +20,8 @@ export default function PlayerConsoleV2() {
       </button>
       <button onClick={() => setSymbol('KRY001')}>KRY001</button>
       <button onClick={() => setSymbol('KRY002')}>KRY002</button>
+
+      {agent.data?.accountId}
       {login.isError && <p>Login failed</p>}
     </div>
   );

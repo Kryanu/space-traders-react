@@ -38,8 +38,8 @@ export class Fetch {
       method: 'GET',
       headers: {
         ...this.baseHeaders,
-        ...headers,
         Authorization: `Bearer ${sessionStorage.getItem('sessionToken') || AUTH_TOKEN}`,
+        ...headers,
       },
     };
 
