@@ -10,7 +10,7 @@ export default defineConfig({
       name: 'space_traders',
       filename: 'remoteEntry.js',
       exposes: {
-        './App': './src/App.jsx',
+        './App': './src/App.tsx',
         './mount': './src/mount.tsx',
       },
       shared: {
@@ -25,9 +25,10 @@ export default defineConfig({
   source: {
     alias: {
       '@types': './src/types',
+      '@api-hooks': './src/api/hooks',
     },
     entry: {
-    index: './src/main.tsx',
+      index: './src/main.tsx',
     },
   },
   server: {

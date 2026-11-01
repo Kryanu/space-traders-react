@@ -10,7 +10,8 @@
     "checkJs": false,
     "paths": {
       "@types": ["./src/types/index.ts"],
-      "@types/*": ["./src/types/*"]
+      "@types/*": ["./src/types/*"],
+      "@api-hooks": ["./src/api/hooks/index.ts"]
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
