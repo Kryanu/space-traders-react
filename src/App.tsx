@@ -5,7 +5,6 @@ import { router } from './router/router';
 import { RouterProvider } from 'react-router-dom';
 import { useState } from 'react';
 import { GameContext } from './context';
-import { Toast } from './components/molecules/Toast/Toast';
 import { darkTheme } from './constants/';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import type { Ship, WaypointSummary } from '@types';
@@ -44,10 +43,6 @@ function App() {
           }}
         >
           <RouterProvider router={router} />
-          <Toast
-            isVisible={isToastVisible.isVisible}
-            message={isToastVisible.message}
-          />
         </GameContext.Provider>
       </QueryClientProvider>
     </ThemeProvider>
