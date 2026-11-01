@@ -6,18 +6,6 @@ import { SignUp } from '../components/pages/SignUp/Signup';
 export const router = createMemoryRouter([
   {
     path: '/',
-    element: <Start />,
-  },
-  {
-    path: '/console',
-    element: <PlayerConsole />,
-  },
-  {
-    path: '/console-v2',
     element: <PlayerConsoleV2 />,
-  },
-  {
-    path: '/sign-up',
-    element: <SignUp />,
   },
 ]);
