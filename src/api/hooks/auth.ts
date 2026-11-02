@@ -34,8 +34,8 @@ export function useAgentDetails(symbol: string, token?: string) {
   return useQuery<Agent>({
     queryKey: ['my/agent', symbol],
     enabled: !!token,
-    queryFn: () =>
-      Fetch.get('my/agent', { Authorization: `Bearer ${token}` }),
+    staleTime: Infinity,
+    queryFn: () => Fetch.get('my/agent', { Authorization: `Bearer ${token}` }),
   });
 }
 
@@ -43,6 +43,7 @@ export function useRegister() {
   return useMutation({
     mutationFn: async (payload: AccountRegisterPayload) => {
       const res = await Fetch.post('register', payload);
+
       if (!res?.token || !res?.agent?.symbol) {
         throw new Error('Registration failed');
       }
@@ -50,6 +51,7 @@ export function useRegister() {
       const { token, agent } = res;
       await pb.collection(agentsTable).create({ token, symbol: agent.symbol });
       setToStorage(token);
+
       return { token, symbol: agent.symbol as string };
     },
     onError: (error) => {

@@ -1,1 +1,1 @@
-export { default as PlayerConsoleV2 } from './PlayerConsoleV2/PlayerConsoleV2';
+export { default as PlayerConsoleV2 } from './PlayerConsoleV2';

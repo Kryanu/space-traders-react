@@ -1,9 +1,10 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-blackie: #121212;
-  --color-map-green: #32c832;
-  --color-overlay-gray: #00000080;
+  --color-primary: #39ff14;
+  --color-secondary: #121414;
+  --color-active-secondary: #181A1A;
+  --color-secondary-gray: #333333;
 }
 
 :root {
