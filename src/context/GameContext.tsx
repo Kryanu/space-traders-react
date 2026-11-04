@@ -1,29 +1,79 @@
-import { createContext, useContext } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
-import type { Ship, WaypointSummary } from '@types';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 
-export interface ToastState {
-	message: string;
-	isVisible: boolean;
+interface GameContextValue {
+  activeShipSymbol: string | undefined;
+  selectShip: (symbol: string) => void;
+  activeWaypointSymbol: string | undefined;
+  toggleWaypoint: (symbol: string) => void;
+  isCargoOpen: boolean;
+  toggleCargo: () => void;
+  isMarketOpen: boolean;
+  toggleMarket: () => void;
+  reset: () => void;
 }
 
-export interface GameContextValue {
-	isToastVisible: ToastState;
-	setIsToastVisible: Dispatch<SetStateAction<ToastState>>;
-	waypoints: WaypointSummary[] | undefined;
-	setWaypoints: Dispatch<SetStateAction<WaypointSummary[] | undefined>>;
-	currentShip: Ship | undefined;
-	setCurrentShip: Dispatch<SetStateAction<Ship | undefined>>;
-	selectedWaypoint: WaypointSummary;
-	setSelectedWaypoint: Dispatch<SetStateAction<WaypointSummary>>;
+const GameContext = createContext<GameContextValue | undefined>(undefined);
+
+export function GameProvider({ children }: { children: ReactNode }) {
+  const [activeShipSymbol, setActiveShipSymbol] = useState<string>();
+  const [activeWaypointSymbol, setActiveWaypointSymbol] = useState<string>();
+  const [isCargoOpen, setIsCargoOpen] = useState(true);
+  const [isMarketOpen, setIsMarketOpen] = useState(false);
+
+  const selectShip = useCallback((symbol: string) => {
+    setActiveShipSymbol(symbol);
+    setActiveWaypointSymbol(undefined);
+    setIsMarketOpen(false);
+  }, []);
+
+  const toggleWaypoint = useCallback((symbol: string) => {
+    setActiveWaypointSymbol((current) =>
+      current === symbol ? undefined : symbol,
+    );
+  }, []);
+
+  const toggleCargo = useCallback(() => setIsCargoOpen((open) => !open), []);
+  const toggleMarket = useCallback(() => setIsMarketOpen((open) => !open), []);
+
+  const reset = useCallback(() => {
+    setActiveShipSymbol(undefined);
+    setActiveWaypointSymbol(undefined);
+    setIsMarketOpen(false);
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      activeShipSymbol,
+      selectShip,
+      activeWaypointSymbol,
+      toggleWaypoint,
+      isCargoOpen,
+      toggleCargo,
+      isMarketOpen,
+      toggleMarket,
+      reset,
+    }),
+    [
+      activeShipSymbol,
+      selectShip,
+      activeWaypointSymbol,
+      toggleWaypoint,
+      isCargoOpen,
+      toggleCargo,
+      isMarketOpen,
+      toggleMarket,
+      reset,
+    ],
+  );
+
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 }
 
-export const GameContext = createContext<GameContextValue | undefined>(undefined);
-
-export function useGameContext(): GameContextValue {
-	const context = useContext(GameContext);
-	if (!context) {
-		throw new Error('useGameContext must be used within GameContext.Provider');
-	}
-	return context;
+export function useGame(): GameContextValue {
+  const context = useContext(GameContext);
+  if (!context) {
+    throw new Error('useGame must be used within GameProvider');
+  }
+  return context;
 }

@@ -1,31 +1,46 @@
+import { SymbolProvider } from '../context/SymbolContext';
+import { GameProvider } from '../context/GameContext';
+import { useActiveShip } from '../hooks';
 import { UserActions } from './UserActions';
 import { ShipList } from './ShipList';
-import { SymbolProvider } from '../context/SymbolContext';
 import { ShipActions } from './ShipActions';
+import { WaypointList } from './WaypointList';
+import { WaypointInfo } from './WaypointInfo';
+import { CargoList } from './CargoList';
+import { Shipyard } from './Shipyard';
+import { Market } from './Market';
+
+function Console() {
+  const { isAuth } = useActiveShip();
+
+  return (
+    <div className='grid h-full w-full gap-3 p-3 bg-black grid-rows-[auto_minmax(0,1fr)]'>
+      <UserActions />
+      {isAuth && (
+        <div className='grid min-h-0 gap-3 grid-cols-[20%_30%_1fr]'>
+          <div className='flex flex-col gap-3 min-h-0'>
+            <ShipList />
+            <ShipActions />
+          </div>
+          <WaypointList />
+          <div className='flex flex-col gap-3 min-h-0 overflow-y-auto'>
+            <WaypointInfo />
+            <CargoList />
+            <Shipyard />
+            <Market />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function PlayerConsoleV2() {
   return (
     <SymbolProvider>
-      <div
-        style={{
-          gridTemplateRows: '5% 1fr',
-        }}
-        className='grid h-full w-full bg-black'
-      >
-        <UserActions />
-        <div style={{ gridTemplateColumns: '20% 35% 45%' }} className='grid'>
-          <div className='flex flex-col p-4 space-y-4'>
-            <ShipList />
-            <ShipActions />
-          </div>
-          <div>waypoint navigation</div>
-          <div>
-            <div>waypoint details</div>
-            <div>Market Details</div>
-            <div>Shipyard</div>
-          </div>
-        </div>
-      </div>
+      <GameProvider>
+        <Console />
+      </GameProvider>
     </SymbolProvider>
   );
 }
