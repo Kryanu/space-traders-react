@@ -7,6 +7,11 @@ export class Fetch {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${AUTH_TOKEN || '123'}`,
   };
+  private static getToken: () => string | undefined = () => undefined;
+
+  static setTokenGetter(getter: () => string | undefined) {
+    this.getToken = getter;
+  }
 
   constructor() {
     if (Fetch.instance) {
@@ -21,7 +26,7 @@ export class Fetch {
       method: 'POST',
       headers: {
         ...this.baseHeaders,
-        Authorization: `Bearer ${sessionStorage.getItem('sessionToken') || AUTH_TOKEN}`,
+        Authorization: `Bearer ${this.getToken() || AUTH_TOKEN}`,
       },
       body: JSON.stringify(payload),
     };
@@ -38,7 +43,7 @@ export class Fetch {
       method: 'GET',
       headers: {
         ...this.baseHeaders,
-        Authorization: `Bearer ${sessionStorage.getItem('sessionToken') || AUTH_TOKEN}`,
+        Authorization: `Bearer ${this.getToken() || AUTH_TOKEN}`,
         ...headers,
       },
     };

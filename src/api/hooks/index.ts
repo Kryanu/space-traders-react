@@ -1,4 +1,4 @@
-export { useLogin, useRegister, useAgentDetails } from './auth';
+export { useRegister, useAgentDetails } from './auth';
 export {
   useSystem,
   useSystemWaypoints,

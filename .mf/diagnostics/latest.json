@@ -1,10 +1,10 @@
 {
   "latestErrorEvent": {
     "code": "TYPE-001",
-    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"C:\\\\nvm4w\\\\nodejs\\\\node.exe C:\\\\Users\\\\andre\\\\repositories\\\\project-portfolio\\\\space-traders-react\\\\node_modules\\\\typescript\\\\bin\\\\tsc --project C:\\\\Users\\\\andre\\\\repositories\\\\project-portfolio\\\\space-traders-react\\\\node_modules\\\\.federation\\\\tsconfig.d50d146b4960eb8bcd683a1578aa66bd.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
+    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"C:\\\\nvm4w\\\\nodejs\\\\node.exe C:\\\\Users\\\\andre\\\\repositories\\\\project-portfolio\\\\space-traders-react\\\\node_modules\\\\typescript\\\\bin\\\\tsc --project C:\\\\Users\\\\andre\\\\repositories\\\\project-portfolio\\\\space-traders-react\\\\node_modules\\\\.federation\\\\tsconfig.b4626d28811d33a2464144a1cc263962.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
     "args": {
-      "cmd": "C:\\nvm4w\\nodejs\\node.exe C:\\Users\\andre\\repositories\\project-portfolio\\space-traders-react\\node_modules\\typescript\\bin\\tsc --project C:\\Users\\andre\\repositories\\project-portfolio\\space-traders-react\\node_modules\\.federation\\tsconfig.d50d146b4960eb8bcd683a1578aa66bd.json"
+      "cmd": "C:\\nvm4w\\nodejs\\node.exe C:\\Users\\andre\\repositories\\project-portfolio\\space-traders-react\\node_modules\\typescript\\bin\\tsc --project C:\\Users\\andre\\repositories\\project-portfolio\\space-traders-react\\node_modules\\.federation\\tsconfig.b4626d28811d33a2464144a1cc263962.json"
     },
-    "timestamp": 1793820442975
+    "timestamp": 1794253871720
   }
 }

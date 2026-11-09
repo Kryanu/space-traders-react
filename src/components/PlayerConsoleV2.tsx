@@ -1,4 +1,3 @@
-import { SymbolProvider } from '../context/SymbolContext';
 import { GameProvider } from '../context/GameContext';
 import { useActiveShip } from '../hooks';
 import { UserActions } from './UserActions';
@@ -37,10 +36,8 @@ function Console() {
 
 export default function PlayerConsoleV2() {
   return (
-    <SymbolProvider>
-      <GameProvider>
-        <Console />
-      </GameProvider>
-    </SymbolProvider>
+    <GameProvider>
+      <Console />
+    </GameProvider>
   );
 }

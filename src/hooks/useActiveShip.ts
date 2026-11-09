@@ -1,12 +1,11 @@
-import { useLogin, useShip, useShips, useWaypoint } from '@api-hooks';
+import { useShip, useShips, useWaypoint } from '@api-hooks';
 import { useGame } from '../context/GameContext';
-import { useSymbol } from '../context/SymbolContext';
+import { useAuth } from '../context/AuthContext';
 
 export function useActiveShip() {
-  const { symbol } = useSymbol();
+  const { token, isAuth } = useAuth();
   const { activeShipSymbol } = useGame();
-  const login = useLogin(symbol);
-  const ships = useShips(login.data ?? '');
+  const ships = useShips(token ?? '');
 
   const fleet = ships.data?.data ?? [];
   // Default to the first ship until one is picked.
@@ -14,7 +13,7 @@ export function useActiveShip() {
   const shipQuery = useShip(shipSymbol);
   const ship = shipQuery.data ?? fleet.find((s) => s.symbol === shipSymbol);
 
-  return { isAuth: !!login.data, fleet, ship };
+  return { isAuth, fleet, ship };
 }
 
 export function useCurrentWaypoint() {
