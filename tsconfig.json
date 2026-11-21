@@ -3,12 +3,14 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
     "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
     "allowJs": true,
     "checkJs": false,
     "paths": {
+      "@portfolio/space-traders-types": ["../libs/space-traders-types/index.d.ts"],
       "@types": ["./src/types/index.ts"],
       "@types/*": ["./src/types/*"],
       "@api-hooks": ["./src/api/hooks/index.ts"]

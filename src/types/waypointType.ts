@@ -1,19 +1,6 @@
-export const WAYPOINT_TRAIT = {
-  FUEL_STATION: 'FUEL_STATION',
-  ARTIFICIAL_GRAVITY_WELL: 'ARTIFICIAL_GRAVITY_WELL',
-  GRAVITY_WELL: 'GRAVITY_WELL',
-  DEBRIS_FIELD: 'DEBRIS_FIELD',
-  NEBULA: 'NEBULA',
-  PLANET: 'PLANET',
-  GAS_GIANT: 'GAS_GIANT',
-  MOON: 'MOON',
-  ORBITAL_STATION: 'ORBITAL_STATION',
-  JUMP_GATE: 'JUMP_GATE',
-  ASTEROID_FIELD: 'ASTEROID_FIELD',
-  ASTEROID: 'ASTEROID',
-  ENGINEERED_ASTEROID: 'ENGINEERED_ASTEROID',
-  ASTEROID_BASE: 'ASTEROID_BASE',
-  SHIPYARD: 'SHIPYARD'
-} as const;
+import type { WaypointTraits } from '@portfolio/space-traders-types';
+import waypointValues from '../../../libs/space-traders-types/waypoint-values.json';
 
-export type WaypointTypes = keyof typeof WAYPOINT_TRAIT;
+export const WAYPOINT_TRAIT = waypointValues as WaypointTraits;
+
+export type { WaypointTypes } from '@portfolio/space-traders-types';
